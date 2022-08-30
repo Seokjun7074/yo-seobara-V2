@@ -2,49 +2,100 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 // import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import axios from "axios";
-import { useState } from 'react';
+import { useInView } from "react-intersection-observer"
 
 export default function WovenImageList() {
 // const navigate = useNavigate();
 
-const [datas, setDatas] = useState(null);
+const [datas, setDatas] = useState([]);
+const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
 
-useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/photos')
-    
-      .then((res) => {
-        
-        setDatas(res.data);
-      })
+  const [ref, inView] = useInView()
+  
+
+  // 서버에서 아이템을 가지고 오는 함수
+  const getItems = useCallback(async () => {
+    setLoading(true)
+    await axios.get('https://jsonplaceholder.typicode.com/photos')
+    .then((res) => {
+        setDatas(prevState => [...prevState, res.data])
+    })
+    .catch(err=> console.log(err))
+    setLoading(false)
+  }, [page])
 
 
-   .catch(err=> console.log(err))
+// useEffect(() => {
+//     axios.get('https://jsonplaceholder.typicode.com/photos')
+//       .then((res) => {
+//         setDatas(res.data);
+//       })
+//    .catch(err=> console.log(err))
+
+//   }, []);
 
 
-  }, []);
+  // `getItems` 가 바뀔 때 마다 함수 실행
+  useEffect(() => {
+    getItems()
+  }, [getItems])
 
-//   console.log(datas,"28")
 
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    if (inView && !loading) {
+      setPage(prevState => prevState + 1)
+    }
+  }, [inView, loading])
+  console.log(datas,page)
 
   return (
     <ImageList sx={{ width: 1/1, height: 1/2 }} variant="woven" cols={3} gap={3}>
-      {itemData.map((item) => (
+      {itemData.map((item, idx) => (
         <ImageListItem key={item.url}>
-          <img onClick={()=>{
-            // navigate();
-          }}
-            src={`${item.url}?w=161&fit=crop&auto=format`}
-            srcSet={`${item.url}?w=161&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
+            {itemData.length -1 ==idx ? (
+                
+                <img onClick={()=>{
+                    // navigate();
+                }}
+                        // src={item.url}
+                    src={`${item.url}?w=161&fit=crop&auto=format`}
+                    srcSet={`${item.url}?w=161&fit=crop&auto=format&dpr=2 2x`}
+                    alt={item.title}
+                    loading="lazy"
+                    ref={ref}
+                    /> 
+            ):(
+                <img onClick={()=>{
+                    // navigate();
+                   }}
+                        //  src={item.url}
+                     src={`${item.url}?w=161&fit=crop&auto=format`}
+                      srcSet={`${item.url}?w=161&fit=crop&auto=format&dpr=2 2x`}
+                      alt={item.title}
+                      loading="lazy"
+                    /> 
+                
+            )}
+       
+
+      
+
+
+
         </ImageListItem>
       ))}
     </ImageList>
   );
 }
+
+
+
+
+
 
 const itemData = [
   {
@@ -95,4 +146,10 @@ const itemData = [
     url: 'https://images.unsplash.com/photo-1588436706487-9d55d73a39e3',
     title: 'Blinds',
   },
+  {
+    url: "https://via.placeholder.com/600/5e12c6",
+    title: 'Blinds',
+  },
+  
+  
 ];
