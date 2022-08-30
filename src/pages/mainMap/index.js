@@ -11,10 +11,14 @@ const MainMap = () => {
     },
     errMsg: null,
     isLoading: true,
+    isPanto: false,
   });
   return (
     <MainMapWrapper>
-      <LocationList location={location}></LocationList>
+      <LocationList
+        location={location}
+        setLocation={setLocation}
+      ></LocationList>
       <MainMapView location={location} setLocation={setLocation}></MainMapView>
     </MainMapWrapper>
   );

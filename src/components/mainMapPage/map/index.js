@@ -1,5 +1,5 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MainMapView = ({ location, setLocation }) => {
   useEffect(() => {
@@ -33,6 +33,7 @@ const MainMapView = ({ location, setLocation }) => {
       }));
     }
   }, []);
+
   return (
     <>
       {location.isLoading ? (
@@ -40,6 +41,7 @@ const MainMapView = ({ location, setLocation }) => {
       ) : (
         <Map
           center={location.center}
+          isPanto={location.isPanto}
           style={{ width: "100%", height: "100vh" }}
         >
           <MapMarker position={location.center}>
