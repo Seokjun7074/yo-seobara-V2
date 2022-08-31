@@ -1,7 +1,9 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { NowLocation } from "./style";
+const MainMapView = ({ location, setLocation, locationList }) => {
+  // const [position, setPosition] = useState(null);
 
-const MainMapView = ({ location, setLocation }) => {
   useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -32,26 +34,37 @@ const MainMapView = ({ location, setLocation }) => {
         isLoading: false,
       }));
     }
-  }, []);
-
-  return (
-    <>
-      {location.isLoading ? (
-        <h1>로딩중..나중에 스피너 넣을거~</h1>
-      ) : (
-        <Map
-          center={location.center}
-          isPanto={location.isPanto}
-          style={{ width: "100%", height: "100vh" }}
-        >
-          <MapMarker position={location.center}>
-            <div style={{ padding: "5px", color: "#000" }}>
-              {location.errMsg ? location.errMsg : "여기에 계신가요?!"}
-            </div>
-          </MapMarker>
-        </Map>
-      )}
-    </>
+  }, [setLocation]);
+  // console.log(locationList);
+  return location.isLoading ? (
+    <h1>로딩중..</h1>
+  ) : (
+    <Map
+      center={location.center}
+      level={4}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <MapMarker
+        position={location.center}
+        image={{
+          src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
+          size: {
+            width: 32,
+            height: 32,
+          }, // 마커이미지의 크기입니다
+        }}
+      >
+        {/* <NowLocation>
+          {location.errMsg ? location.errMsg : "현재위치"}
+        </NowLocation> */}
+      </MapMarker>
+      {locationList.map((e) => (
+        <MapMarker
+          key={`${e.location.lat}+${e.location.lng}`}
+          position={e.location}
+        ></MapMarker>
+      ))}
+    </Map>
   );
 };
 
