@@ -2,7 +2,7 @@ const fontSizes = {
   base: "1rem",
   large: "1.5rem",
   xlarge: "2rem",
-  tittle: "3rem",
+  title: "3rem",
 };
 const padding = {
   base: "1rem",
