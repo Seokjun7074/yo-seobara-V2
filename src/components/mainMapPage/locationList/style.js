@@ -11,9 +11,9 @@ export const LocationListWrapper = styled.div`
   background-color: transparent;
   width: 25vw;
   min-width: 300px;
-  height: 100vh;
+  height: calc(100% - 70px);
   z-index: 10;
-  overflow: scroll;
+  overflow: auto;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;

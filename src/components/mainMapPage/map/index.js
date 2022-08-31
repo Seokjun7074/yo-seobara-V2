@@ -1,9 +1,13 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
 import { NowLocation } from "./style";
-const MainMapView = ({ location, setLocation, locationList }) => {
+const MainMapView = ({
+  location,
+  setLocation,
+  locationList,
+  setPickedLocation,
+}) => {
   // const [position, setPosition] = useState(null);
-
   useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -36,6 +40,7 @@ const MainMapView = ({ location, setLocation, locationList }) => {
     }
   }, [setLocation]);
   // console.log(locationList);
+
   return location.isLoading ? (
     <h1>로딩중..</h1>
   ) : (
@@ -58,10 +63,13 @@ const MainMapView = ({ location, setLocation, locationList }) => {
           {location.errMsg ? location.errMsg : "현재위치"}
         </NowLocation> */}
       </MapMarker>
-      {locationList.map((e) => (
+      {locationList.map((data) => (
         <MapMarker
-          key={`${e.location.lat}+${e.location.lng}`}
-          position={e.location}
+          key={data.postId}
+          position={data.location}
+          onClick={() => {
+            setPickedLocation(data.postId);
+          }}
         ></MapMarker>
       ))}
     </Map>
