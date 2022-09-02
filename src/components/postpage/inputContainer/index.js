@@ -1,4 +1,14 @@
-import { ImageInputButton, InputContainerWrapper, InputText } from "./style";
+import {
+  ImageInputButton,
+  InputBox,
+  InputContainerWrapper,
+  InputText,
+  InputTextArea,
+  Label,
+  LabelBox,
+  PhotoBox,
+  SubmitButton,
+} from "./style";
 import useInput from "../../../hooks/useInput";
 import { useEffect, useRef, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
@@ -41,35 +51,48 @@ const InputContainer = () => {
   //   console.log(imageInput);
 
   return (
-    <InputContainerWrapper>
-      <Slider imageList={imageInput} />
-      <ImageInputButton onClick={imageUpload}>
-        <MdAddPhotoAlternate size={"50%"}></MdAddPhotoAlternate>
-        <span>사진추가</span>
-      </ImageInputButton>
-      <input
-        type="file"
-        multiple="multiple"
-        accept="image"
-        style={{ display: "none" }}
-        ref={imageRef}
-        onChange={addImage}
-      />
-      <InputText
-        type="text"
-        name="title"
-        placeholder="장소를 입력해주세요"
-        onChange={titleHandler}
-        value={title}
-      />
-      <InputText
-        type="content"
-        name="content"
-        placeholder="장소에 대한 설명을 입력해주세요."
-        onChange={contentHandler}
-        value={content}
-      />
-    </InputContainerWrapper>
+    <>
+      <InputContainerWrapper>
+        <PhotoBox>
+          <Slider imageList={imageInput} />
+          <ImageInputButton onClick={imageUpload}>
+            <MdAddPhotoAlternate size={"50%"}></MdAddPhotoAlternate>
+            <span>사진추가</span>
+          </ImageInputButton>
+          <input
+            type="file"
+            multiple="multiple"
+            accept="image"
+            style={{ display: "none" }}
+            ref={imageRef}
+            onChange={addImage}
+          />
+        </PhotoBox>
+        <InputBox>
+          <LabelBox>
+            <Label>제목</Label>
+            <InputText
+              type="text"
+              name="title"
+              placeholder="장소를 입력해주세요"
+              onChange={titleHandler}
+              value={title}
+            />
+          </LabelBox>
+          <LabelBox>
+            <Label>내용</Label>
+            <InputTextArea
+              type="content"
+              name="content"
+              placeholder="장소에 대한 설명을 입력해주세요."
+              onChange={contentHandler}
+              value={content}
+            />
+          </LabelBox>
+        </InputBox>
+      </InputContainerWrapper>
+      <SubmitButton>제출</SubmitButton>
+    </>
   );
 };
 
