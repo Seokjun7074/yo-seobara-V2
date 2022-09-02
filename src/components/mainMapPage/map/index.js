@@ -1,5 +1,5 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NowLocation } from "./style";
 const MainMapView = ({
   location,

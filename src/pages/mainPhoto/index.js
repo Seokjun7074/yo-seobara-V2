@@ -2,25 +2,18 @@ import React from "react";
 import { StyledComponent } from "styled-components";
 import Card from "../../components/Card";
 
-
 const MainPhoto = () => {
-
-
-
-
-  return (<div>
-           <Card />
-
-          </div>
-
-   
-  )
+  return (
+    <div>
+      <Card />
+    </div>
+  );
 };
 
 export default MainPhoto;
 
-
-{/* <div>사진만 나오는 메인페이지</div>
+{
+  /* <div>사진만 나오는 메인페이지</div>
              
 <div className="card-box">
 
@@ -43,4 +36,5 @@ export default MainPhoto;
 
 </div>
 
-</div> */}
+</div> */
+}
