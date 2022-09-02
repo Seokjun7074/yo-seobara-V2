@@ -16,7 +16,10 @@ const margin = {
   xlarge: "2rem",
   xxlarge: "3rem",
 };
-const color = {};
+const color = {
+  lightgray: "#E9E9E9",
+  darkgray: "#333333",
+};
 
 const theme = {
   fontSizes,
