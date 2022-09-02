@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledComponent } from "styled-components";
-import Card from "../../components/Card";
+import Card from "../../components/mainPhotoPage/Card";
 
 
 const MainPhoto = () => {
