@@ -20,8 +20,8 @@ const InputContainer = ({ pick }) => {
   const [imageInput, setImageInput] = useState([]); // 미리보기용 이미지 리스트
   const [imageFile, setImageFile] = useState([]); // 서버 전송용 이미지 데이터
   const imageRef = useRef();
-
   const formData = new FormData();
+  const IMAGE_LIMIT = 3;
 
   const submitData = {
     title: title,
@@ -34,12 +34,11 @@ const InputContainer = ({ pick }) => {
   };
 
   const addImage = (e) => {
-    if (imageInput.length >= 3) {
+    const selectedImageList = e.target.files; // 선택한 이미지들
+    if (selectedImageList.length + imageInput.length >= IMAGE_LIMIT) {
       alert("사진은 최대 3장까지만 업로드 가능합니다");
       return;
     }
-    const selectedImageList = e.target.files; // 선택한 이미지들
-    // console.log(selectedImageList);
     const imageURLList = [...imageInput];
     const imageFileList = [...imageFile];
     // for문 쓰는 이유: 한번에 두세장씩 업로드하는경우
@@ -51,6 +50,7 @@ const InputContainer = ({ pick }) => {
     setImageInput(imageURLList);
     setImageFile(imageFileList);
   };
+
   const onSubmit = () => {
     formData.append(
       "inputData",
@@ -60,16 +60,20 @@ const InputContainer = ({ pick }) => {
     imageFile.forEach((e, idx) => {
       formData.append(`image_${idx}`, e);
     });
-    // for (let key of formData.keys()) {
-    //   console.log(key);
-    // }
-    // // FormData의 value 확인
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    // }
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
+    // FormData의 value 확인
+    for (let value of formData.values()) {
+      console.log(value);
+    }
   };
 
   const imageUpload = () => {
+    if (imageInput.length >= IMAGE_LIMIT) {
+      alert("사진은 최대 3장까지만 업로드 가능합니다");
+      return;
+    }
     // 버튼클릭시 input태그에 클릭이벤트를 걸어준다.
     imageRef.current.click();
   };
