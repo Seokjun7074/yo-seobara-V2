@@ -7,13 +7,12 @@ import ButtonBase from '@mui/material/ButtonBase';
 import {Img,Text,Text2, Text3} from "./style"
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 
-// import {useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
-const DetailPohto = () => {
+const DetailPohto = (id) => {
 
-// const{id} = useParams();
-// console.log(id)
-
+  const idNum = id
+console.log(idNum,'sd')
 
 
       return (

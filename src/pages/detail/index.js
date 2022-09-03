@@ -8,13 +8,14 @@ import {CardBox} from './style';
 // import {useParams} from 'react-router-dom'
 
 
-const Detail = () => {
+const Detail = ({id}) => {
 // const {id} = useParams();
-// console.log(id)
+
+const idNum = id
 
   return (<div>
              <CardBox>
-                  <DetailPohto/>
+                  <DetailPohto id={idNum}/>
                   {/* <p>sds</p> */}  
              </CardBox>
              <div className="Comment">

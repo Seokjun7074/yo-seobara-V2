@@ -85,8 +85,8 @@ const [page, setPage] = useState(1)
                                         subtitle={<span>by: {item.author}</span>}
                                         position="below"
                                       />
-                      <Modal btn_title="상세페이지" key={item.title}>
-                        <Detail/>
+                      <Modal btn_title="상세페이지" >
+                        <Detail id={item.id}/>
                       </Modal>
                     </div>
                     </ImageListItem>
@@ -107,11 +107,11 @@ const [page, setPage] = useState(1)
                                         subtitle={<span>by: {item.author}</span>}
                                         position="below"
                                       />
-                      <Modal btn_title="상세페이지" key={item.title}>
-                          <Detail/>
+                      <Modal btn_title="상세페이지" >
+                          <Detail id={item.id}/>
                       </Modal>
                     </div>
-                  
+                  <p>{item.id}</p>
             </ImageListItem>
             </div>
                 
