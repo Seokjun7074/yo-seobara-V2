@@ -85,8 +85,8 @@ const [page, setPage] = useState(1)
                                         subtitle={<span>by: {item.author}</span>}
                                         position="below"
                                       />
-                      <Modal btn_title="모달버튼이름">
-                          여기에 원하는 컴포넌트 넣어서 사용
+                      <Modal btn_title="상세페이지" key={item.title}>
+                        <Detail/>
                       </Modal>
                     </div>
                     </ImageListItem>
@@ -107,7 +107,7 @@ const [page, setPage] = useState(1)
                                         subtitle={<span>by: {item.author}</span>}
                                         position="below"
                                       />
-                      <Modal btn_title="모달버튼이름">
+                      <Modal btn_title="상세페이지" key={item.title}>
                           <Detail/>
                       </Modal>
                     </div>

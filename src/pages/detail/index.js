@@ -5,10 +5,17 @@ import styled, { css } from 'styled-components';
 import DetailPohto from "../../components/detailPage/detailPohto";
 import CommentList from "../../components/detailPage/comments";
 import {CardBox} from './style';
+// import {useParams} from 'react-router-dom'
+
+
 const Detail = () => {
+// const {id} = useParams();
+// console.log(id)
+
   return (<div>
              <CardBox>
                   <DetailPohto/>
+                  {/* <p>sds</p> */}  
              </CardBox>
              <div className="Comment">
                  <CommentList/>

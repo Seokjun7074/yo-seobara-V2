@@ -11,7 +11,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<MainPhoto />} />
         <Route exact path="/map" element={<MainMap />} />
-        <Route exact path="/detail" element={<Detail />} />
+        <Route exact path="/detail/:id" element={<Detail />} />
         <Route exact path="/userpage" element={<UserPage />} />
         <Route exact path="/login" element={<Login />} />
       </Routes>
