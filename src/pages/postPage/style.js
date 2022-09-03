@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const CenterContainer = styled.div`
-  padding-top: 30px;
+  padding: 30px 0;
   margin: 0 auto;
   width: 70%;
   min-width: 800px;
-  height: 100vh;
+  height: 100%;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
   display: flex;

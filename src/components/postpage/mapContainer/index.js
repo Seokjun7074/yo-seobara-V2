@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { MapContainerWrapper } from "./style";
 
-const MapContainer = () => {
+const MapContainer = ({ pick, setPick }) => {
   const [location, setLocation] = useState({
     center: {
       lat: 33.450701,
@@ -11,10 +11,8 @@ const MapContainer = () => {
     errMsg: null,
     isLoading: true,
   });
-  const [pick, setPick] = useState({});
   useEffect(() => {
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation((prev) => ({
@@ -35,7 +33,6 @@ const MapContainer = () => {
         }
       );
     } else {
-      // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
       setLocation((prev) => ({
         ...prev,
         errMsg: "geolocation을 사용할수 없어요..",
