@@ -29,7 +29,9 @@ export const PhotoBox = styled.div`
 `;
 export const InputBox = styled.div`
   width: 100%;
-  height: 100%;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
 `;
 export const LabelBox = styled.div`
   height: 50%;
@@ -54,15 +56,19 @@ export const InputTextArea = styled.textarea`
   width: 100%;
   min-height: 100px;
   height: 100%;
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
   border: none;
   resize: none;
+  &:focus {
+    outline: none;
+  }
 `;
 export const SubmitButton = styled.button`
-  position: relative;
-  bottom: -30px;
+  /* position: relative;
+  bottom: -30px; */
   /* background-color: ${(props) => props.theme.color.darkgray}; */
+  margin-top: 20px;
   background-color: tomato;
   width: 80%;
   height: 50px;
