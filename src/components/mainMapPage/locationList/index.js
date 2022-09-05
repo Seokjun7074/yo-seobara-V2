@@ -8,8 +8,12 @@ const LocationList = ({
   pickedLocation,
   setPickedLocation,
 }) => {
-  // const scrollControl = useRef([]);
-
+  const scrollControl = useRef([]);
+  useEffect(() => {
+    scrollControl.current[pickedLocation]?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [pickedLocation]);
   // 현재위치를 통해 정보 로딩
   return location.isLoading ? null : (
     <LocationListWrapper>
@@ -17,13 +21,10 @@ const LocationList = ({
         <div
           key={data.postId}
           className={data.postId}
-          // ref={(el) => {
-          //   // console.log(el);
-          //   scrollControl.current.push(el);
-          // }}
           onClick={() => {
             setPickedLocation(data.postId);
           }}
+          ref={(e) => (scrollControl.current[data.postId] = e)}
         >
           <ContentContainer
             picked={pickedLocation === data.postId}
