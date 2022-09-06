@@ -1,13 +1,19 @@
+/*global kakao*/
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useEffect } from "react";
-import { NowLocation } from "./style";
+import { useEffect, useRef } from "react";
+import { NowLocation, SearchButton } from "./style";
+import { useCallback } from "react";
 const MainMapView = ({
   location,
   setLocation,
   locationList,
+  pickedLocation,
   setPickedLocation,
+  boundary,
+  setBoundary,
 }) => {
   // const [position, setPosition] = useState(null);
+  const mapRef = useRef();
   useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -39,16 +45,47 @@ const MainMapView = ({
       }));
     }
   }, [setLocation]);
-  // console.log(locationList);
+
+  const searchPosition = () => {
+    const map = mapRef.current;
+    setBoundary({
+      swLatLng: {
+        lat: map.getBounds().getSouthWest().getLat(),
+        lng: map.getBounds().getSouthWest().getLng(),
+      },
+      neLatLng: {
+        lat: map.getBounds().getNorthEast().getLat(),
+        lng: map.getBounds().getNorthEast().getLng(),
+      },
+    });
+  };
+  const onCreate = useCallback(() => {
+    const map = mapRef.current;
+
+    setBoundary({
+      South_West: {
+        lat: map.getBounds().getSouthWest().getLat(),
+        lng: map.getBounds().getSouthWest().getLng(),
+      },
+      North_East: {
+        lat: map.getBounds().getNorthEast().getLat(),
+        lng: map.getBounds().getNorthEast().getLng(),
+      },
+    });
+  }, []);
 
   return location.isLoading ? (
     <h1>로딩중..</h1>
   ) : (
     <Map
-      center={location.center}
+      isPanto="true"
+      center={pickedLocation.postId ? pickedLocation.location : location.center}
       level={4}
       style={{ width: "100%", height: "100%" }}
+      ref={mapRef}
+      onCreate={onCreate}
     >
+      <SearchButton onClick={searchPosition}>현재위치에서 검색</SearchButton>
       <MapMarker
         position={location.center}
         image={{
@@ -68,7 +105,7 @@ const MainMapView = ({
           key={data.postId}
           position={data.location}
           onClick={() => {
-            setPickedLocation(data.postId);
+            setPickedLocation({ postId: data.postId, location: data.location });
           }}
         ></MapMarker>
       ))}

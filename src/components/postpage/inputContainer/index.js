@@ -35,6 +35,7 @@ const InputContainer = ({ pick }) => {
 
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
+    console.log(selectedImageList);
     if (selectedImageList.length + imageInput.length >= IMAGE_LIMIT) {
       alert("사진은 최대 3장까지만 업로드 가능합니다");
       return;
@@ -58,15 +59,15 @@ const InputContainer = ({ pick }) => {
       // new Blob([JSON.stringify(submitData)], { type: "application/json" })
     );
     imageFile.forEach((e, idx) => {
-      formData.append(`image_${idx}`, e);
+      formData.append(`image`, e);
     });
-    for (let key of formData.keys()) {
-      console.log(key);
-    }
-    // FormData의 value 확인
-    for (let value of formData.values()) {
-      console.log(value);
-    }
+    // for (let key of formData.keys()) {
+    //   console.log(key);
+    // }
+    // // FormData의 value 확인
+    // for (let value of formData.values()) {
+    //   console.log(value);
+    // }
   };
 
   const imageUpload = () => {
