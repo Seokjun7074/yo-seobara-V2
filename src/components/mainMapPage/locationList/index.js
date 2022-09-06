@@ -10,7 +10,7 @@ const LocationList = ({
 }) => {
   const scrollControl = useRef([]);
   useEffect(() => {
-    scrollControl.current[pickedLocation]?.scrollIntoView({
+    scrollControl.current[pickedLocation.postId]?.scrollIntoView({
       behavior: "smooth",
     });
   }, [pickedLocation]);
@@ -23,12 +23,12 @@ const LocationList = ({
           key={data.postId}
           className={data.postId}
           onClick={() => {
-            setPickedLocation(data.postId);
+            setPickedLocation({ postId: data.postId, location: data.location });
           }}
           ref={(e) => (scrollControl.current[data.postId] = e)}
         >
           <ContentContainer
-            picked={pickedLocation === data.postId}
+            picked={pickedLocation.postId === data.postId}
             data={data}
           ></ContentContainer>
         </div>

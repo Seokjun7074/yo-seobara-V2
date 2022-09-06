@@ -7,6 +7,7 @@ const MainMapView = ({
   location,
   setLocation,
   locationList,
+  pickedLocation,
   setPickedLocation,
   boundary,
   setBoundary,
@@ -77,7 +78,8 @@ const MainMapView = ({
     <h1>로딩중..</h1>
   ) : (
     <Map
-      center={location.center}
+      isPanto="true"
+      center={pickedLocation.postId ? pickedLocation.location : location.center}
       level={4}
       style={{ width: "100%", height: "100%" }}
       ref={mapRef}
@@ -103,7 +105,7 @@ const MainMapView = ({
           key={data.postId}
           position={data.location}
           onClick={() => {
-            setPickedLocation(data.postId);
+            setPickedLocation({ postId: data.postId, location: data.location });
           }}
         ></MapMarker>
       ))}
