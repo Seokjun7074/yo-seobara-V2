@@ -9,4 +9,5 @@ export const ContentContainerWrapper = styled.div`
   text-align: left;
   font-weight: 600;
   transition: 0.3s;
+  cursor: pointer;
 `;

@@ -15,6 +15,7 @@ const LocationList = ({
     });
   }, [pickedLocation]);
   // 현재위치를 통해 정보 로딩
+  // console.log(scrollControl);
   return location.isLoading ? null : (
     <LocationListWrapper>
       {locationList.map((data) => (

@@ -1,7 +1,7 @@
 import { MainMapWrapper } from "./style";
 import MainMapView from "../../components/mainMapPage/map";
 import LocationList from "../../components/mainMapPage/locationList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/global/header";
 const MainMap = () => {
   // 더미 데이터
@@ -90,6 +90,17 @@ const MainMap = () => {
 
   const [pickedLocation, setPickedLocation] = useState(null); // 선택한 장소
   const [locationList, setLocationList] = useState(dummyData); // 데이터 리스트
+  const [boundary, setBoundary] = useState(null); // 보이는 지도 범위
+
+  // 위치정보 가져와서 서버에 목록 요청하기
+  useEffect(() => {
+    // get요청 후 setLocationList(red.data)
+    // console.log("새로운 위치를 기반으로 데이터 리스트 요청");
+    if (boundary) {
+      console.log("boundary 갱신");
+      console.log(boundary);
+    }
+  }, [boundary]);
 
   return (
     <MainMapWrapper>
@@ -105,6 +116,8 @@ const MainMap = () => {
         setLocation={setLocation}
         locationList={locationList}
         setPickedLocation={setPickedLocation}
+        setBoundary={setBoundary}
+        boundary={boundary}
       ></MainMapView>
     </MainMapWrapper>
   );
