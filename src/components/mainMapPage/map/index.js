@@ -1,7 +1,8 @@
 /*global kakao*/
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
-import { NowLocation, SearchButton } from "./style";
+import { LocationButton, NowLocation, SearchButton } from "./style";
 import { useCallback } from "react";
 const MainMapView = ({
   location,
@@ -49,16 +50,17 @@ const MainMapView = ({
   const searchPosition = () => {
     const map = mapRef.current;
     setBoundary({
-      swLatLng: {
+      South_West: {
         lat: map.getBounds().getSouthWest().getLat(),
         lng: map.getBounds().getSouthWest().getLng(),
       },
-      neLatLng: {
+      North_East: {
         lat: map.getBounds().getNorthEast().getLat(),
         lng: map.getBounds().getNorthEast().getLng(),
       },
     });
   };
+
   const onCreate = useCallback(() => {
     const map = mapRef.current;
 
@@ -85,7 +87,14 @@ const MainMapView = ({
       ref={mapRef}
       onCreate={onCreate}
     >
-      <SearchButton onClick={searchPosition}>현재위치에서 검색</SearchButton>
+      <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
+      <LocationButton
+        onClick={() => {
+          setPickedLocation({ postId: null, location: location.center });
+        }}
+      >
+        <BiCurrentLocation size={"40px"} color={"white"} />
+      </LocationButton>
       <MapMarker
         position={location.center}
         image={{

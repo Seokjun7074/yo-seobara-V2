@@ -19,3 +19,17 @@ export const SearchButton = styled.button`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 1;
 `;
+
+export const LocationButton = styled.div`
+  height: 50px;
+  position: fixed;
+  left: 20px;
+  bottom: 7%;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  border-radius: 50%;
+  padding: 5px;
+  /* background-color: ${(props) => props.theme.color.darkgray}; */
+  background-color: lightcoral;
+  cursor: pointer;
+`;

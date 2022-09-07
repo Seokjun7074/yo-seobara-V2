@@ -101,7 +101,7 @@ const MainMap = () => {
     // console.log("새로운 위치를 기반으로 데이터 리스트 요청");
     if (boundary) {
       // console.log("boundary 갱신");
-      // console.log(boundary);
+      console.log(boundary);
     }
   }, [boundary]);
   return (
