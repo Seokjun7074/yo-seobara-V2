@@ -33,3 +33,14 @@ export const LocationButton = styled.div`
   background-color: lightcoral;
   cursor: pointer;
 `;
+
+export const MarkerOverlay = styled.div`
+  position: relative;
+  bottom: 145px;
+  right: 100px;
+  width: 200px;
+  height: 100px;
+  border-radius: 20px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: lightgray;
+`;

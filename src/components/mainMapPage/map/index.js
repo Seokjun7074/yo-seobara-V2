@@ -1,5 +1,5 @@
 /*global kakao*/
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
 import {
@@ -115,15 +115,22 @@ const MainMapView = ({
         </NowLocation> */}
       </MapMarker>
       {locationList.map((data) => (
-        <MapMarker
-          key={data.postId}
-          position={data.location}
-          onClick={() => {
-            setPickedLocation({ postId: data.postId, location: data.location });
-          }}
-        >
-          <div>{data.title}</div>
-        </MapMarker>
+        <div key={data.postId}>
+          <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+            position={data.location}
+          >
+            {data.postId === pickedLocation.postId && <MarkerOverlay />}
+          </CustomOverlayMap>
+          <MapMarker
+            position={data.location}
+            onClick={() => {
+              setPickedLocation({
+                postId: data.postId,
+                location: data.location,
+              });
+            }}
+          ></MapMarker>
+        </div>
       ))}
     </Map>
   );
