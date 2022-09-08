@@ -68,7 +68,7 @@ const onButtonClick=()=>{
           onChange={inp}
         />
            <Button sx={{m:1,textAlign: 'right' }} variant="contained" endIcon={<SendIcon />}
-          // onClick={ onButtonClick}
+          onClick={ onButtonClick}
           >
         댓글남기기
       </Button>
