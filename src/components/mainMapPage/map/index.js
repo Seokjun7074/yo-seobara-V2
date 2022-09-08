@@ -2,7 +2,12 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
-import { LocationButton, NowLocation, SearchButton } from "./style";
+import {
+  LocationButton,
+  MarkerOverlay,
+  NowLocation,
+  SearchButton,
+} from "./style";
 import { useCallback } from "react";
 const MainMapView = ({
   location,
@@ -116,7 +121,9 @@ const MainMapView = ({
           onClick={() => {
             setPickedLocation({ postId: data.postId, location: data.location });
           }}
-        ></MapMarker>
+        >
+          <div>{data.title}</div>
+        </MapMarker>
       ))}
     </Map>
   );
