@@ -129,7 +129,16 @@ const [page, setPage] = useState(1)
   );
 }
 
-
+// {
+//   “postId”: “게시물 번호”,
+//    "title": "게시글 제목",
+//    "content": "게시글 내용",
+//    "images": [이미지 파일]
+//    ”location”: { 
+//                        lat: 37.5614231, 
+//                        lng: 127.1911081 
+//                       }
+// },
 
 // variant="woven" cols={3} gap={3}
 
