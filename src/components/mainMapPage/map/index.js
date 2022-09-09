@@ -1,14 +1,10 @@
-/*global kakao*/
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
-import {
-  LocationButton,
-  MarkerOverlay,
-  NowLocation,
-  SearchButton,
-} from "./style";
+import { LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
+import "./style.css";
+
 const MainMapView = ({
   location,
   setLocation,
@@ -109,18 +105,9 @@ const MainMapView = ({
             height: 32,
           }, // 마커이미지의 크기입니다
         }}
-      >
-        {/* <NowLocation>
-          {location.errMsg ? location.errMsg : "현재위치"}
-        </NowLocation> */}
-      </MapMarker>
+      />
       {locationList.map((data) => (
         <div key={data.postId}>
-          <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
-            position={data.location}
-          >
-            {data.postId === pickedLocation.postId && <MarkerOverlay />}
-          </CustomOverlayMap>
           <MapMarker
             position={data.location}
             onClick={() => {
@@ -129,7 +116,18 @@ const MainMapView = ({
                 location: data.location,
               });
             }}
-          ></MapMarker>
+          />
+          {data.postId === pickedLocation.postId && (
+            <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+              position={data.location}
+            >
+              <div className="balloon">
+                {data.title}
+                <br />
+                <span>이미지 미리보기 넣을까</span>
+              </div>
+            </CustomOverlayMap>
+          )}
         </div>
       ))}
     </Map>
