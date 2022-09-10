@@ -8,7 +8,7 @@ import axios from "axios";
 import { useInView } from "react-intersection-observer"
 import  Modal  from '../global/modal/index';
 import Detail from '../../pages/detail';
-
+import Slider from '../global/slider';
 
 const MainPhotoCard =()=> {
 
@@ -51,17 +51,14 @@ const [page, setPage] = useState(1)
 
 
   useEffect(() => {
-    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    
     if (inView && !loading) {
       setPage(prevState => prevState + 1)
-    //   setId(prevState => prevState + 1)
+   
     }
   }, [inView, loading])
-//   console.log(datas,page)
+  // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
 
-
-//   const lists = datas.filter(data => data.length < albumId)
-//   console.log(lists)
 
   return (
     <ImageList  sx={{ width: 1/1, height: 1/2 }}cols={3} rowMaxHeight={164} >
@@ -103,6 +100,7 @@ const [page, setPage] = useState(1)
                       alt={item.title}
                       loading="lazy"
                     /> 
+                    {/* <Slider imageList={d_data}/> */}
                     <div>
                       <ImageListItemBar
                                         title={item.title}
@@ -210,3 +208,10 @@ const itemData = [
     author: '@southside_customs',
   },
 ];
+
+
+const d_data = [
+  'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
+  'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
+  'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
+]

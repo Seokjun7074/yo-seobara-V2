@@ -10,7 +10,7 @@ import {useEffect, useState, useCallback} from 'react';
 import axios from 'axios';
 import Modal from '../../global/modal';
 import DetailForm from '../detailForm';
-
+import Slider from '../../global/slider';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Block } from '@mui/icons-material';
@@ -22,7 +22,11 @@ const [detail,setDetail] = useState(
 {
   id:'',
   title:'',
-  url:''
+  url:[
+    'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
+    'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
+    'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
+  ]
 }
 
 );
@@ -31,34 +35,24 @@ const [detail,setDetail] = useState(
 
 
 
-
-useEffect(() => {
+//아이디에 맞는 정보를 서버에 요청
+// useEffect(() => {
 
   
-    axios.get(`https://jsonplaceholder.typicode.com/photos/${idNum}`)
-      .then((res) => {
-        // console.log(res.data.url)
-        setDetail(res.data);
+//     axios.get(`https://jsonplaceholder.typicode.com/photos/${idNum}`)
+//       .then((res) => {
+//         // console.log(res.data.url)
+//         setDetail(res.data);
         
          
-      })
-   .catch(err=> console.log(err))
+//       })
+//    .catch(err=> 
+//     console.log(err))
 
-  
-
-
-  }, []);
-  // console.log(detail.url)
+//   }, []);
 
 
-//   useEffect(()=>{
-// console.log(detail.url)
-// // console.log(typeof(detail))
 
-
-//   },[detail])
-
-// console.log(url)
 
 const deletePost= ()=>{
 
@@ -94,24 +88,25 @@ const deletePost= ()=>{
 
             <Grid item>
               <ButtonBase sx={{ width: '100%', height: '300px' }}>
-                <Img alt="complex" 
+                {/* <Img alt="complex" 
                 src={detail.url}
                 // src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62" 
                 // src={`${detail.url}?w=161&fit=crop&auto=format`}
-                />
+                /> */}
+                <Slider imageList={detail.url}/>
               </ButtonBase>
             </Grid>
-            <Grid item xs={12} sm container>
+            <Grid item xs={16} sm container>
               <Grid item xs container direction="column" spacing={2}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1" component="div">
-                    <Text>{detail.title}</Text>
+                    <Text>서울시 동작구 만양로 상도건영아파트</Text>
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                  <Text2>위치정보</Text2>
+                  <Text2>{detail.title}우리집sdsdsdssdsdssss</Text2>
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                  <Text3>{detail.title}내용or후기</Text3>
+                  <Text3>{detail.title}내용or후기bvbvbbsxsxsxssxsxs</Text3>
                   </Typography>
                 </Grid>
                
@@ -133,8 +128,8 @@ const deletePost= ()=>{
               </Grid> */}
               
             
-              <Grid item>
-                <Typography variant="subtitle1" component="div" sx={{m:1}}>
+              {/* <Grid item>
+                <Typography variant="subtitle1" component="button" sx={{m:1, height:10}}>
                 <Button variant="outlined" startIcon={<DeleteIcon />}  onClick={()=>{
                   alert('삭제입니다')
                   deletePost();
@@ -142,9 +137,8 @@ const deletePost= ()=>{
                  }}>
                  삭제하기
                 </Button>
-        
                 </Typography>
-              </Grid>
+              </Grid> */}
           
             </Grid>
            

@@ -7,22 +7,33 @@ export const Img = styled('img')({
     maxHeight: '100%',
   });
 
-export const Text = styled.h2`
+export const Text = styled.div`
 	font-size: 17px;
     // font-weight: 600;
     // font-height:21vh;
     height:11vh;
-    // background-color:red; 
+    max-height:17vh;
+    background-color:red; 
 `;
 
-export const Text2 = styled.h2`
+export const Text2 = styled.div`
 	font-size: 22px;
     font-weight: 600;
+    max-width:100px;
+    background-color:blue;
     `;
 
-    export const Text3 = styled.h2`
+    export const Text3 = styled.div`
 	font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
+    max-height:16vh;
+    position: fixed;
+    height:20vh;
+
+    box-sizing: border-box;
+    background: yellow;
+    padding: 3px;
+  
     `;
 
 export const Like = styled.h3`
