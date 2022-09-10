@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledComponent } from "styled-components";
-import Card from "../../components/mainPhotoPage/Card";
+import MainPhotoCard from "../../components/mainPhotoPage";
 
 
 const MainPhoto = () => {
@@ -9,7 +9,7 @@ const MainPhoto = () => {
 
 
   return (<div>
-           <Card />
+           <MainPhotoCard />
 
           </div>
 

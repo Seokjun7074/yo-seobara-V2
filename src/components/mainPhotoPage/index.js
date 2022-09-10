@@ -10,7 +10,9 @@ import  Modal  from '../global/modal/index';
 import Detail from '../../pages/detail';
 
 
-export default function TitlebarBelowImageList() {
+const MainPhotoCard =()=> {
+
+
 const navigate = useNavigate();
 
 const [datas, setDatas] = useState([]);
@@ -128,6 +130,9 @@ const [page, setPage] = useState(1)
     </ImageList>
   );
 }
+
+
+export default MainPhotoCard;
 
 // {
 //   “postId”: “게시물 번호”,
