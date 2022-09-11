@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import { getAddr } from "../../../utils/address";
 import { MapContainerWrapper } from "./style";
 
 const MapContainer = ({ pick, setPick }) => {
@@ -11,6 +12,7 @@ const MapContainer = ({ pick, setPick }) => {
     errMsg: null,
     isLoading: true,
   });
+  const [address, setAddress] = useState("");
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -40,6 +42,11 @@ const MapContainer = ({ pick, setPick }) => {
       }));
     }
   }, [setLocation]);
+  // 좌표를 주소로 변환하는 부분
+  // useEffect(() => {
+  //   getAddr(pick.lat, pick.lng, setAddress);
+  // }, [pick]);
+  // console.log(address);
   return (
     <MapContainerWrapper>
       {location.isLoading ? (
@@ -63,6 +70,16 @@ const MapContainer = ({ pick, setPick }) => {
             })
           }
         >
+          <MapMarker
+            position={location.center}
+            image={{
+              src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
+              size: {
+                width: 32,
+                height: 32,
+              }, // 마커이미지의 크기입니다
+            }}
+          />
           {pick && <MapMarker position={pick} />}
         </Map>
       )}

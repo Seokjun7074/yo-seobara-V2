@@ -4,9 +4,18 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
-export const post_API = {};
+export const apis = {
+  // 무한스크롤 게물 조회
+
+  // 좌표기준 게시물 조회
+
+  // 게시물 작성
+  createPost: (data) =>
+    instance.post("/api/post", data, {
+      headers: {
+        Authorization: `Bearer ${ss}`,
+      },
+    }),
+};
