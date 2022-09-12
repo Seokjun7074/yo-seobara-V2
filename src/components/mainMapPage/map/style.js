@@ -10,7 +10,10 @@ export const SearchButton = styled.button`
   width: 200px;
   height: 50px;
   border-radius: 20px;
-  background-color: lightcoral;
+  background-color: ${(props) => props.theme.color.blue};
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1.5px;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 1;
 `;
@@ -23,8 +26,11 @@ export const LocationButton = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
   z-index: 1;
   border-radius: 50%;
-  padding: 5px;
+  padding: 10px;
   /* background-color: ${(props) => props.theme.color.darkgray}; */
-  background-color: lightcoral;
+  background-color: ${(props) => props.theme.color.blue};
   cursor: pointer;
+`;
+export const ImageContainer = styled.img`
+  width: 270px;
 `;

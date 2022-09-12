@@ -15,6 +15,6 @@ export const apis = {
   loginUser: (userData) => api.post('/api/member/login', userData),
   logoutUser: (userData) => api.post('/api/auth/users/logout', userData),
   checkNickname: (userData) => api.post('/api/member/signup/nicknameCheck', userData),
-  // getMypage: (userData) => api.get('/api/mypage', userData),
+  
 }
 

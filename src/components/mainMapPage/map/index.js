@@ -1,7 +1,7 @@
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
-import { LocationButton, SearchButton } from "./style";
+import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
 import "./style.css";
 
@@ -76,7 +76,6 @@ const MainMapView = ({
       },
     });
   }, []);
-
   return location.isLoading ? (
     <h1>로딩중..</h1>
   ) : (
@@ -94,15 +93,15 @@ const MainMapView = ({
           setPickedLocation({ postId: null, location: location.center });
         }}
       >
-        <BiCurrentLocation size={"40px"} color={"white"} />
+        <BiCurrentLocation size={"30px"} color={"white"} />
       </LocationButton>
       <MapMarker
         position={location.center}
         image={{
-          src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
+          src: `${process.env.PUBLIC_URL}/images/reddot.png`, // 마커이미지의 주소입니다
           size: {
-            width: 32,
-            height: 32,
+            width: 24,
+            height: 24,
           }, // 마커이미지의 크기입니다
         }}
       />
@@ -122,9 +121,7 @@ const MainMapView = ({
               position={data.location}
             >
               <div className="balloon">
-                {data.title}
-                <br />
-                <span>이미지 미리보기 넣을까</span>
+                <ImageContainer src={`${data.thumbnailUrl}`} />
               </div>
             </CustomOverlayMap>
           )}

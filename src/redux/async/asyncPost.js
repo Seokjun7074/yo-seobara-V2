@@ -6,6 +6,7 @@ export const __createPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.createPost(payload);
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -15,10 +16,11 @@ export const __createPost = createAsyncThunk(
 );
 
 export const __getPost = createAsyncThunk(
-  "post/createPost",
+  "post/getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.createPost(payload);
+      const data = await apis.getPost();
+      // console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
