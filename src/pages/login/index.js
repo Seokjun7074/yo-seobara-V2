@@ -18,40 +18,41 @@ import { useNavigate } from "react-router";
 import { apis } from "../../api/loginAPI";
 //쿠키저장
 import { setCookie } from "../../shared/Cookie";
+//소셜로그인
+import { KAKAO_AUTH_URL } from "../../shared/SocialOauth";
 
 const theme = createTheme();
 
 export default function Login(props) {
-  //navigate
+  
   const navigate = useNavigate();
+
   const [nickState, setNickState] = useState(false);
-  const [pwState, setPwState] = useState(false);
   const [login, setLogin] = useState(true);
 
   const [nick, nickChange] = useInput();
-  const [pw, pwChange] = useInput();
-  const [pwCheck, pwCheckChange] = useInput();
+  const [checknick,setChecknick]=useState('');
 
   const emailInput = useRef();
   const passwordInput = useRef();
   const passwordConfirmInput = useRef();
   const nicknameInput = useRef();
 
-  //console.log(emailInput);
 
   //닉네임 중복확인 api 호출 함수
   const nicknameCheck = async (event) => {
     let enteredNickname = "";
-
+    
+    //닉네임 유효성 검사
     if (nick.length < 2 || nick.length > 10) {
       console.log(nick);
-      alert("다시입력");
+      alert("닉네임은 2자이상 10자 이하로 입력해주세요");
       return;
     } else {
       enteredNickname = nick;
       setNickState(true);
     }
-
+    
     const userNickname = {
       //nickname: nicknameInput.current.value,
       nickname: enteredNickname,
@@ -60,6 +61,7 @@ export default function Login(props) {
     console.log(res.data);
     if (res.data == 0) {
       alert("사용가능한 닉네임입니다!");
+      setChecknick(enteredNickname) 
       //setNickState(true);
     } else {
       alert("이미 다른 사용자가 사용중입니다!");
@@ -104,7 +106,10 @@ export default function Login(props) {
       const enteredNickname = nicknameInput.current.value;
       const regExp =
         /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-
+      if(nickState&&(checknick!==enteredNickname)){
+          alert('중복확인해주세요')
+          return
+        }
       if (enteredEmail.match(regExp) == null) {
         alert("이메일 형식으로 입력해주세요!");
 
@@ -180,10 +185,7 @@ export default function Login(props) {
                   autoComplete="current-password"
                   inputRef={passwordInput}
                 />
-                {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+                
                 <Button
                   type="submit"
                   fullWidth
@@ -193,6 +195,25 @@ export default function Login(props) {
                 >
                   로그인
                 </Button>
+                
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  //onClick={submitHandler}
+                  href={KAKAO_AUTH_URL}
+                >
+                  카카오로 로그인하기
+                </Button>
+
+               
+                
+                <hr></hr>
+                {/* <img src={`${process.env.PUBLIC_URL}/images/kakao_login.svg`} alt="kakao_login_medium.pnkakao_login.svg" /> */}
+                {/* </a> */}
+              
+                
                 <Grid container>
                   <Grid item xs>
                     {/* <Link href="#" variant="body2">
@@ -268,12 +289,13 @@ export default function Login(props) {
                     <TextField
                       required
                       fullWidth
-                      id="email"
+                      id="password"
                       label="비밀번호 : 5자 이상 입력해주세요"
-                      name="email"
-                      autoComplete="email"
+                      name="password"
+                      type="password"
+                      autoComplete="password"
                       inputRef={passwordInput}
-                      onChange={pwChange}
+                      //onChange={pwChange}
                     />
                   </Grid>
                   <Grid item xs={12}>
