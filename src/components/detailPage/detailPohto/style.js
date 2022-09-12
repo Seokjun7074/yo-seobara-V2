@@ -36,7 +36,7 @@ export const Text2 = styled.div`
   
     `;
 
-export const Like = styled.h3`
-font-size: 18px;
-itmeAlign:left;
+export const Like = styled.div`
+
+background-color:blue;
 `;

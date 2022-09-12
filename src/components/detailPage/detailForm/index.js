@@ -5,6 +5,11 @@ import { useState, useRef, useEffect } from "react";
 import { Block } from "@mui/icons-material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import {Form, FormBox, FormButton} from './style';
+
+
+
+
 const DetailForm = () => {
   const [com, setCom] = useState(false);
 
@@ -12,9 +17,7 @@ const DetailForm = () => {
 
     const [value, setValue] = useState(''); //Initial value should be empty
     const handleSubmit = (e)=> {
-      // alert('The value: ' + value);
-      // console.log(e.target.value)
-      // setValue(null);                        //To reset the textfield value
+  
       e.preventDefault();
       e.target.reset();
     }
@@ -24,10 +27,6 @@ const inp = (e) => {
 }
 
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-   
-  // };
 
   const textRef = useRef();
 
@@ -42,42 +41,43 @@ const onButtonClick=()=>{
 
   return (
     
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "80%",maxHeight:17 }, 
-          // float: 'left',width: '80%'
-          textAlign: 'left',
-         
+    
+     <FormBox onChange={handleSubmit}>
+   
+      <Form>
 
-        }}
-       
-        noValidate
-        autoComplete="off"
-      >
-        <form  onChange={handleSubmit}>
-          <TextField
-          InputProps={{ style: { fontSize: 20 ,maxHeight:63} }}
-          InputLabelProps={{ style: { fontSize: 20 } }}
-          id="outlined-multiline-static"
-          label="댓글남기기"
-          multiline
-          rows={2}
-          value={value}
-          // inputRef={textRef}
-          onChange={inp}
-        />
-           <Button sx={{m:1,textAlign: 'right' }} variant="contained" endIcon={<SendIcon />}
-          onClick={ onButtonClick}
-          >
-        댓글남기기
+
+
+        <TextField
+        sx={{m:1 ,width:'auto',height:'auto',display:'flex'}}
+        InputProps={{ style: { fontSize: 20 ,maxHeight:63}}}
+        InputLabelProps={{ style: { fontSize: 20 } }}
+        id="outlined-multiline-static"
+        label="댓글남기기"
+        multiline
+        rows={2}
+        value={value}
+        // inputRef={textRef}
+        onChange={inp}
+      />
+      </Form>
+      <FormButton>
+      <Button sx={{m:1, width:'auto',height:'auto',display:'flex',
+    
+         
+    }} variant="contained" endIcon={<SendIcon />}
+        onClick={ onButtonClick}
+        >
+      
       </Button>
-        </form>
-       
-      </Box>
+
+      </FormButton>
      
+     </FormBox>
     
   );
 };
 
 export default DetailForm;
+
+

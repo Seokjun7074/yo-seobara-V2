@@ -87,18 +87,18 @@ const deletePost= ()=>{
         <Grid container spacing={2}>
 
             <Grid item>
-              <ButtonBase sx={{ width: '100%', height: '300px' }}>
-                {/* <Img alt="complex" 
-                src={detail.url}
-                // src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62" 
-                // src={`${detail.url}?w=161&fit=crop&auto=format`}
-                /> */}
-                <Slider imageList={detail.url}/>
+              <ButtonBase sx={{ 
+                width: '100%', height: '300px',backgroundColor:'red',
+                // float: left,
+                // ml:-9
+                // float: left
+                }}>
+             <Slider imageList={detail.url}/>
               </ButtonBase>
             </Grid>
             <Grid item xs={16} sm container>
-              <Grid item xs container direction="column" spacing={2}>
-                <Grid item xs>
+              <Grid item xs container direction="column" spacing={0}>
+                {/* <Grid item xs>
                   <Typography gutterBottom variant="subtitle1" component="div">
                     <Text>서울시 동작구 만양로 상도건영아파트</Text>
                   </Typography>
@@ -108,17 +108,23 @@ const deletePost= ()=>{
                   <Typography variant="body2" color="text.secondary">
                   <Text3>{detail.title}내용or후기bvbvbbsxsxsxssxsxs</Text3>
                   </Typography>
-                </Grid>
+                </Grid> */}
                
                 {/* <Grid item>
                   <Typography sx={{ cursor: 'pointer' }} variant="body2">
                     Remove
                   </Typography>
                 </Grid> */}
-                  <div>
+
+
+
+
+
+
+                  <Like>
                         <p>좋아요</p>
                         <p>생성시간</p>
-                  </div>
+                  </Like>
               </Grid>
 
               {/* <Grid container sx={{ color: 'text.primary' }}>
