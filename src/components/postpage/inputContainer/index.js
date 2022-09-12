@@ -13,6 +13,9 @@ import useInput from "../../../hooks/useInput";
 import { useEffect, useRef, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import Slider from "../../global/slider";
+import { useDispatch } from "react-redux";
+import { __createPost } from "../../../redux/async/asyncPost";
+import { useNavigate } from "react-router-dom";
 
 const InputContainer = ({ pick }) => {
   const [title, titleHandler] = useInput();
@@ -23,6 +26,8 @@ const InputContainer = ({ pick }) => {
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const submitData = {
     title: title,
     content: content,
@@ -35,7 +40,7 @@ const InputContainer = ({ pick }) => {
 
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
-    console.log(selectedImageList);
+    // console.log(selectedImageList);
     if (selectedImageList.length + imageInput.length >= IMAGE_LIMIT) {
       alert("사진은 최대 3장까지만 업로드 가능합니다");
       return;
@@ -53,14 +58,18 @@ const InputContainer = ({ pick }) => {
   };
 
   const onSubmit = () => {
+    console.log(submitData);
     formData.append(
-      "inputData",
-      submitData
-      // new Blob([JSON.stringify(submitData)], { type: "application/json" })
+      "postRequestDto",
+      // submitData
+      new Blob([JSON.stringify(submitData)], { type: "application/json" })
     );
     imageFile.forEach((e, idx) => {
-      formData.append(`image`, e);
+      formData.append(`images`, e);
     });
+    dispatch(__createPost(formData));
+    alert("게시물 작성이 완료 되었습니다.");
+    navigate("/map");
     // for (let key of formData.keys()) {
     //   console.log(key);
     // }

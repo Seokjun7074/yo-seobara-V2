@@ -1,8 +1,10 @@
-/*global kakao*/
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import { BiCurrentLocation } from "react-icons/bi";
 import { useEffect, useRef } from "react";
-import { NowLocation, SearchButton } from "./style";
+import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
+import "./style.css";
+
 const MainMapView = ({
   location,
   setLocation,
@@ -49,16 +51,17 @@ const MainMapView = ({
   const searchPosition = () => {
     const map = mapRef.current;
     setBoundary({
-      swLatLng: {
+      South_West: {
         lat: map.getBounds().getSouthWest().getLat(),
         lng: map.getBounds().getSouthWest().getLng(),
       },
-      neLatLng: {
+      North_East: {
         lat: map.getBounds().getNorthEast().getLat(),
         lng: map.getBounds().getNorthEast().getLng(),
       },
     });
   };
+
   const onCreate = useCallback(() => {
     const map = mapRef.current;
 
@@ -73,7 +76,6 @@ const MainMapView = ({
       },
     });
   }, []);
-
   return location.isLoading ? (
     <h1>로딩중..</h1>
   ) : (
@@ -85,29 +87,45 @@ const MainMapView = ({
       ref={mapRef}
       onCreate={onCreate}
     >
-      <SearchButton onClick={searchPosition}>현재위치에서 검색</SearchButton>
+      <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
+      <LocationButton
+        onClick={() => {
+          setPickedLocation({ postId: null, location: location.center });
+        }}
+      >
+        <BiCurrentLocation size={"30px"} color={"white"} />
+      </LocationButton>
       <MapMarker
         position={location.center}
         image={{
-          src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
+          src: `${process.env.PUBLIC_URL}/images/reddot.png`, // 마커이미지의 주소입니다
           size: {
-            width: 32,
-            height: 32,
+            width: 24,
+            height: 24,
           }, // 마커이미지의 크기입니다
         }}
-      >
-        {/* <NowLocation>
-          {location.errMsg ? location.errMsg : "현재위치"}
-        </NowLocation> */}
-      </MapMarker>
+      />
       {locationList.map((data) => (
-        <MapMarker
-          key={data.postId}
-          position={data.location}
-          onClick={() => {
-            setPickedLocation({ postId: data.postId, location: data.location });
-          }}
-        ></MapMarker>
+        <div key={data.postId}>
+          <MapMarker
+            position={data.location}
+            onClick={() => {
+              setPickedLocation({
+                postId: data.postId,
+                location: data.location,
+              });
+            }}
+          />
+          {data.postId === pickedLocation.postId && (
+            <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+              position={data.location}
+            >
+              <div className="balloon">
+                <ImageContainer src={`${data.thumbnailUrl}`} />
+              </div>
+            </CustomOverlayMap>
+          )}
+        </div>
       ))}
     </Map>
   );
