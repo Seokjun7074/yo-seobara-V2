@@ -78,7 +78,7 @@ const MainMapView = ({
     });
   }, []);
   return location.isLoading ? (
-    <Spinner />
+    <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
     <Map
       isPanto="true"
