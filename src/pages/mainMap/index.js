@@ -4,7 +4,7 @@ import LocationList from "../../components/mainMapPage/locationList";
 import { useEffect, useState } from "react";
 import Header from "../../components/global/header";
 import { useDispatch, useSelector } from "react-redux";
-import { __getPost } from "../../redux/async/asyncPost";
+import { __getPost, __getPostLocation } from "../../redux/async/asyncPost";
 const MainMap = () => {
   const [location, setLocation] = useState({
     center: {
@@ -33,7 +33,8 @@ const MainMap = () => {
     if (boundary) {
       // console.log("boundary 갱신");
       // console.log(boundary);
-      dispatch(__getPost());
+      // dispatch(__getPost());
+      dispatch(__getPostLocation(boundary));
     }
   }, [boundary]);
   return (
