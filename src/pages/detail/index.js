@@ -4,27 +4,33 @@ import styled, { css } from 'styled-components';
 //페이지컴포넌트
 import DetailPohto from "../../components/detailPage/detailPohto";
 import CommentList from "../../components/detailPage/comments";
-import {CardBox, Box, DetailBox,DetailHeader,DetailMain,
+import {Box, DetailBox,DetailHeader,DetailMain,
   Detailside,DetailFooter} from './style';
 import DetailForm from "../../components/detailPage/detailForm";
 // import {useParams} from 'react-router-dom'
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Slider from '../../components/global/slider';
+import DetailBody from "../../components/detailPage/detailBody";
+import Modal from "../../components/global/modal";
+
+
 const Detail = ({id}) => {
 // const {id} = useParams();
 
 // useEffect(async() => {
+
 //   axios.get('https://jsonplaceholder.typicode.com/photos/9')
 //     .then((res) => {
 //       console.log(res.data.url)
-//       // setDetail(res.data);
+//       setDetail(res.data);
 //     })
 //  .catch(err=> console.log(err))
 
 // }, [])
 
 const idNum = id
+
 
 const [detail,setDetail] = useState(
   {
@@ -38,23 +44,30 @@ const [detail,setDetail] = useState(
   }
 )
 
-
+// console.log(detail)
 
 return(
   <DetailBox>
 
 <DetailMain>
-  <Box>s</Box>
-{/* <Slider imageList={detail.url}/> */}
+  {/* <Box> */}
+    
 
+<Slider imageList={detail.url}/>
+  {/* </Box> */}
 </DetailMain>
-<Detailside>side</Detailside>
+
+<Detailside>
+  <DetailBody/>
+</Detailside>
+
+
 <DetailHeader>
 <DetailForm/>
 </DetailHeader>
 
 <DetailFooter>
-  <CommentList/>
+<CommentList id={idNum}/>
   
 </DetailFooter>
   </DetailBox>
@@ -86,8 +99,3 @@ return(
 };
 
 export default Detail;
-{/* <Comments/> */}
-
-// const CardBox = styled.div`
-
-// `;

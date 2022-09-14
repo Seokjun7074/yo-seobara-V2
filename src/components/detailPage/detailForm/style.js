@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 export const FormBox = styled.div`
-width:50vw;
+width:100%;
 // height:80vh;
 display: grid;
 grid-template-columns: 5fr 1fr;

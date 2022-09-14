@@ -16,7 +16,7 @@ const MainPhotoCard =()=> {
 const navigate = useNavigate();
 
 const [datas, setDatas] = useState([]);
-const [page, setPage] = useState(1)
+const [page, setPage] = useState()
   const [loading, setLoading] = useState(false)
 
   const [ref, inView] = useInView()
@@ -25,7 +25,7 @@ const [page, setPage] = useState(1)
   // 서버에서 아이템을 가지고 오는 함수
   const getItems = useCallback(async () => {
     setLoading(true)
-    await axios.get(`https://jsonplaceholder.typicode.com/photos/${page}`)
+    await axios.get('http://13.209.88.83/api/posts')
     .then((res) => {
         setDatas(prevState => [...prevState, res.data])
     })
@@ -60,8 +60,11 @@ const [page, setPage] = useState(1)
   // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
 
 
+
+  
+
   return (
-    <ImageList  sx={{ width: 1/1, height: 1/2 }}cols={3} rowMaxHeight={164} >
+    <ImageList  sx={{ width: 1/1, height: 1/1 }}cols={3} rowMaxHeight={164} >
       {datas.map((item, idx) => (
         <React.Fragment key={idx}>     
         
@@ -84,7 +87,7 @@ const [page, setPage] = useState(1)
                                         subtitle={<span>by: {item.author}</span>}
                                         position="below"
                                       />
-                      <Modal btn_title="상세페이지" >
+                      <Modal btn_title="상세페이지"  >
                         <Detail id={item.id}/>
                       </Modal>
                     </div>

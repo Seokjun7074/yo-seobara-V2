@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 export const SliderWrapper = styled.div`
-  width: 500px;
-  height: 250px;
+  // width: 500px;
+  // height: 250px;
+
+  width: 100%;
+  height: 100%;
+
   /* border: 1px solid gray; */
   display: flex;
   overflow: hidden;
@@ -18,19 +22,33 @@ export const ButtonContainer = styled.div`
   cursor: pointer;
 `;
 export const ImagePreviewWrapper = styled.div`
-  width: 400px;
-  height: 250px;
+  // width: 400px;
+  // height: 250px;
+
+  width: 100%;
+  height: 100%;
+
+
   overflow: hidden;
 `;
 export const PreviewContainer = styled.div`
-  width: 400px;
-  height: 250px;
+  // width: 400px;
+  // height: 250px;
+
+  width: 100%;
+  height: 100%;
+
   display: flex;
 `;
 
 export const ImagePreview = styled.div`
-  width: 400px;
-  height: 250px;
+  // width: 400px;
+  // height: 250px;
+
+  width: 100%;
+  height: 100%;
+
+
   /* border-radius: 10px; */
   overflow: hidden;
   flex: none;
