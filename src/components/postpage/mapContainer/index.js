@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { getAddr } from "../../../utils/address";
+import Spinner from "../../global/spinner";
 import { MapContainerWrapper } from "./style";
 
 const MapContainer = ({ pick, setPick }) => {
@@ -50,7 +51,7 @@ const MapContainer = ({ pick, setPick }) => {
   return (
     <MapContainerWrapper>
       {location.isLoading ? (
-        <h1>로딩중..</h1>
+        <Spinner />
       ) : (
         <Map
           center={{

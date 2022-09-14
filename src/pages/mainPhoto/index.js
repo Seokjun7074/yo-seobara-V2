@@ -1,21 +1,14 @@
 import React from "react";
-import MainPhotoCard from "../../components/mainPhotoPage";
-import Header from '../../components/global/header';
-import { MainMapWrapper} from './style';
+import InfiniteScroll from "../../components/infinifeScrollTest";
+import Header from "../../components/global/header";
 
 const MainPhoto = () => {
-
-
-
-
-  return (<MainMapWrapper>
-      <Header></Header>
-           <MainPhotoCard />
-  </MainMapWrapper>
-        
-);
- }
+  return (
+    <div>
+      <Header />
+      <InfiniteScroll />
+    </div>
+  );
+};
 
 export default MainPhoto;
-
-
