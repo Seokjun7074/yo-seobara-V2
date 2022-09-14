@@ -1,13 +1,21 @@
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useEffect, useState } from "react";
-import { NowLocation } from "./style";
+import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import { BiCurrentLocation } from "react-icons/bi";
+import { useEffect, useRef } from "react";
+import { ImageContainer, LocationButton, SearchButton } from "./style";
+import { useCallback } from "react";
+import "./style.css";
+
 const MainMapView = ({
   location,
   setLocation,
   locationList,
+  pickedLocation,
   setPickedLocation,
+  boundary,
+  setBoundary,
 }) => {
   // const [position, setPosition] = useState(null);
+  const mapRef = useRef();
   useEffect(() => {
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -39,38 +47,85 @@ const MainMapView = ({
       }));
     }
   }, [setLocation]);
-  // console.log(locationList);
 
+  const searchPosition = () => {
+    const map = mapRef.current;
+    setBoundary({
+      South_West: {
+        lat: map.getBounds().getSouthWest().getLat(),
+        lng: map.getBounds().getSouthWest().getLng(),
+      },
+      North_East: {
+        lat: map.getBounds().getNorthEast().getLat(),
+        lng: map.getBounds().getNorthEast().getLng(),
+      },
+    });
+  };
+
+  const onCreate = useCallback(() => {
+    const map = mapRef.current;
+
+    setBoundary({
+      South_West: {
+        lat: map.getBounds().getSouthWest().getLat(),
+        lng: map.getBounds().getSouthWest().getLng(),
+      },
+      North_East: {
+        lat: map.getBounds().getNorthEast().getLat(),
+        lng: map.getBounds().getNorthEast().getLng(),
+      },
+    });
+  }, []);
   return location.isLoading ? (
     <h1>로딩중..</h1>
   ) : (
     <Map
-      center={location.center}
+      isPanto="true"
+      center={pickedLocation.postId ? pickedLocation.location : location.center}
       level={4}
       style={{ width: "100%", height: "100%" }}
+      ref={mapRef}
+      onCreate={onCreate}
     >
+      <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
+      <LocationButton
+        onClick={() => {
+          setPickedLocation({ postId: null, location: location.center });
+        }}
+      >
+        <BiCurrentLocation size={"30px"} color={"white"} />
+      </LocationButton>
       <MapMarker
         position={location.center}
         image={{
-          src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
+          src: `${process.env.PUBLIC_URL}/images/reddot.png`, // 마커이미지의 주소입니다
           size: {
-            width: 32,
-            height: 32,
+            width: 24,
+            height: 24,
           }, // 마커이미지의 크기입니다
         }}
-      >
-        {/* <NowLocation>
-          {location.errMsg ? location.errMsg : "현재위치"}
-        </NowLocation> */}
-      </MapMarker>
+      />
       {locationList.map((data) => (
-        <MapMarker
-          key={data.postId}
-          position={data.location}
-          onClick={() => {
-            setPickedLocation(data.postId);
-          }}
-        ></MapMarker>
+        <div key={data.postId}>
+          <MapMarker
+            position={data.location}
+            onClick={() => {
+              setPickedLocation({
+                postId: data.postId,
+                location: data.location,
+              });
+            }}
+          />
+          {data.postId === pickedLocation.postId && (
+            <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
+              position={data.location}
+            >
+              <div className="balloon">
+                <ImageContainer src={`${data.thumbnailUrl}`} />
+              </div>
+            </CustomOverlayMap>
+          )}
+        </div>
       ))}
     </Map>
   );

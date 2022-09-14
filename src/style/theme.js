@@ -16,7 +16,12 @@ const margin = {
   xlarge: "2rem",
   xxlarge: "3rem",
 };
-const color = {};
+const color = {
+  lightgray: "#E9E9E9",
+  darkgray: "#333333",
+  blue: "#0584BB",
+  orange: "#047EB3",
+};
 
 const theme = {
   fontSizes,
@@ -26,3 +31,12 @@ const theme = {
 };
 
 export default theme;
+
+// 사용법(styled-components에서 사용 가능)
+
+// export const YourComponent = styled.div`
+//   width: 100%;
+//   height: 40px;
+//   background-color: ${(props) => props.theme.color.blue};
+//   padding: ${(props) => props.theme.padding.xlarge};
+// `;
