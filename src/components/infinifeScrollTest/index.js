@@ -51,7 +51,6 @@ const InfiniteScroll = () => {
     1000: 2,
     700: 1,
   };
-  console.log(datas);
   return (
     <>
       <Masonry
