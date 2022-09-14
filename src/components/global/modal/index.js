@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 import { ModalWrapper, ModalContainer, ModalButton } from "./style";
+import axios from "axios";
 
-function Modal({ btn_title, children }) {
+
+function Modal({ btn_title, id, children }) {
   const [modalToggel, setModlaToggle] = useState(false);
+  
+
   const closeModal = () => {
     setModlaToggle(false);
   };
   const openModal = () => {
+
     setModlaToggle(true);
+  //   const idNum = id.id
+  //  console.log(idNum)
+
+  axios.get('https://jsonplaceholder.typicode.com/photos/9')
+    .then((res) => {
+      console.log(res.data.url);
+      
+    })
+ .catch(err=> console.log(err))
+
+
+
   };
   return (
     <div className="Modal">
