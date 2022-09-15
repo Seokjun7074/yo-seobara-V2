@@ -20,7 +20,11 @@ export const __getPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.getPost(payload);
-      const content = data.data.data.content;
+      // console.log("res", data.data.data.number);
+      const content = {
+        content: data.data.data.content,
+        page: data.data.data.number,
+      };
       return thunkAPI.fulfillWithValue(content);
     } catch (error) {
       console.log(error);

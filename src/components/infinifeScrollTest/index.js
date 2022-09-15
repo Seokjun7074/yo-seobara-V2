@@ -1,28 +1,32 @@
 import Masonry from "react-masonry-css";
 import "./style.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { CheckBar, ImageWrapper } from "./style.js";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPost } from "../../redux/async/asyncPost";
+import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 
 const InfiniteScroll = () => {
-  // const [datas, setDatas] = useState([]);
-  const [page, setPage] = useState(0);
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.post.data);
+  const page = useSelector((state) => state.post.page);
+  const update = useSelector((state) => state.post.update);
 
   useEffect(() => {
-    dispatch(__getPost(page));
+    if (update) {
+      dispatch(__getPost(page));
+    }
   }, [page]);
-  console.log(datas);
+
   useEffect(() => {
     if (inView) {
-      setPage((prev) => prev + 1);
+      dispatch(incrementPage());
+      dispatch(updateTrue());
     }
   }, [inView]);
 
@@ -43,7 +47,6 @@ const InfiniteScroll = () => {
         {datas.map((data) => (
           <div key={data.postId}>
             <ImageWrapper src={data.thumbnailUrl} alt="" />
-            <p>{data.postId}</p>
           </div>
         ))}
       </Masonry>
