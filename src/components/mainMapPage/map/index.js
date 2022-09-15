@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
 import "./style.css";
+import Spinner from "../../global/spinner";
 
 const MainMapView = ({
   location,
@@ -77,7 +78,7 @@ const MainMapView = ({
     });
   }, []);
   return location.isLoading ? (
-    <h1>로딩중..</h1>
+    <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
     <Map
       isPanto="true"

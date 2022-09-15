@@ -68,8 +68,7 @@ const InputContainer = ({ pick }) => {
       formData.append(`images`, e);
     });
     dispatch(__createPost(formData));
-    alert("게시물 작성이 완료 되었습니다.");
-    navigate("/map");
+    // navigate("/map");
     // for (let key of formData.keys()) {
     //   console.log(key);
     // }

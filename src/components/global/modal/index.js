@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { ModalWrapper, ModalContainer, ModalButton } from "./style";
+import axios from "axios";
 
-function Modal({ btn_title, children }) {
+
+function Modal({ btn_title, id, children }) {
   const [modalToggel, setModlaToggle] = useState(false);
+  
+
   const closeModal = () => {
     setModlaToggle(false);
   };
   const openModal = () => {
+
     setModlaToggle(true);
+  
   };
   return (
     <div className="Modal">
