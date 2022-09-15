@@ -13,18 +13,7 @@ function Modal({ btn_title, id, children }) {
   const openModal = () => {
 
     setModlaToggle(true);
-  //   const idNum = id.id
-  //  console.log(idNum)
-
-  axios.get('https://jsonplaceholder.typicode.com/photos/9')
-    .then((res) => {
-      console.log(res.data.url);
-      
-    })
- .catch(err=> console.log(err))
-
-
-
+  
   };
   return (
     <div className="Modal">
