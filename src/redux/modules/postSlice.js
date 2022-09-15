@@ -17,9 +17,7 @@ const postSlice = createSlice({
     });
     // 전체 게시물 조회
     builder.addCase(__getPost.fulfilled, (state, actions) => {
-      // console.log("actions", actions.payload);
-      state.data = actions.payload;
-      // console.log(state);
+      state.data = [...state.data, ...actions.payload];
     });
     builder.addCase(__getPost.rejected, (state, actions) => {
       // console.log("actions", actions);

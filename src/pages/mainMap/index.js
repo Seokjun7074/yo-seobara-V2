@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/global/header";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPost, __getPostLocation } from "../../redux/async/asyncPost";
+import { dummyData } from "./dummy";
 const MainMap = () => {
   const [location, setLocation] = useState({
     center: {
@@ -20,10 +21,10 @@ const MainMap = () => {
     postId: null,
     location: null,
   }); // 선택한 장소
-  // const [locationList, setLocationList] = useState(dummyData); // 데이터 리스트
+  const [locationList, setLocationList] = useState(dummyData); // 데이터 리스트
   const [boundary, setBoundary] = useState(); // 보이는 지도 범위
   const dispatch = useDispatch();
-  const locationList = useSelector((state) => state.post.data);
+  // const locationList = useSelector((state) => state.post.data);
   // console.log(locationList);
   // 위치정보 가져와서 서버에 목록 요청하기
 
@@ -34,7 +35,7 @@ const MainMap = () => {
       // console.log("boundary 갱신");
       // console.log(boundary);
       // dispatch(__getPost());
-      dispatch(__getPostLocation(boundary));
+      // dispatch(__getPostLocation(boundary));
     }
   }, [boundary]);
   return (
