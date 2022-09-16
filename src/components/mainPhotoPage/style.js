@@ -1,23 +1,19 @@
 import styled from "styled-components";
 
-export const ImageContainer = styled.div`
-  height: 300px;
-  width: 250px;
-  background-color: lightgray;
-  overflow: hidden;
+export const Box = styled.div`
+margin-bottom: 10px;
   border-radius: 10px;
+  cursor: pointer;
+
 `;
-export const CheckBar = styled.div`
-  height: 1px;
-  background-color: transparent;
-`;
+
+
 export const ImageWrapper = styled.img`
   width: 100%;
+  height: 100%;
   position: relative;
-  margin-bottom: 10px;
   border-radius: 10px;
   transition: all 0.3s ease;   
-  cursor: pointer;
   image-rendering: -moz-crisp-edges; /* firefox */
   image-rendering: -o-crisp-edges; /* opera */
   image-rendering: -webkit-optimize-contrast; /* chrome(비표준) */
@@ -25,6 +21,10 @@ export const ImageWrapper = styled.img`
 
   &:hover {
     transform: scale(1.02);
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
   }
+`;
+
+export const CheckBar = styled.div`
+  height: 1px;
+  background-color: transparent;
 `;
