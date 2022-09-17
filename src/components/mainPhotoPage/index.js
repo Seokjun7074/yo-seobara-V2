@@ -1,21 +1,20 @@
-import * as React from 'react'
-import { useEffect,  useState } from 'react';
+import * as React from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useInView } from "react-intersection-observer"
-import  Modal  from '../global/modal/index';
-import Detail from '../../pages/detail';
-import {getCookie} from '../../shared/Cookie';
-
+import { useInView } from "react-intersection-observer";
+import Modal from "../global/modal/index";
+import Detail from "../../pages/detail";
+import { getCookie } from "../../shared/Cookie";
 
 //css 부분 (외부)
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
-import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
+import ImageListItem from "@mui/material/ImageListItem";
 import Masonry from "react-masonry-css";
 
 //css 부분 (내부)
-import {ImageWrapper, Box, CheckBar} from './style';
+import { ImageWrapper, Box, CheckBar } from "./style";
 import "./style.css";
 
 
@@ -52,25 +51,17 @@ const [ref, inView] = useInView(
         setLoading(false);
       };
 
-
-
-
- // `page` 가 바뀔 때 마다 함수 실행
+  // `page` 가 바뀔 때 마다 함수 실행
   useEffect(() => {
     getItems();
   }, [page]);
 
-
-
-// 사용자가 마지막 요소를 보고 있으면
+  // 사용자가 마지막 요소를 보고 있으면
   useEffect(() => {
-    
     if (inView) {
       setPage((prev) => prev + 1);
     }
   }, [inView]);
-
-
 
   const Columns = {
     default: 4,
@@ -163,5 +154,3 @@ return (
 
 
 export default MainPhotoCard;
-
-

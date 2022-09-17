@@ -43,10 +43,4 @@ export const apis = {
       },
     }),
   // 게시물 전체 싹 다 조회
-  getPost: () =>
-    instance.get("api/posts", {
-      headers: {
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      },
-    }),
 };
