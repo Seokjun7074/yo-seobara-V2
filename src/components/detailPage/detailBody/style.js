@@ -5,58 +5,58 @@ export const BodyBox = styled.div`
 
 
 height:100%;
-// padding:10px;
 display: grid;
-grid-template-columns: 1fr 2fr;
-grid-template-rows:1fr 1fr 2fr 5fr;
+grid-template-columns: 2fr 3fr;
+grid-template-rows:1fr 1fr 2fr 3fr 1fr;
 grid-template-areas:
 'top side'
 'header header'
 'title title'
 'main main'
-// background-color: black;
-// overflow: auto;
+'footer footer'
 `;
 
 export const BodyTop = styled.div`
 grid-area:top;
-background-color: black;
+border:1px solid black;
 
 
 `;
 
 export const BodySide = styled.div`
 grid-area:side;
-
-// overflow: auto;
-// max-height:50%;
-// display: flex;
-
-// position: relative;
-
-
+border:1px solid black;
 
 
 `;
 
 export const BodyHeader = styled.div`
 grid-area:header;
-background-color: blue;
 overflow: auto;
 display: flex;
+border:1px solid black;
 `;
 export const BodyTitle = styled.div`
 grid-area:title;
-background-color: red;
+border:1px solid black;
 `;
 
 export const BodyMain = styled.div`
 grid-area:main;
-background-color: blue;
 overflow:auto;
-border-radius:1px;
+border-radius:2px;
 border:1px solid black;
 `;
 
 
+export const Footer = styled.div`
+grid-area:footer;
+border-radius:1px;
+border:1px solid black;
 
+
+`;
+export const Time = styled.p`
+font-size: 17px;
+// display:block;
+`;

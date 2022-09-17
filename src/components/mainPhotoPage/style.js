@@ -10,7 +10,6 @@ margin-bottom: 10px;
 
 export const ImageWrapper = styled.img`
   width: 100%;
-  height: 100%;
   position: relative;
   border-radius: 10px;
   transition: all 0.3s ease;   

@@ -17,32 +17,39 @@ import Masonry from "react-masonry-css";
 import { ImageWrapper, Box, CheckBar } from "./style";
 import "./style.css";
 
-const MainPhotoCard = () => {
-  const [loading, setLoading] = useState(false);
-  const [datas, setDatas] = useState([]);
-  const [page, setPage] = useState(0);
-  const [ref, inView] = useInView({
-    threshold: 1, // ref부분이 다 보여야 작동
-    // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
-  });
 
+const MainPhotoCard =()=> {
+
+  
+const [loading, setLoading] = useState(false);
+const [datas, setDatas] = useState([]);
+const [page, setPage] = useState(0)
+const [ref, inView] = useInView(
+  {
+  // threshold: 1, // ref부분이 다 보여야 작동
+  // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
+}
+);
+ 
   // 서버에서 리스트를 가지고 오기
   const getItems = async () => {
-    setLoading(true);
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/api/posts?page=${page}&size=6`, {
-        headers: {
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        // console.log(“불러온 데이터“, res.data.data.last);
-        const dataList = res.data.data.content;
-        setDatas((prev) => [...prev, ...dataList]);
-      })
-      .catch((err) => console.log(err));
-    setLoading(false);
-  };
+        setLoading(true);
+        await axios
+          .get(`${process.env.REACT_APP_API_URL}/api/posts?page=${page}&size=6`, {
+            headers: {
+              Authorization: `Bearer ${getCookie('accessToken')}`,
+              
+            },
+          })
+          .then((res) => {
+            // console.log('불러온 데이터', res.data.data.last);
+            const dataList = res.data.data.content;
+            // console.log(dataList)
+            setDatas((prev) => [...prev, ...dataList]);
+          })
+          .catch((err) => console.log(err));
+        setLoading(false);
+      };
 
   // `page` 가 바뀔 때 마다 함수 실행
   useEffect(() => {
@@ -63,78 +70,87 @@ const MainPhotoCard = () => {
     700: 1,
   };
 
-  return (
+
+
+return (
+  
     <Masonry
-      breakpointCols={Columns}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column"
-    >
-      {datas.map((item, idx) => (
-        <div>
-          {datas.length - 1 == idx ? (
+        breakpointCols={Columns}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+    {datas.map((item, idx) => (
+      <div>     
+          {datas.length -1 ==idx ? (
+        
+   <Box>
+      <ImageListItem key={item.img}>
+        
+      <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
+    
+      <ImageListItemBar
+          sx={{borderBottomRightRadius:10,borderBottomLeftRadius:10,}} 
+          title={item.title}
+          subtitle={item.author}
+          actionIcon={
+        <IconButton
+         sx={{ 
+            color: 'rgba(255, 255, 255, 0.54)' }}
+          aria-label={`info about ${item.title}`}
+          >
+            <InfoIcon />
+            </IconButton>
+            }
+            />
+      </ImageListItem>
+      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>} 
+      <Modal btn_title={'상세보기'} >
+        <Detail item={item}/>
+        </Modal>
+    </Box>   
+    
+    
+          ):(
+            <>
             <Box>
-              <ImageListItem key={item.img} ref={ref}>
-                <ImageWrapper
-                  key={item.postId}
-                  src={item.thumbnailUrl}
-                  alt=""
-                />
-
-                <ImageListItemBar
-                  sx={{
-                    borderBottomRightRadius: 10,
-                    borderBottomLeftRadius: 10,
-                  }}
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
-                      sx={{
-                        color: "rgba(255, 255, 255, 0.54)",
-                      }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
+            <ImageListItem key={item.img}>
+            <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
+          
+            <ImageListItemBar
+                
+                sx={{borderBottomRightRadius:10,borderBottomLeftRadius:10,}} 
+                title={item.title}
+                subtitle={item.author}
+                actionIcon={
+              <IconButton
+               sx={{ 
+                  color: 'rgba(255, 255, 255, 0.54)' }}
+                aria-label={`info about ${item.title}`}
+                >
+                  <InfoIcon />
+                  </IconButton>
                   }
-                />
-              </ImageListItem>
-              {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
-            </Box>
-          ) : (
-            <Box>
-              <ImageListItem key={item.img}>
-                <ImageWrapper
-                  key={item.postId}
-                  src={item.thumbnailUrl}
-                  alt=""
-                />
-
-                <ImageListItemBar
-                  sx={{
-                    borderBottomRightRadius: 10,
-                    borderBottomLeftRadius: 10,
-                  }}
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
-                      sx={{
-                        color: "rgba(255, 255, 255, 0.54)",
-                      }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Box>
+                  />
+            </ImageListItem>
+            {item.postId}
+             <Modal btn_title={'상세보기'} >
+              <Detail item={item} />
+              </Modal>
+          </Box>
+         
+          
+              </>   
           )}
-        </div>
-      ))}
-    </Masonry>
-  );
-};
+     
+      </div>
+    ))}
+    
+  </Masonry>
+);
+
+
+  
+}
+
 
 export default MainPhotoCard;

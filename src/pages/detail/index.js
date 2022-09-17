@@ -15,84 +15,54 @@ import DetailBody from "../../components/detailPage/detailBody";
 import Modal from "../../components/global/modal";
 
 
-const Detail = ({id}) => {
-// const {id} = useParams();
-
-// useEffect(async() => {
-
-//   axios.get('https://jsonplaceholder.typicode.com/photos/9')
-//     .then((res) => {
-//       console.log(res.data.url)
-//       setDetail(res.data);
-//     })
-//  .catch(err=> console.log(err))
-
-// }, [])
-
-const idNum = id
-
-
+const Detail = (item) => {
+const data= item.item;
+// console.log(data);
 const [detail,setDetail] = useState(
   {
-    id:'',
-    title:'',
-    url:[
-      'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    ]
+    ...data
   }
 )
-
 // console.log(detail)
+// console.log(detail.data)
+
+const dummydata = ( 
+  {
+    url:[
+  'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
+  'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
+  'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
+]
+}
+)
+
 
 return(
   <DetailBox>
 
 <DetailMain>
-  {/* <Box> */}
-    
-
-<Slider imageList={detail.url}/>
-  {/* </Box> */}
+ 
+{/* <Slider imageList={dummydata.url}/>  */}
+  
 </DetailMain>
 
 <Detailside>
-  <DetailBody/>
+  <DetailBody data={data}/>
 </Detailside>
 
 
 <DetailHeader>
-<DetailForm/>
+<DetailForm id={detail.postId}/>
 </DetailHeader>
 
 <DetailFooter>
-<CommentList id={idNum}/>
+<CommentList id={detail.postId}/>
   
 </DetailFooter>
   </DetailBox>
   
 );
   
-
-
-
-
-// return (<DetailBox>
-  //            <CardBox>
-  //                 <DetailPohto id={idNum}/>
-                  
-                  
-  //            </CardBox>
-             
-  //            <CommentBox>
-                
-  //                <CommentList id={idNum}/>
-  //            </CommentBox>
-            
-
-  
-
 
 
 
