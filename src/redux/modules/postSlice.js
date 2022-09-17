@@ -24,9 +24,7 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     // 게시물 작성
-    builder.addCase(__createPost.fulfilled, (state, actions) => {
-      console.log("actions", actions);
-    });
+    builder.addCase(__createPost.fulfilled, (state, actions) => {});
     builder.addCase(__createPost.rejected, (state, actions) => {
       alert("게시글 작성 실패!! 다시 시도해주세요.");
     });
@@ -42,7 +40,6 @@ const postSlice = createSlice({
     });
     // 좌표기준 게시물 조회
     builder.addCase(__getPostLocation.fulfilled, (state, actions) => {
-      // console.log("actions", actions.payload);
       state.location = actions.payload;
       // console.log(state);
     });

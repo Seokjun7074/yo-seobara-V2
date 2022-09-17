@@ -37,10 +37,9 @@ export const __getPostLocation = createAsyncThunk(
   "post/getPostLocation",
   async (payload, thunkAPI) => {
     try {
-      console.log("payload", payload);
       const data = await apis.getPostLocation(payload);
-      // console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      const res = data.data.data;
+      return thunkAPI.fulfillWithValue(res);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
