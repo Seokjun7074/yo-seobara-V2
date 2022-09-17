@@ -22,7 +22,7 @@ const MainPhotoCard = () => {
   const [datas, setDatas] = useState([]);
   const [page, setPage] = useState(0);
   const [ref, inView] = useInView({
-    threshold: 1, // ref부분이 다 보여야 작동
+    // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
 
@@ -36,8 +36,9 @@ const MainPhotoCard = () => {
         },
       })
       .then((res) => {
-        // console.log(“불러온 데이터“, res.data.data.last);
+        // console.log('불러온 데이터', res.data.data.last);
         const dataList = res.data.data.content;
+        // console.log(dataList)
         setDatas((prev) => [...prev, ...dataList]);
       })
       .catch((err) => console.log(err));
@@ -62,78 +63,138 @@ const MainPhotoCard = () => {
     1000: 2,
     700: 1,
   };
+  const [modalToggel, setModlaToggle] = useState({
+    open: false,
+    loading: false,
+    data: {
+      title: "제목",
+      body: "댓글",
+    },
+  });
 
   return (
-    <Masonry
-      breakpointCols={Columns}
-      className="my-masonry-grid"
-      columnClassName="my-masonry-grid_column"
-    >
-      {datas.map((item, idx) => (
-        <div>
-          {datas.length - 1 == idx ? (
-            <Box>
-              <ImageListItem key={item.img} ref={ref}>
-                <ImageWrapper
-                  key={item.postId}
-                  src={item.thumbnailUrl}
-                  alt=""
-                />
+    <>
+      <Masonry
+        breakpointCols={Columns}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {datas.map((item, idx) => (
+          <div key={item.postId}>
+            {datas.length - 1 == idx ? (
+              <Box>
+                <ImageListItem key={item.img}>
+                  <div
+                    onClick={async () => {
+                      setModlaToggle((prev) => {
+                        return { ...prev, open: true, loading: true };
+                      });
+                      // api통신
+                      const res = await axios.get(
+                        `https://jsonplaceholder.typicode.com/posts/${item.postId}`
+                      );
+                      setModlaToggle((prev) => {
+                        return {
+                          ...prev,
+                          data: { ...res.data, ...item },
+                          loading: false,
+                        };
+                      });
+                    }}
+                  >
+                    <ImageWrapper
+                      key={item.postId}
+                      src={item.thumbnailUrl}
+                      alt=""
+                    />
+                  </div>
 
-                <ImageListItemBar
-                  sx={{
-                    borderBottomRightRadius: 10,
-                    borderBottomLeftRadius: 10,
-                  }}
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
-                      sx={{
-                        color: "rgba(255, 255, 255, 0.54)",
+                  <ImageListItemBar
+                    sx={{
+                      borderBottomRightRadius: 10,
+                      borderBottomLeftRadius: 10,
+                    }}
+                    title={item.title}
+                    subtitle={item.author}
+                    actionIcon={
+                      <IconButton
+                        sx={{
+                          color: "rgba(255, 255, 255, 0.54)",
+                        }}
+                        aria-label={`info about ${item.title}`}
+                      >
+                        <InfoIcon />
+                      </IconButton>
+                    }
+                  />
+                </ImageListItem>
+                {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
+                {/* <Modal btn_title={"상세보기"}>
+                <Detail item={item} />
+              </Modal> */}
+              </Box>
+            ) : (
+              <>
+                <Box>
+                  <ImageListItem key={item.img}>
+                    <div
+                      onClick={async () => {
+                        setModlaToggle((prev) => {
+                          return { ...prev, open: true, loading: true };
+                        });
+                        // api통신
+                        const res = await axios.get(
+                          `https://jsonplaceholder.typicode.com/posts/${item.postId}`
+                        );
+                        setModlaToggle((prev) => {
+                          return {
+                            ...prev,
+                            data: { ...res.data, ...item },
+                            loading: false,
+                          };
+                        });
                       }}
-                      aria-label={`info about ${item.title}`}
                     >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-              {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
-            </Box>
-          ) : (
-            <Box>
-              <ImageListItem key={item.img}>
-                <ImageWrapper
-                  key={item.postId}
-                  src={item.thumbnailUrl}
-                  alt=""
-                />
+                      <ImageWrapper
+                        key={item.postId}
+                        src={item.thumbnailUrl}
+                        alt=""
+                      />
+                    </div>
 
-                <ImageListItemBar
-                  sx={{
-                    borderBottomRightRadius: 10,
-                    borderBottomLeftRadius: 10,
-                  }}
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
+                    <ImageListItemBar
                       sx={{
-                        color: "rgba(255, 255, 255, 0.54)",
+                        borderBottomRightRadius: 10,
+                        borderBottomLeftRadius: 10,
                       }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Box>
-          )}
-        </div>
-      ))}
-    </Masonry>
+                      title={item.title}
+                      subtitle={item.author}
+                      actionIcon={
+                        <IconButton
+                          sx={{
+                            color: "rgba(255, 255, 255, 0.54)",
+                          }}
+                          aria-label={`info about ${item.title}`}
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                  {item.postId}
+                  {/* <Modal btn_title={"상세보기"}>
+                  <Detail item={item} />
+                </Modal> */}
+                </Box>
+              </>
+            )}
+          </div>
+        ))}
+      </Masonry>
+      <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+        <Detail item={modalToggel.data} />
+      </Modal>
+    </>
   );
 };
 

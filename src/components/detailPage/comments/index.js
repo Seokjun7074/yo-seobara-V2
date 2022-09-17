@@ -8,61 +8,78 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import {useEffect, useState}from 'react';
-import { CommentBox, Time } from './style';
+import { CommentBox,UserBox, Time, Comment,Text } from './style';
+
+//라이브러리
 import moment from 'moment';
 import Moment from 'react-moment';
 import 'moment/locale/ko';      //한국말 번역
 
+
  const CommentList =(id)=> {
-  const idNum = id.id
+
+
+  
+  const idNum = id.id // postId
+// console.log(idNum)
+
 
   const [comments,setComments] = useState([
     {
-      postId:'1',
-      id:'1',
-      body:'멋져요김이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이',
-      name:'이예찬'
+      commentId: '댓글아이디',
+      nickname: '작성자닉네임',
+      comment: '댓글내용',
+      creativeAt: '작성 시간',
+      modifiedAt: '수정 시간'
     },
     {
-      postId:'1',
-      id:'2',
-      body:'어딘가요?',
-      name:'구구까까'
+      commentId: '댓글아이디22',
+      nickname: '작성자닉네임22',
+      comment: '댓글내용22',
+      creativeAt: '작성 시간22',
+      modifiedAt: '수정 시간22'
     },
-    {
-      postId:'1',
-      id:'1',
-      body:'멋져요',
-      name:'이예찬'
-    },{
-      postId:'1',
-      id:'1',
-      body:'멋져요',
-      name:'이예찬'
-    },{
-      postId:'1',
-      id:'1',
-      body:'멋져요',
-      name:'이예찬'
-    },{
-      postId:'1',
-      id:'1',
-      body:'멋져요',
-      name:'이예찬'
-    },
+
+    // {
+    // postId: 1,
+    // id: 3,
+    // name: "odio adipisci rerum aut animi",
+    // email: "Nikita@garfield.biz",
+    // body: "quia molestiae reprehenderit quasi aspernatur"
+    // },
+
+
   ])
 
 
   useEffect(() => {
-
     
 
-  
-  //   axios.get(`https://jsonplaceholder.typicode.com/comments/${idNum}`)
-  //     .then((res) => {
-  //       console.log(res.data)
-  //       setComments(res.data)
+    //실전서버용
+    // await axios
+    // .get(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`, {
+    //   headers: {
+    //     Authorization: `Bearer ${getCookie('accessToken')}`,
         
+    //   },
+    // })
+    // .then((res) => {
+    //   console.log('불러온 데이터', res);
+      
+      
+    // })
+    // .catch((err) => console.log(err));
+
+
+
+  // 가상서버 테스트용
+  //   await axios.get(`https://jsonplaceholder.typicode.com/comments/?postId=${idNum}`)
+  //     .then((res) => {
+        
+  //       const list = res.data
+  //       console.log(idNum,list)
+        
+  //       setComments(list)
         
          
   //     })
@@ -72,6 +89,7 @@ import 'moment/locale/ko';      //한국말 번역
 
 
   }, []);
+  
   const nowTime = moment().format('2022-09-12 15:20:03'),  // 서버로부터 받은 작성,또는수정시간
         startTime = new Date(nowTime);
 
@@ -88,58 +106,72 @@ import 'moment/locale/ko';      //한국말 번역
 
   return (
 
+    <List style={{height: 300,  
+    width:'100%'
+    }}>
     
-      <List style={{height: 300,  display:'block',
-      width:'100%'
-      }}>
+        <CommentBox>
+        <UserBox>
+          닉네임
+          
+          </UserBox>          
+        <Comment>댓글내용ㅇㅇ</Comment>
+        <Time>몇분전</Time>
+        </CommentBox>
 
 
+
+                
+                    
+   </List>
       
-{comments.map((comment,idx)=>(
-  <>
-<ListItem alignItems="flex-start">
-{/* <ListItemAvatar>
-<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-</ListItemAvatar> */}
-<ListItemText
-sx={{ fontSize: 15 }}
-primary={comment.name}
-secondary={
-<React.Fragment>
-<Typography
-sx={{ display: 'flex',fontSize: 20 }}
-component="span"
-variant="body2"
-color="text.primary"
->
-{comment.body}
-</Typography>
-</React.Fragment>
-}
-/>
-{/* <Time>메인시간{new Date().toLocaleString()}</Time> */}
-<Time><Moment fromNow>{startTime}</Moment></Time>
-</ListItem>
-<Divider variant="inset" component="li" />
-
-</>))}
-
-
-
-     
-         
-       </List>
-            
-       
+                          
+                    
 
   );
 }
 
 export default CommentList;
 
+//mui 스타일 댓글창
+{/* <List style={{height: 300,  display:'block',
+width:'100%'
+}}>
+
+        {comments.map((comment,idx)=>(
+          <>
+        <ListItem alignItems="flex-start">
+        
+        <ListItemText
+        sx={{ fontSize: 15 }}
+        primary={comment.name}
+        
+        secondary={
+        <React.Fragment>
+        <Typography
+        sx={{ display: 'flex',fontSize: 20 }}
+        component="span"
+        variant="body2"
+        color="text.primary"
+        >
+        {comment.comment}
+        {comment.body}
+        </Typography>
+        </React.Fragment>
+        }
+        />
+
+        <Time><Moment fromNow>{startTime}</Moment></Time>
+        </ListItem>
+        <Divider variant="inset" component="li" />
+
+        </>))}
 
 
 
+            
+                
+</List> */}
 
 
 

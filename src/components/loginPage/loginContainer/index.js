@@ -19,7 +19,18 @@ import { setCookie } from "../../../shared/Cookie";
 // 소셜로그인
 import { KAKAO_AUTH_URL } from "../../../shared/SocialOauth";
 
-const theme = createTheme();
+const theme = createTheme(
+  {
+    palette: {
+      primary: {
+        main: "#0584BB",
+      },
+      secondary: {
+        main: '#C4441C',
+      },
+    },
+  }
+);
 
 const LoginContainer = ({ login, setLogin }) => {
   const navigate = useNavigate();
@@ -68,6 +79,8 @@ const LoginContainer = ({ login, setLogin }) => {
             alignItems: "center",
           }}
         >
+          {/*  */} 
+          {/* "" */}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>

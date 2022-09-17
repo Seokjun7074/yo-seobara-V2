@@ -7,17 +7,18 @@ import UserPage from "./pages/userPage";
 import Login from "./pages/login";
 import PostPage from "./pages/postPage";
 import InfiniteScroll from "./components/infinifeScrollTest";
+
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPhoto />} />
-        <Route path="/scroll" element={<InfiniteScroll />} />
         <Route exact path="/map" element={<MainMap />} />
         <Route exact path="/post" element={<PostPage />} />
         <Route exact path="/detail" element={<Detail />} />
         <Route exact path="/userpage" element={<UserPage />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/scroll" element={<InfiniteScroll />} />
       </Routes>
     </BrowserRouter>
   );
