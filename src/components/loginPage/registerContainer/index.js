@@ -16,9 +16,21 @@ import useInput from "../../../hooks/useInput";
 //통신
 import { apis } from "../../../api/loginAPI";
 
-const theme = createTheme();
+const theme = createTheme(
+  {
+    palette: {
+      primary: {
+        main: "#0584BB",
+      },
+      secondary: {
+        main: '#C4441C',
+      },
+    },
+  }
+);
 
 const RegisterContainer = ({ login, setLogin }) => {
+  
   const emailInput = useRef();
   const passwordInput = useRef();
   const passwordConfirmInput = useRef();
@@ -211,6 +223,7 @@ const RegisterContainer = ({ login, setLogin }) => {
             >
               가입하기
             </Button>
+            <hr/>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 {/* <Link href="#" variant="body2">
