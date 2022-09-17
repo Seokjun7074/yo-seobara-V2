@@ -17,9 +17,10 @@ export const apis = {
     }),
   // 좌표기준 게시물 조회
   getPostLocation: (params) =>
-    instance.get(
-      "/api/posts/location",
-      { params: params },
+    instance.post(
+      "/api/posts/bounds",
+      params,
+      // { params: params },
       {
         headers: {
           Authorization: `Bearer ${getCookie("accessToken")}`,
