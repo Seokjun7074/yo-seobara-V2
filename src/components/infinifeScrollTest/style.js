@@ -16,7 +16,7 @@ export const ImageWrapper = styled.img`
   position: relative;
   margin-bottom: 10px;
   border-radius: 10px;
-  transition: all 0.3s ease;   
+  transition: all 0.3s ease;
   cursor: pointer;
   image-rendering: -moz-crisp-edges; /* firefox */
   image-rendering: -o-crisp-edges; /* opera */
@@ -25,5 +25,6 @@ export const ImageWrapper = styled.img`
 
   &:hover {
     transform: scale(1.02);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
   }
 `;

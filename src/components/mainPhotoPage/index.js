@@ -1,31 +1,32 @@
-import * as React from 'react'
-import { useEffect,  useState } from 'react';
+import * as React from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useInView } from "react-intersection-observer"
-import  Modal  from '../global/modal/index';
-import Detail from '../../pages/detail';
-import {getCookie} from '../../shared/Cookie';
-
+import { useInView } from "react-intersection-observer";
+import Modal from "../global/modal/index";
+import Detail from "../../pages/detail";
+import { getCookie } from "../../shared/Cookie";
 
 //css 부분 (외부)
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
-import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
+import ImageListItem from "@mui/material/ImageListItem";
 import Masonry from "react-masonry-css";
 
 //css 부분 (내부)
-import {ImageWrapper, Box, CheckBar} from './style';
+import { ImageWrapper, Box, CheckBar } from "./style";
 import "./style.css";
 
+
 const MainPhotoCard =()=> {
+
   
 const [loading, setLoading] = useState(false);
 const [datas, setDatas] = useState([]);
 const [page, setPage] = useState(0)
 const [ref, inView] = useInView(
   {
-  threshold: 1, // ref부분이 다 보여야 작동
+  // threshold: 1, // ref부분이 다 보여야 작동
   // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
 }
 );
@@ -41,33 +42,26 @@ const [ref, inView] = useInView(
             },
           })
           .then((res) => {
-            // console.log(“불러온 데이터“, res.data.data.last);
+            // console.log('불러온 데이터', res.data.data.last);
             const dataList = res.data.data.content;
+            // console.log(dataList)
             setDatas((prev) => [...prev, ...dataList]);
           })
           .catch((err) => console.log(err));
         setLoading(false);
       };
 
-
-
-
- // `page` 가 바뀔 때 마다 함수 실행
+  // `page` 가 바뀔 때 마다 함수 실행
   useEffect(() => {
     getItems();
   }, [page]);
 
-
-
-// 사용자가 마지막 요소를 보고 있으면
+  // 사용자가 마지막 요소를 보고 있으면
   useEffect(() => {
-    
     if (inView) {
       setPage((prev) => prev + 1);
     }
   }, [inView]);
-
-
 
   const Columns = {
     default: 4,
@@ -77,8 +71,10 @@ const [ref, inView] = useInView(
   };
 
 
+
 return (
-  <Masonry
+  
+    <Masonry
         breakpointCols={Columns}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
@@ -86,9 +82,10 @@ return (
     {datas.map((item, idx) => (
       <div>     
           {datas.length -1 ==idx ? (
-           
+        
    <Box>
-      <ImageListItem key={item.img} ref={ref}>
+      <ImageListItem key={item.img}>
+        
       <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
     
       <ImageListItemBar
@@ -106,18 +103,21 @@ return (
             }
             />
       </ImageListItem>
-      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
-    </Box>
-                 
-                 
-          ):(
-            
+      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>} 
+      <Modal btn_title={'상세보기'} >
+        <Detail item={item}/>
+        </Modal>
+    </Box>   
     
+    
+          ):(
+            <>
             <Box>
             <ImageListItem key={item.img}>
             <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
           
             <ImageListItemBar
+                
                 sx={{borderBottomRightRadius:10,borderBottomLeftRadius:10,}} 
                 title={item.title}
                 subtitle={item.author}
@@ -132,11 +132,14 @@ return (
                   }
                   />
             </ImageListItem>
-            
+            {item.postId}
+             <Modal btn_title={'상세보기'} >
+              <Detail item={item} />
+              </Modal>
           </Box>
          
-      
-              
+          
+              </>   
           )}
      
       </div>
@@ -146,17 +149,8 @@ return (
 );
 
 
-
-
-
-
-
-
-
   
 }
 
 
 export default MainPhotoCard;
-
-

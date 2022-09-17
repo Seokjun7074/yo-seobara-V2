@@ -1,49 +1,32 @@
-import axios from "axios";
 import Masonry from "react-masonry-css";
 import "./style.css";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { getCookie } from "../../shared/Cookie.js";
 import { CheckBar, ImageWrapper } from "./style.js";
-import { Modal } from "@mui/material";
-import Detail from '../../pages/detail';
+import { useDispatch, useSelector } from "react-redux";
+import { __getPost } from "../../redux/async/asyncPost";
+import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 
 const InfiniteScroll = () => {
-  const [datas, setDatas] = useState([]);
-  const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
-
-  // 서버에서 아이템을 가지고 오는 함수
-  const getItems = async () => {
-    // console.log("서버통신 시작");
-    setLoading(true);
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}/api/posts?page=${page}&size=6`, {
-        headers: {
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        // console.log("불러온 데이터", res.data.data.last);
-        const dataList = res.data.data.content;
-        setDatas((prev) => [...prev, ...dataList]);
-      })
-      .catch((err) => console.log(err));
-    setLoading(false);
-  };
+  const dispatch = useDispatch();
+  const datas = useSelector((state) => state.post.data);
+  const page = useSelector((state) => state.post.page);
+  const update = useSelector((state) => state.post.update);
 
   useEffect(() => {
-    getItems();
+    if (update) {
+      dispatch(__getPost(page));
+    }
   }, [page]);
 
   useEffect(() => {
     if (inView) {
-      setPage((prev) => prev + 1);
+      dispatch(incrementPage());
+      dispatch(updateTrue());
     }
   }, [inView]);
 
@@ -53,6 +36,7 @@ const InfiniteScroll = () => {
     1000: 2,
     700: 1,
   };
+
   return (
     <>
       <Masonry
@@ -61,15 +45,12 @@ const InfiniteScroll = () => {
         columnClassName="my-masonry-grid_column"
       >
         {datas.map((data) => (
-        <div>
-          <ImageWrapper key={data.postId} src={data.thumbnailUrl} alt="" />
-          <Modal>
-            <Detail/>
-          </Modal>
-        </div>
-          
+          <div key={data.postId}>
+            <ImageWrapper src={data.thumbnailUrl} alt="" />
+          </div>
         ))}
       </Masonry>
+       
       {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
     </>
   );
