@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
 import "./style.css";
+import Spinner from "../../global/spinner";
 
 const MainMapView = ({
   location,
@@ -51,13 +52,15 @@ const MainMapView = ({
   const searchPosition = () => {
     const map = mapRef.current;
     setBoundary({
-      South_West: {
-        lat: map.getBounds().getSouthWest().getLat(),
-        lng: map.getBounds().getSouthWest().getLng(),
-      },
-      North_East: {
-        lat: map.getBounds().getNorthEast().getLat(),
-        lng: map.getBounds().getNorthEast().getLng(),
+      bounds: {
+        South_West: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        North_East: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       },
     });
   };
@@ -66,18 +69,20 @@ const MainMapView = ({
     const map = mapRef.current;
 
     setBoundary({
-      South_West: {
-        lat: map.getBounds().getSouthWest().getLat(),
-        lng: map.getBounds().getSouthWest().getLng(),
-      },
-      North_East: {
-        lat: map.getBounds().getNorthEast().getLat(),
-        lng: map.getBounds().getNorthEast().getLng(),
+      bounds: {
+        South_West: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        North_East: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       },
     });
   }, []);
   return location.isLoading ? (
-    <h1>로딩중..</h1>
+    <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
     <Map
       isPanto="true"

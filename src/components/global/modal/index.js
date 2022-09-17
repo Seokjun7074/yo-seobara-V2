@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { ModalWrapper, ModalContainer, ModalButton } from "./style";
 
-function Modal({ btn_title, children }) {
-  const [modalToggel, setModlaToggle] = useState(false);
+function Modal({ btn_title, modalToggel, setModlaToggle, children }) {
+  // const [modalToggel, setModlaToggle] = useState(false);
+
   const closeModal = () => {
-    setModlaToggle(false);
+    setModlaToggle({ ...modalToggel, open: false });
   };
-  const openModal = () => {
-    setModlaToggle(true);
-  };
+  // const openModal = () => {
+  //   setModlaToggle(true);
+  // };
   return (
     <div className="Modal">
-      <ModalButton onClick={openModal}>{btn_title}</ModalButton>
-      <ModalContainer visible={modalToggel}>{children}</ModalContainer>
-      <ModalWrapper visible={modalToggel} onClick={closeModal}></ModalWrapper>
+      {/* <ModalButton onClick={openModal}>{btn_title}</ModalButton> */}
+      <ModalContainer visible={modalToggel.open}>{children}</ModalContainer>
+      <ModalWrapper
+        visible={modalToggel.open}
+        onClick={closeModal}
+      ></ModalWrapper>
     </div>
   );
 }

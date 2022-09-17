@@ -19,9 +19,27 @@ export const __getPost = createAsyncThunk(
   "post/getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.getPost();
-      // console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await apis.getPost(payload);
+      // console.log("res", data.data.data.number);
+      const content = {
+        content: data.data.data.content,
+        page: data.data.data.number,
+      };
+      return thunkAPI.fulfillWithValue(content);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getPostLocation = createAsyncThunk(
+  "post/getPostLocation",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.getPostLocation(payload);
+      const res = data.data.data;
+      return thunkAPI.fulfillWithValue(res);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
