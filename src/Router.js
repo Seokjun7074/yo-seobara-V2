@@ -6,6 +6,8 @@ import Detail from "./pages/detail";
 import UserPage from "./pages/userPage";
 import Login from "./pages/login";
 import PostPage from "./pages/postPage";
+
+
 const Router = () => {
   return (
     <BrowserRouter>

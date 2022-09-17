@@ -18,14 +18,16 @@ import Masonry from "react-masonry-css";
 import {ImageWrapper, Box, CheckBar} from './style';
 import "./style.css";
 
+
 const MainPhotoCard =()=> {
+
   
 const [loading, setLoading] = useState(false);
 const [datas, setDatas] = useState([]);
 const [page, setPage] = useState(0)
 const [ref, inView] = useInView(
   {
-  threshold: 1, // ref부분이 다 보여야 작동
+  // threshold: 1, // ref부분이 다 보여야 작동
   // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
 }
 );
@@ -41,8 +43,9 @@ const [ref, inView] = useInView(
             },
           })
           .then((res) => {
-            // console.log(“불러온 데이터“, res.data.data.last);
+            // console.log('불러온 데이터', res.data.data.last);
             const dataList = res.data.data.content;
+            // console.log(dataList)
             setDatas((prev) => [...prev, ...dataList]);
           })
           .catch((err) => console.log(err));
@@ -77,8 +80,10 @@ const [ref, inView] = useInView(
   };
 
 
+
 return (
-  <Masonry
+  
+    <Masonry
         breakpointCols={Columns}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
@@ -86,9 +91,10 @@ return (
     {datas.map((item, idx) => (
       <div>     
           {datas.length -1 ==idx ? (
-           
+        
    <Box>
-      <ImageListItem key={item.img} ref={ref}>
+      <ImageListItem key={item.img}>
+        
       <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
     
       <ImageListItemBar
@@ -106,18 +112,21 @@ return (
             }
             />
       </ImageListItem>
-      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
-    </Box>
-                 
-                 
-          ):(
-            
+      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>} 
+      <Modal btn_title={'상세보기'} >
+        <Detail item={item}/>
+        </Modal>
+    </Box>   
     
+    
+          ):(
+            <>
             <Box>
             <ImageListItem key={item.img}>
             <ImageWrapper key={item.postId} src={item.thumbnailUrl} alt="" />
           
             <ImageListItemBar
+                
                 sx={{borderBottomRightRadius:10,borderBottomLeftRadius:10,}} 
                 title={item.title}
                 subtitle={item.author}
@@ -132,11 +141,14 @@ return (
                   }
                   />
             </ImageListItem>
-            
+            {item.postId}
+             <Modal btn_title={'상세보기'} >
+              <Detail item={item} />
+              </Modal>
           </Box>
          
-      
-              
+          
+              </>   
           )}
      
       </div>
@@ -144,13 +156,6 @@ return (
     
   </Masonry>
 );
-
-
-
-
-
-
-
 
 
   

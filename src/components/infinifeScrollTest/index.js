@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { getCookie } from "../../shared/Cookie.js";
 import { CheckBar, ImageWrapper } from "./style.js";
-import { Modal } from "@mui/material";
+// import { Modal } from "@mui/material";
 import Detail from '../../pages/detail';
-
+import Modal from "../global/modal";
 const InfiniteScroll = () => {
   const [datas, setDatas] = useState([]);
   const [page, setPage] = useState(0);
@@ -61,15 +61,16 @@ const InfiniteScroll = () => {
         columnClassName="my-masonry-grid_column"
       >
         {datas.map((data) => (
-        <div>
+        <div key={data.postId}>
           <ImageWrapper key={data.postId} src={data.thumbnailUrl} alt="" />
-          <Modal>
+          {/* <Modal btn_title={data.title}>
             <Detail/>
-          </Modal>
+          </Modal> */}
+          <p>{data.postId}</p>
         </div>
-          
         ))}
       </Masonry>
+       
       {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
     </>
   );

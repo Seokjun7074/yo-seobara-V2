@@ -6,12 +6,14 @@ import { Block } from "@mui/icons-material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import {Form, FormBox, FormButton} from './style';
+import axios from "axios";
+import { getCookie } from "../../../shared/Cookie"; 
 
 
-
-
-const DetailForm = () => {
-  const [com, setCom] = useState(false);
+const DetailForm = (id) => {
+  const idNum= id.id;  // postId
+  // console.log(idNum);
+  // const [com, setCom] = useState(false);
 
 
 
@@ -33,8 +35,22 @@ const inp = (e) => {
 
 
 // console.log(value)
-const onButtonClick=()=>{
-  console.log(value)
+const onButtonClick=async()=>{
+  await axios
+  .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`, {
+    headers: {
+      Authorization: `Bearer ${getCookie('accessToken')}`,
+    },  
+  },{
+    comment:value
+  }
+  )
+  .then((res) => {
+    console.log('성공');
+    
+  })
+  .catch((err) => console.log(err));
+
   setValue('')
 }
 // console.log(value)
@@ -57,7 +73,7 @@ const onButtonClick=()=>{
         multiline
         rows={2}
         value={value}
-        // inputRef={textRef}
+        inputRef={textRef}
         onChange={inp}
       />
       </Form>
