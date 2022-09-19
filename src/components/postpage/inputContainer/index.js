@@ -40,14 +40,12 @@ const InputContainer = ({ pick }) => {
 
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
-    // console.log(selectedImageList);
     if (selectedImageList.length + imageInput.length >= IMAGE_LIMIT) {
       alert("사진은 최대 3장까지만 업로드 가능합니다");
       return;
     }
-    const imageURLList = [...imageInput];
-    const imageFileList = [...imageFile];
-    // for문 쓰는 이유: 한번에 두세장씩 업로드하는경우
+    const imageURLList = [...imageInput]; // 미리보기용 사진
+    const imageFileList = [...imageFile]; // 서버로 보낼 사진
     for (let i = 0; i < selectedImageList.length; i++) {
       const imageURL = URL.createObjectURL(selectedImageList[i]);
       imageURLList.push(imageURL);
@@ -58,24 +56,22 @@ const InputContainer = ({ pick }) => {
   };
 
   const onSubmit = () => {
-    console.log(submitData);
-    formData.append(
-      "postRequestDto",
-      // submitData
-      new Blob([JSON.stringify(submitData)], { type: "application/json" })
-    );
-    imageFile.forEach((e, idx) => {
-      formData.append(`images`, e);
-    });
-    dispatch(__createPost(formData));
-    // navigate("/map");
-    // for (let key of formData.keys()) {
-    //   console.log(key);
-    // }
-    // // FormData의 value 확인
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    // }
+    if (title === "" || content === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    } else if (imageFile.length === 0) {
+      alert("사진을 추가해주세요.");
+      return;
+    } else {
+      formData.append(
+        "postRequestDto",
+        new Blob([JSON.stringify(submitData)], { type: "application/json" })
+      );
+      imageFile.forEach((e, idx) => {
+        formData.append(`images`, e);
+      });
+      dispatch(__createPost(formData));
+    }
   };
 
   const imageUpload = () => {

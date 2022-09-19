@@ -21,7 +21,7 @@ const DetailBody = (data) => {
   const Like = () => {};
 
   const detail = data.data;
-  console.log(detail);
+  // console.log(detail);
 
   const nowTime = moment().format(`${detail.createdAt}`), // 서버로부터 받은 작성,또는수정시간
     startTime = new Date(nowTime);

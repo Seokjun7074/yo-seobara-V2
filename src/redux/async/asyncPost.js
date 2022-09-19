@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 import { apis } from "../../api/postAPI";
 
 export const __createPost = createAsyncThunk(
@@ -6,11 +7,19 @@ export const __createPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.createPost(payload);
-      // console.log(data);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error);
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        alert("로그인 해주세요");
+        console.log("X");
+        // useNavigate("login");
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
     }
   }
 );
