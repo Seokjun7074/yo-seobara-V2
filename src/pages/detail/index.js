@@ -22,11 +22,10 @@ import Modal from "../../components/global/modal";
 
 const Detail = (item) => {
   const data = item.item;
-  console.log(item);
   const [detail, setDetail] = useState({
     ...data,
   });
-  // console.log(detail)
+  // console.log(data);
   // console.log(detail.data)
 
   const dummydata = {
