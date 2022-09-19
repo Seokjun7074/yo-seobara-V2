@@ -41,7 +41,14 @@ const Header = () => {
         <LogineButton isLogin={isLogin} onClick={() => [navigate("/login")]}>
           로그인
         </LogineButton>
-        <LoginedButton isLogin={isLogin}>ssdd</LoginedButton>
+        <LoginedButton
+          onClick={() => {
+            navigate("/post");
+          }}
+          isLogin={isLogin}
+        >
+          게시글 작성
+        </LoginedButton>
         <AnonymousButton onClick={navigatePage}>
           {nowURL === "/" ? "지도로보기" : "사진으로 보기"}
         </AnonymousButton>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 import { __createPost, __getPost, __getPostLocation } from "../async/asyncPost";
 
 const initialState = {
@@ -24,7 +25,9 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     // 게시물 작성
-    builder.addCase(__createPost.fulfilled, (state, actions) => {});
+    builder.addCase(__createPost.fulfilled, (state, actions) => {
+      alert("작성완료");
+    });
     builder.addCase(__createPost.rejected, (state, actions) => {
       alert("게시글 작성 실패!! 다시 시도해주세요.");
     });

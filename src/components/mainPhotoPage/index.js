@@ -66,10 +66,7 @@ const MainPhotoCard = () => {
   const [modalToggel, setModlaToggle] = useState({
     open: false,
     loading: false,
-    data: {
-      title: "제목",
-      body: "댓글",
-    },
+    data: {},
   });
 
   return (
@@ -93,6 +90,7 @@ const MainPhotoCard = () => {
                       const res = await axios.get(
                         `https://jsonplaceholder.typicode.com/posts/${item.postId}`
                       );
+                      console.log(res.data);
                       setModlaToggle((prev) => {
                         return {
                           ...prev,
