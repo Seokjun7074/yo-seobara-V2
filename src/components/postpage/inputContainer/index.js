@@ -16,6 +16,7 @@ import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { __createPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
+import { apis } from "../../../api/postAPI";
 
 const InputContainer = ({ pick }) => {
   const [title, titleHandler] = useInput();
@@ -41,7 +42,7 @@ const InputContainer = ({ pick }) => {
 
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
-    if (selectedImageList.length + imageInput.length >= IMAGE_LIMIT) {
+    if (selectedImageList.length + imageInput.length > IMAGE_LIMIT) {
       alert("사진은 최대 3장까지만 업로드 가능합니다");
       return;
     }
