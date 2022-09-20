@@ -13,7 +13,7 @@ import useInput from "../../../hooks/useInput";
 import { useEffect, useRef, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import Slider from "../../global/slider";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __createPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,7 @@ const InputContainer = ({ pick }) => {
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
 
+  const postStatus = useSelector((state) => state.post); // 작성상태
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const submitData = {
@@ -73,6 +74,12 @@ const InputContainer = ({ pick }) => {
       dispatch(__createPost(formData));
     }
   };
+
+  useEffect(() => {
+    if (postStatus.createPost) {
+      navigate("/map");
+    }
+  }, [postStatus.createPost]);
 
   const imageUpload = () => {
     if (imageInput.length >= IMAGE_LIMIT) {
