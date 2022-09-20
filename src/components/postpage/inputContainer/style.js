@@ -20,7 +20,10 @@ export const ImageInputButton = styled.button`
 `;
 
 export const PhotoBox = styled.div`
-  height: 100%;
+  /* height: 100%; */
+  min-width: 400px;
+  width: 100%;
+  height: 300px;
   display: flex;
   flex-direction: column;
   gap: 20px;

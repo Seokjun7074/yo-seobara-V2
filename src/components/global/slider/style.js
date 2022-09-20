@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 export const SliderWrapper = styled.div`
-  width: 500px;
-  height: 250px;
+  /* width: 500px; */
+  /* height: 250px; */
+  width: 100%;
+  height: 100%;
 
-  /* border: 1px solid gray; */
   display: flex;
   overflow: hidden;
   background-color: ${(props) => props.theme.color.lightgray};
@@ -12,32 +13,33 @@ export const SliderWrapper = styled.div`
 `;
 export const ButtonContainer = styled.div`
   width: 50px;
-  height: 250px;
+  /* height: 250px; */
+  height: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 `;
 export const ImagePreviewWrapper = styled.div`
-
   width: 100%;
   height: 100%;
-
-
   overflow: hidden;
 `;
 
 export const PreviewContainer = styled.div`
-  width: 400px;
-  height: 250px;
+  /* width: 400px; */
+  /* height: 250px; */
+  width: 100%;
+  height: 100%;
   display: flex;
 `;
 
 export const ImagePreview = styled.div`
-
-  width: 400px;
-  height: 250px;
-  /* border-radius: 10px; */
+  /* width: 400px; */
+  /* height: 250px; */
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   flex: none;
 `;

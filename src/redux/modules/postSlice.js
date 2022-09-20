@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 import { __createPost, __getPost, __getPostLocation } from "../async/asyncPost";
 
 const initialState = {
@@ -6,6 +7,7 @@ const initialState = {
   page: 0, // 무한스크롤 페이지
   data: [], // 전체데이터
   location: [], // 지도페이지용 데이터
+  createPost: false, // 작성상태
 };
 
 const postSlice = createSlice({
@@ -21,14 +23,19 @@ const postSlice = createSlice({
     updateTrue(state) {
       state.update = true;
     },
+    initCreatePost(state) {
+      state.createPost = false;
+    },
   },
   extraReducers: (builder) => {
     // 게시물 작성
     builder.addCase(__createPost.fulfilled, (state, actions) => {
-      console.log("actions", actions);
+      state.createPost = true;
+
+      alert("작성완료");
     });
     builder.addCase(__createPost.rejected, (state, actions) => {
-      alert("게시글 작성 실패!! 다시 시도해주세요.");
+      alert("작성실패");
     });
     // 전체 게시물 조회
     builder.addCase(__getPost.fulfilled, (state, actions) => {
@@ -42,7 +49,6 @@ const postSlice = createSlice({
     });
     // 좌표기준 게시물 조회
     builder.addCase(__getPostLocation.fulfilled, (state, actions) => {
-      // console.log("actions", actions.payload);
       state.location = actions.payload;
       // console.log(state);
     });
@@ -53,5 +59,6 @@ const postSlice = createSlice({
   },
 });
 
-export const { incrementPage, updateTrue, updateFalse } = postSlice.actions;
+export const { incrementPage, updateTrue, updateFalse, initCreatePost } =
+  postSlice.actions;
 export default postSlice.reducer;

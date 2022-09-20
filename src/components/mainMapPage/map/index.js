@@ -52,13 +52,15 @@ const MainMapView = ({
   const searchPosition = () => {
     const map = mapRef.current;
     setBoundary({
-      South_West: {
-        lat: map.getBounds().getSouthWest().getLat(),
-        lng: map.getBounds().getSouthWest().getLng(),
-      },
-      North_East: {
-        lat: map.getBounds().getNorthEast().getLat(),
-        lng: map.getBounds().getNorthEast().getLng(),
+      bounds: {
+        South_West: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        North_East: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       },
     });
   };
@@ -67,13 +69,15 @@ const MainMapView = ({
     const map = mapRef.current;
 
     setBoundary({
-      South_West: {
-        lat: map.getBounds().getSouthWest().getLat(),
-        lng: map.getBounds().getSouthWest().getLng(),
-      },
-      North_East: {
-        lat: map.getBounds().getNorthEast().getLat(),
-        lng: map.getBounds().getNorthEast().getLng(),
+      bounds: {
+        South_West: {
+          lat: map.getBounds().getSouthWest().getLat(),
+          lng: map.getBounds().getSouthWest().getLng(),
+        },
+        North_East: {
+          lat: map.getBounds().getNorthEast().getLat(),
+          lng: map.getBounds().getNorthEast().getLng(),
+        },
       },
     });
   }, []);
