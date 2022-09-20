@@ -91,6 +91,7 @@ const MainPhotoCard = () => {
                         `https://jsonplaceholder.typicode.com/posts/${item.postId}`
                       );
                       // console.log(res.data);
+
                       setModlaToggle((prev) => {
                         return {
                           ...prev,
