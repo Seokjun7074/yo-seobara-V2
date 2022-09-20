@@ -12,16 +12,51 @@ import {
 import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Grid";
-
+import { useState } from "react";
 import moment from "moment";
 import Moment from "react-moment";
 import "moment/locale/ko"; //한국말 번역
+import { getCookie } from "../../../shared/Cookie";
+import axios from "axios";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const DetailBody = (data) => {
-  const Like = () => {};
+const detail = data.data;
+const idNum = detail.id
+const [count,setCount] = useState(0);
 
-  const detail = data.data;
-  console.log(detail);
+  // console.log(typeof(count));
+      
+  
+  const [heart, setHeart] = useState(false);
+
+  const Like = () => {
+      if(heart){
+        setHeart(false);
+        console.log('취소')
+        setCount(0);
+      }else{
+        setHeart(true);
+        console.log('좋아요')
+        setCount(1);
+    //     await axios
+    //   .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/heart`, {
+    //    headers: {
+    //                Authorization: `Bearer ${getCookie('accessToken')}`,
+    //             },  
+    //    }
+    //    )
+    //    .then((res) => {
+    //    console.log('성공');
+    
+    //    })
+    //  .catch((err) => console.log(err));
+
+      }
+  };
+
+  
 
   const nowTime = moment().format(`${detail.createdAt}`), // 서버로부터 받은 작성,또는수정시간
     startTime = new Date(nowTime);
@@ -29,7 +64,13 @@ const DetailBody = (data) => {
   return (
     <BodyBox>
       <BodyTop>
-        <button onClick={Like}>좋아요좋아요</button>
+
+    {heart ? (
+      <button onClick={Like}><FavoriteIcon/></button>
+    ):(
+<button onClick={Like}><FavoriteBorderIcon/></button>
+    )}:{detail.heart + count}
+           
       </BodyTop>
 
       <BodySide>

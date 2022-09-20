@@ -68,7 +68,7 @@ const MainPhotoCard = () => {
     loading: false,
     data: {},
   });
-
+  
   return (
     <>
       <Masonry
