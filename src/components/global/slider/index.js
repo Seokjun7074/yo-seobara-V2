@@ -46,7 +46,7 @@ const Slider = ({ imageList }) => {
             <ImagePreview key={idx}>
               <img
                 src={img}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
               ></img>
             </ImagePreview>
           ))}
