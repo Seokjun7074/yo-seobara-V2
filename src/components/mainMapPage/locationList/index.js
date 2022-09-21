@@ -7,6 +7,7 @@ const LocationList = ({
   locationList,
   pickedLocation,
   setPickedLocation,
+  setToggleCustomOverlay,
 }) => {
   const scrollControl = useRef([]);
   useEffect(() => {
@@ -24,6 +25,7 @@ const LocationList = ({
           className={data.postId}
           onClick={() => {
             setPickedLocation({ postId: data.postId, location: data.location });
+            setToggleCustomOverlay(true);
           }}
           ref={(e) => (scrollControl.current[data.postId] = e)}
         >

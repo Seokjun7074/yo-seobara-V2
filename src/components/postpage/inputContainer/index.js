@@ -8,6 +8,7 @@ import {
   LabelBox,
   PhotoBox,
   SubmitButton,
+  TextArea,
 } from "./style";
 import useInput from "../../../hooks/useInput";
 import { useEffect, useRef, useState } from "react";
@@ -16,7 +17,6 @@ import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { __createPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
-import { apis } from "../../../api/postAPI";
 
 const InputContainer = ({ pick }) => {
   const [title, titleHandler] = useInput();
@@ -64,6 +64,11 @@ const InputContainer = ({ pick }) => {
     } else if (imageFile.length === 0) {
       alert("사진을 추가해주세요.");
       return;
+    } else if (
+      submitData.location.lat === undefined ||
+      submitData.location.lng === undefined
+    ) {
+      alert("지도에 위치를 표시해주세요.");
     } else {
       formData.append(
         "postRequestDto",
@@ -77,6 +82,7 @@ const InputContainer = ({ pick }) => {
   };
 
   useEffect(() => {
+    // 게시물 작성 성공했을 때만 페이지 이동
     if (postStatus.createPost) {
       navigate("/map");
     }
@@ -119,6 +125,12 @@ const InputContainer = ({ pick }) => {
               onChange={titleHandler}
               value={title}
             />
+          </LabelBox>
+          <LabelBox>
+            <Label>주소</Label>
+            <TextArea>
+              <span>지도에서 위치를 골라주세요</span>
+            </TextArea>
           </LabelBox>
           <LabelBox>
             <Label>내용</Label>

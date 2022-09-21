@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
-import { getAddr } from "../../../utils/address";
 import Spinner from "../../global/spinner";
 import { MapContainerWrapper } from "./style";
 
@@ -63,13 +62,14 @@ const MapContainer = ({ pick, setPick }) => {
             height: "100%",
           }}
           level={4}
-          onClick={(_t, mouseEvent) =>
+          onClick={(_t, mouseEvent) => {
+            console.log("axios");
             setPick({
               ...pick,
               lat: mouseEvent.latLng.getLat(),
               lng: mouseEvent.latLng.getLng(),
-            })
-          }
+            });
+          }}
         >
           <MapMarker
             position={location.center}
