@@ -14,8 +14,9 @@ const MainMapView = ({
   setPickedLocation,
   boundary,
   setBoundary,
+  toggleCustomOverlay,
+  setToggleCustomOverlay,
 }) => {
-  // const [position, setPosition] = useState(null);
   const mapRef = useRef();
   useEffect(() => {
     if (navigator.geolocation) {
@@ -81,20 +82,30 @@ const MainMapView = ({
       },
     });
   }, []);
+
+  console.log(pickedLocation);
   return location.isLoading ? (
     <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
     <Map
       isPanto="true"
-      center={pickedLocation.postId ? pickedLocation.location : location.center}
+      center={toggleCustomOverlay ? pickedLocation.location : location.center}
       level={4}
       style={{ width: "100%", height: "100%" }}
       ref={mapRef}
       onCreate={onCreate}
+      onClick={(_t, mouseEvent) => {
+        // console.log("axios");
+        setPickedLocation({
+          ...pickedLocation,
+          postId: null,
+        });
+      }}
     >
       <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
       <LocationButton
         onClick={() => {
+          setToggleCustomOverlay(false);
           setPickedLocation({ postId: null, location: location.center });
         }}
       >
@@ -115,13 +126,14 @@ const MainMapView = ({
           <MapMarker
             position={data.location}
             onClick={() => {
+              setToggleCustomOverlay(true);
               setPickedLocation({
                 postId: data.postId,
                 location: data.location,
               });
             }}
           />
-          {data.postId === pickedLocation.postId && (
+          {data.postId === pickedLocation.postId && toggleCustomOverlay ? (
             <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
               position={data.location}
             >
@@ -129,7 +141,7 @@ const MainMapView = ({
                 <ImageContainer src={`${data.thumbnailUrl}`} />
               </div>
             </CustomOverlayMap>
-          )}
+          ) : null}
         </div>
       ))}
     </Map>

@@ -20,10 +20,9 @@ export const ImageInputButton = styled.button`
 `;
 
 export const PhotoBox = styled.div`
-  /* height: 100%; */
+  height: 300px;
   min-width: 400px;
   width: 100%;
-  height: 300px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -31,13 +30,14 @@ export const PhotoBox = styled.div`
   justify-content: center;
 `;
 export const InputBox = styled.div`
+  height: 300px;
   width: 100%;
-  height: 310px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `;
 export const LabelBox = styled.div`
-  height: 50%;
+  /* height: 50%; */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -66,6 +66,18 @@ export const InputTextArea = styled.textarea`
   &:focus {
     outline: none;
   }
+`;
+export const TextArea = styled.div`
+  background-color: ${(props) => props.theme.color.lightgray};
+  width: 100%;
+  min-height: 40px;
+  max-height: 70px;
+  height: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.3rem;
+  overflow: scroll;
 `;
 export const SubmitButton = styled.button`
   /* position: relative;
