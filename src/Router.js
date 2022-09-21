@@ -16,7 +16,7 @@ const Router = () => {
         <Route exact path="/map" element={<MainMap />} />
         <Route exact path="/post" element={<PostPage />} />
         <Route exact path="/detail" element={<Detail />} />
-        <Route exact path="/userpage" element={<UserPage />} />
+        <Route exact path="/userpage/:username" element={<UserPage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/scroll" element={<InfiniteScroll />} />
       </Routes>

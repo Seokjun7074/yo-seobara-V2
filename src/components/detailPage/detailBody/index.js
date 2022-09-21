@@ -20,8 +20,13 @@ import { getCookie } from "../../../shared/Cookie";
 import axios from "axios";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useNavigate } from "react-router-dom";
+
 
 const DetailBody = (data) => {
+
+const navigate = useNavigate()
+
 const detail = data.data;
 const idNum = detail.id
 const [count,setCount] = useState(0);
@@ -82,7 +87,10 @@ const [count,setCount] = useState(0);
 
       <BodyHeader>주소:{detail.address}</BodyHeader>
       <BodyTitle>
-        {detail.nickname}의 {detail.title}
+        <div onClick={() => navigate(`/userpage/${detail.nickname}`)}>
+          {detail.nickname}
+          </div>의 
+        {detail.title}
       </BodyTitle>
       <BodyMain>내용:{detail.content}</BodyMain>
       <Footer>

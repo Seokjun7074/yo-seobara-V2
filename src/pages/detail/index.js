@@ -46,7 +46,10 @@ const Detail = (item) => {
   // console.log(data);
   // console.log(detail);
 
-  //단축다이얼
+  getCookie('nickname');
+  // console.log(getCookie);
+
+  //단축메뉴창
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -67,13 +70,13 @@ console.log('삭제');
 //   console.log('성공');
 // })
 // .catch((err) => console.log(err);
-// }
+}
 
 const locationClick = () => {
   console.log('위치정보');
   }
 
-  console.log(getCookie);
+  // console.log(getCookie);
   
   const actions = [
     { icon: <CreateIcon fontSize="large" onClick={updateClick}/>, name: '수정' },
