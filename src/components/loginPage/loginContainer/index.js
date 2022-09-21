@@ -19,18 +19,16 @@ import { setCookie } from "../../../shared/Cookie";
 // 소셜로그인
 import { KAKAO_AUTH_URL } from "../../../shared/SocialOauth";
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: {
-        main: "#0584BB",
-      },
-      secondary: {
-        main: '#C4441C',
-      },
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0584BB",
     },
-  }
-);
+    secondary: {
+      main: "#C4441C",
+    },
+  },
+});
 
 const LoginContainer = ({ login, setLogin }) => {
   const navigate = useNavigate();
@@ -55,8 +53,10 @@ const LoginContainer = ({ login, setLogin }) => {
     //쿠키저장
     try {
       const token = res.data.data.token;
+      console.log(res.data.data.nickname);
       setCookie("accessToken", token.accessToken, token.accessTokenExpiresIn);
       setCookie("refreshToken", token.refreshToken);
+      setCookie("nickname", res.data.data.nickname);
       //setCookie('userId', res.data.data.id, token.accessTokenExpiresIn);
       alert("로그인 성공");
       navigate("/");
@@ -79,7 +79,7 @@ const LoginContainer = ({ login, setLogin }) => {
             alignItems: "center",
           }}
         >
-          {/*  */} 
+          {/*  */}
           {/* "" */}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />

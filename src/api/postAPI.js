@@ -9,19 +9,12 @@ const instance = axios.create({
 
 export const apis = {
   // 무한스크롤 게시물 조회
-
   getPostPic: (page) =>
-  instance.get(
-    `/api/posts?page=${page}&size=6`,
-    {
+    instance.get(`/api/posts?page=${page}&size=6`, {
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
-    }
-  ),
-
-
-
+    }),
 
   // 좌표기준 게시물 조회
   getPostLocation: (params) =>
