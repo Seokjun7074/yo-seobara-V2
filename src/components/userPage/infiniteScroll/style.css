@@ -1,4 +1,4 @@
-/* .my-masonry-grid {
+.my-masonry-grid {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,4 +9,4 @@
 .my-masonry-grid_column {
   padding: 10px 5px;
   background-clip: padding-box;
-} */
+}

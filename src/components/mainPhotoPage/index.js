@@ -25,7 +25,6 @@ const MainPhotoCard = () => {
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
-
   // 서버에서 리스트를 가지고 오기
   const getItems = async () => {
     setLoading(true);
