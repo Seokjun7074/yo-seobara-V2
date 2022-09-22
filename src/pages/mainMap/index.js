@@ -16,7 +16,7 @@ const MainMap = () => {
     isLoading: true,
     isPanto: false,
   });
-
+  const [toggleCustomOverlay, setToggleCustomOverlay] = useState(false); // 지도에 오버레이 토글
   const [pickedLocation, setPickedLocation] = useState({
     postId: null,
     location: null,
@@ -42,6 +42,7 @@ const MainMap = () => {
         locationList={locationList}
         pickedLocation={pickedLocation}
         setPickedLocation={setPickedLocation}
+        setToggleCustomOverlay={setToggleCustomOverlay}
       ></LocationList>
       <MainMapView
         location={location}
@@ -51,6 +52,8 @@ const MainMap = () => {
         setPickedLocation={setPickedLocation}
         setBoundary={setBoundary}
         boundary={boundary}
+        toggleCustomOverlay={toggleCustomOverlay}
+        setToggleCustomOverlay={setToggleCustomOverlay}
       ></MainMapView>
     </MainMapWrapper>
   );
