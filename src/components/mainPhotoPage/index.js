@@ -142,9 +142,13 @@ const MainPhotoCard = () => {
                           return { ...prev, open: true, loading: true };
                         });
                         // api통신
-                        const res = await axios.get(
-                          `https://jsonplaceholder.typicode.com/posts/${item.postId}`
-                        );
+                        const res = await axios
+                        .get(`${process.env.REACT_APP_API_URL}/api/posts/${item.postId}/comments`, {
+                          headers: {
+                            Authorization: `Bearer ${getCookie('accessToken')}`,
+                            
+                          },
+                        })
                         setModlaToggle((prev) => {
                           return {
                             ...prev,

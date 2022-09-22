@@ -41,9 +41,10 @@ import { getCookie } from "../../shared/Cookie";
 
 
 const Detail = (item) => {
+
   const data = item.item;
   const [detail, setDetail] = useState(data);
-  // console.log(data);
+  // console.log(data.data.data);
   // console.log(detail);
 
   getCookie('nickname');
@@ -60,6 +61,7 @@ console.log('수정');
 
 const deleteClick = () => {
 console.log('삭제');
+alert('삭제되어 메인페이지로 이동합니다')
 // axios
 // .delete(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/`,{heades:{
   
@@ -99,7 +101,7 @@ const locationClick = () => {
     <>
     <DetailBox>
       <DetailMain>
-        {/* <Slider imageList={detail.imageUrls}/>  */}
+        {/* <Slider imageList={detail.imageUrls}/>  */} 
         <Slider imageList={dummydata.url}/> 
         </DetailMain>
 
@@ -108,11 +110,11 @@ const locationClick = () => {
       </Detailside>
 
       <DetailHeader>
-        <DetailForm id={detail.postId} />
+        {/* <DetailForm id={detail.postId} /> */}
       </DetailHeader>
 
       <DetailFooter>
-        <CommentList id={detail.postId} />
+        <CommentList data={data} />
       </DetailFooter>
 
      

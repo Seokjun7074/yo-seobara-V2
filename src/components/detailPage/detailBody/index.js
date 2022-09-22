@@ -8,6 +8,7 @@ import {
   BodyMain,
   Footer,
   Time,
+  UseName
 } from "./style";
 import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -87,9 +88,9 @@ const [count,setCount] = useState(0);
 
       <BodyHeader>주소:{detail.address}</BodyHeader>
       <BodyTitle>
-        <div onClick={() => navigate(`/userpage/${detail.nickname}`)}>
-          {detail.nickname}
-          </div>의 
+        <UseName onClick={() => navigate(`/userpage/${detail.nickname}`)}>
+          {detail.nickname}님의
+          </UseName>
         {detail.title}
       </BodyTitle>
       <BodyMain>내용:{detail.content}</BodyMain>
