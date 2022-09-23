@@ -15,7 +15,7 @@ export const apis = {
   logoutUser: (userData) => api.post("/api/auth/users/logout", userData),
   checkNickname: (userData) =>
     api.post("/api/member/signup/nicknameCheck", userData),
-  kakaoLogin: (code) => api.get(`member/kakao/callback?code=${code}`),
+  kakaoLogin: (code) => api.get(`/member/kakao/callback?code=${code}`),
 };
 
 //kakaoLogin: (code) => api.get(`?code=${code}`),

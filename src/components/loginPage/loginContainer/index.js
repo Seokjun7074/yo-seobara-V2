@@ -47,13 +47,11 @@ const LoginContainer = ({ login, setLogin }) => {
       password: enteredPassword,
     };
 
-    console.log(userObj);
     const res = await apis.loginUser(userObj);
 
     //쿠키저장
     try {
       const token = res.data.data.token;
-      console.log(res.data.data.nickname);
       setCookie("accessToken", token.accessToken, token.accessTokenExpiresIn);
       setCookie("refreshToken", token.refreshToken);
       setCookie("nickname", res.data.data.nickname);
