@@ -1,10 +1,10 @@
-import { UserInfoWrapper, FollowButton, UserInfoBox } from "./style";
+import { UserInfoWrapper, FollowButton, UserInfoBox, Nickname } from "./style";
 
 const UserInfo = ({ isFollowing, isMyPage, nickname }) => {
   return (
     <UserInfoWrapper>
       <UserInfoBox>
-        <span>{nickname}</span>
+        <Nickname>{nickname}님의 게시물</Nickname>
         <FollowButton isMyPage={isMyPage}>
           {isFollowing ? "Following" : "Follow"}
         </FollowButton>

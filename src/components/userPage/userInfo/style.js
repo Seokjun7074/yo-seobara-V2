@@ -5,14 +5,20 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+export const Nickname = styled.span`
+  font-size: 2.2rem;
+  font-weight: 600;
+`;
 export const UserInfoBox = styled.div`
-  width: 50%;
-  height: 200px;
+  width: 70%;
+  /* height: 100px; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: ${(props) => props.theme.padding.xlarge};
-  background-color: lightgray;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  /* background-color: lightgray; */
 `;
 export const FollowButton = styled.button`
   display: ${(props) => (props.isMyPage ? "none" : null)};
