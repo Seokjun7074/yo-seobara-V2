@@ -52,4 +52,8 @@ export const apis = {
   // 좌표를 주소로 변환
   convertToAddress: (lat, lng) =>
     instance.get(`/api/map/address?lat=${lat}&lng=${lng}`),
+
+  // 주소를 좌표로 변환
+  convertToLocation: (address) =>
+    instance.get(`api/map/coordinate?address=${address}`),
 };
