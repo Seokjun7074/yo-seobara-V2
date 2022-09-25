@@ -48,4 +48,8 @@ export const apis = {
       },
     }),
   // 게시물 전체 싹 다 조회
+
+  // 좌표를 주소로 변환
+  convertToAddress: (lat, lng) =>
+    instance.get(`/api/map/address?lat=${lat}&lng=${lng}`),
 };

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
+import { apis } from "../../../api/postAPI";
 import Spinner from "../../global/spinner";
 import { MapContainerWrapper } from "./style";
 
-const MapContainer = ({ pick, setPick }) => {
+const MapContainer = ({ pick, setPick, pickedAddress, setPickAddress }) => {
   const [location, setLocation] = useState({
     center: {
       lat: 33.450701,
@@ -12,7 +13,6 @@ const MapContainer = ({ pick, setPick }) => {
     errMsg: null,
     isLoading: true,
   });
-  const [address, setAddress] = useState("");
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -43,10 +43,16 @@ const MapContainer = ({ pick, setPick }) => {
     }
   }, [setLocation]);
   // 좌표를 주소로 변환하는 부분
-  // useEffect(() => {
-  //   getAddr(pick.lat, pick.lng, setAddress);
-  // }, [pick]);
-  // console.log(address);
+  const changeLocationToAddress = async () => {
+    if (pick.lat === null || pick.lng === null) return;
+    const address = await apis.convertToAddress(pick.lat, pick.lng);
+    setPickAddress(address.data.data);
+  };
+
+  useEffect(() => {
+    changeLocationToAddress(pick.lat, pick.lng);
+  }, [pick]);
+
   return (
     <MapContainerWrapper>
       {location.isLoading ? (
@@ -63,12 +69,18 @@ const MapContainer = ({ pick, setPick }) => {
           }}
           level={4}
           onClick={(_t, mouseEvent) => {
-            console.log("axios");
+            // console.log("axios");
             setPick({
               ...pick,
               lat: mouseEvent.latLng.getLat(),
               lng: mouseEvent.latLng.getLng(),
             });
+            // setPick((prev) => ({
+            //   ...prev,
+            //   lat: mouseEvent.latLng.getLat(),
+            //   lng: mouseEvent.latLng.getLng(),
+            // }));
+            // console.log(pick);
           }}
         >
           <MapMarker

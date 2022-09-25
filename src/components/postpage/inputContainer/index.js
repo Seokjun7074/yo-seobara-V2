@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __createPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
 
-const InputContainer = ({ pick }) => {
+const InputContainer = ({ pick, pickedAddress }) => {
   const [title, titleHandler] = useInput();
   const [content, contentHandler] = useInput();
   const [imageInput, setImageInput] = useState([]); // 미리보기용 이미지 리스트
@@ -38,6 +38,7 @@ const InputContainer = ({ pick }) => {
       lat: pick.lat,
       lng: pick.lng,
     },
+    address: pickedAddress,
   };
 
   const addImage = (e) => {
@@ -129,7 +130,7 @@ const InputContainer = ({ pick }) => {
           <LabelBox>
             <Label>주소</Label>
             <TextArea>
-              <span>지도에서 위치를 골라주세요</span>
+              <span>{pickedAddress}</span>
             </TextArea>
           </LabelBox>
           <LabelBox>
