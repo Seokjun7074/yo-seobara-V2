@@ -15,6 +15,17 @@ export const apis = {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     }),
+  getUserPost: (page, nickname) =>
+    instance.get(
+      `/api/posts?page=${page}&size=10&search=nickname&keyword=${encodeURIComponent(
+        nickname
+      )}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getCookie("accessToken")}`,
+        },
+      }
+    ),
 
   // 좌표기준 게시물 조회
   getPostLocation: (params) =>
