@@ -3,7 +3,7 @@ import { BiSearch } from "react-icons/bi";
 import useInput from "../../../hooks/useInput";
 import { apis } from "../../../api/postAPI";
 
-const AddressSearchContainer = ({ pick, setPick }) => {
+const AddressSearchContainer = ({ setPick }) => {
   const [addressInput, changeAddressInput] = useInput();
 
   const changeAddressToLocation = async () => {
@@ -25,12 +25,13 @@ const AddressSearchContainer = ({ pick, setPick }) => {
       changeAddressToLocation();
     }
   };
+
   return (
     <AddressInputBox>
       <BiSearch size={"30px"} color={"#333333"} />
       <InputBox
         type={"text"}
-        placeholder={"주소를 검색해주세요      ex) 삼성동"}
+        placeholder={"주소를 검색해주세요 ex) 삼성동"}
         onChange={changeAddressInput}
         onKeyPress={onKeyPress}
       />
