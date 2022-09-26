@@ -38,17 +38,23 @@ import CreateIcon from '@mui/icons-material/Create';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 
 import { getCookie } from "../../shared/Cookie";
+import { useNavigate } from "react-router-dom";
 
 
 const Detail = (item) => {
+  
+const navigator = useNavigate();
 
   const data = item.item;
-  const [detail, setDetail] = useState(data);
-  // console.log(data.data.data);
-  // console.log(detail);
+  const idNum = data.postId;
+  // console.log(item);
+  // console.log(dummydata.url);
 
   getCookie('nickname');
   // console.log(getCookie);
+
+
+
 
   //단축메뉴창
   const [open, setOpen] = useState(false);
@@ -59,19 +65,22 @@ const updateClick = () => {
 console.log('수정');
 }
 
-const deleteClick = () => {
+const deleteClick = async() => {
 console.log('삭제');
 alert('삭제되어 메인페이지로 이동합니다')
-// axios
-// .delete(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/`,{heades:{
+await axios
+.delete(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/`,{heades:{
   
-//   Authorization: `Bearer ${getCookie('accessToken')}`,
+  Authorization: `Bearer ${getCookie('accessToken')}`,
         
-// }})
-// .then((res) => {
-//   console.log('성공');
-// })
-// .catch((err) => console.log(err);
+}})
+.then((res) => {
+  console.log('성공');
+})
+.catch((err) => console.log(err));
+
+navigator('/');
+
 }
 
 const locationClick = () => {
@@ -89,20 +98,20 @@ const locationClick = () => {
 
 
 
-  const dummydata = {
-    url: [
+  const dummydata = [
+     
       "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-      "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-      "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    ],
-  };
+      
+  ];
 
   return (
     <>
     <DetailBox>
       <DetailMain>
-        {/* <Slider imageList={detail.imageUrls}/>  */} 
-        <Slider imageList={dummydata.url}/> 
+        {/* <Slider imageList={data.imageUrls}/> */}
+        <Slider imageList={data.imageUrls === undefined ? dummydata : data. imageUrls}/> 
+
+        {/* <Slider imageList={dummydata}/>  */}
         </DetailMain>
 
       <Detailside>
@@ -110,7 +119,7 @@ const locationClick = () => {
       </Detailside>
 
       <DetailHeader>
-        {/* <DetailForm id={detail.postId} /> */}
+        <DetailForm id={data.postId} />
       </DetailHeader>
 
       <DetailFooter>

@@ -17,15 +17,17 @@ const DetailForm = (id) => {
 
 
 
-    const [value, setValue] = useState(''); //Initial value should be empty
+    const [value, setValue] = useState(); //Initial value should be empty
     const handleSubmit = (e)=> {
   
       e.preventDefault();
-      e.target.reset();
+      
     }
 const inp = (e) => {
-  console.log(e.target.value)
+  // console.log(e.target.value)
   setValue(e.target.value)
+
+  // console.log(textRef.current.value,'s')
 }
 
 
@@ -35,14 +37,16 @@ const inp = (e) => {
 
 
 // console.log(value)
-const onButtonClick=async()=>{
+const onButtonClick= async()=>{
   await axios
-  .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`, {
+  .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`,
+   {
     headers: {
+      // Authorization: `Bearer ${getCookie('accessToken')}`,
       Authorization: `Bearer ${getCookie('accessToken')}`,
     },  
   },{
-    comment:value
+    "content":value
   }
   )
   .then((res) => {

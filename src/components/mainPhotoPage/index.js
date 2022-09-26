@@ -36,7 +36,7 @@ const MainPhotoCard = () => {
         },
       })
       .then((res) => {
-        // console.log('불러온 데이터', res.data.data.last);
+        console.log('불러온 데이터', res.data.data.content);
         const dataList = res.data.data.content;
         // console.log(dataList)
         setDatas((prev) => [...prev, ...dataList]);
@@ -49,6 +49,12 @@ const MainPhotoCard = () => {
   useEffect(() => {
     getItems();
   }, [page]);
+
+  // useEffect(() => {
+  //   console.log('모달업데이트')
+  // }, [modalToggel.data]);
+
+
 
   // 사용자가 마지막 요소를 보고 있으면
   useEffect(() => {
@@ -87,12 +93,16 @@ const MainPhotoCard = () => {
                         return { ...prev, open: true, loading: true };
                       });
                       // api통신
-                      const res = await axios.get(
-                        `https://jsonplaceholder.typicode.com/posts/${item.postId}`
-                      );
-                      // console.log(res.data);
+                      const res = await axios
+                      .get(`${process.env.REACT_APP_API_URL}/api/posts/${item.postId}/comments`, {
+                        headers: {
+                          Authorization: `Bearer ${getCookie('accessToken')}`,
+                          
+                        },
+                      });
 
-                      setModlaToggle((prev) => {
+                      //기존데이터에 댓글추가
+                       setModlaToggle((prev) => {
                         return {
                           ...prev,
                           data: { ...res.data, ...item },
@@ -195,7 +205,8 @@ const MainPhotoCard = () => {
         ))}
       </Masonry>
       <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-        <Detail item={modalToggel.data} />
+        {/* {false && <Detail item={modalToggel.data} />} */}
+         <Detail item={modalToggel.data} />
       </Modal>
     </>
   );

@@ -21,7 +21,7 @@ import 'moment/locale/ko';      //한국말 번역
  const CommentList =(data)=> {
   
   const comments = data.data.data;
-  // console.log(comments);
+  console.log(comments);
 
 // console.log(list.list);
 
@@ -113,7 +113,40 @@ import 'moment/locale/ko';      //한국말 번역
     width:'100%'
     }}>
 
-        {comments && comments.map((comment)=>(
+        {/* {comments && comments.map((comment)=>(
+
+
+        <CommentBox key={comment.commentId}>
+        <UserBox>
+          닉네임:{comment.nickname}
+          
+          </UserBox>          
+        <Comment>
+          댓글내용:{comment.content}
+          </Comment>
+        <Time>
+        <Moment fromNow>{comment.createdAt}</Moment>
+          
+          </Time>
+        </CommentBox>
+        ))} */}
+
+
+        {comments && comments.length === 0 ? (
+     <CommentBox >
+     <UserBox>
+       닉네임
+       
+       </UserBox>          
+     <Comment>
+       댓글이 없어요
+       </Comment>
+     <Time>
+    시간
+       </Time>
+     </CommentBox>
+        ):(<>
+           {comments && comments.map((comment)=>(
 
 
         <CommentBox key={comment.commentId}>
@@ -130,6 +163,9 @@ import 'moment/locale/ko';      //한국말 번역
           </Time>
         </CommentBox>
         ))}
+        </>
+        )}
+
        
        {/* <CommentBox >
         <UserBox>
