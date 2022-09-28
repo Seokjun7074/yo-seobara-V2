@@ -4,7 +4,7 @@ import useInput from "../../../hooks/useInput";
 import { apis } from "../../../api/postAPI";
 
 const AddressSearchContainer = ({ setPick }) => {
-  const [addressInput, changeAddressInput] = useInput();
+  const [addressInput, changeAddressInput, setAddressInput] = useInput();
 
   const changeAddressToLocation = async () => {
     const res = await apis.convertToLocation(addressInput);
@@ -18,6 +18,7 @@ const AddressSearchContainer = ({ setPick }) => {
         lat: resData.lat,
         lng: resData.lng,
       }));
+      setAddressInput("");
     }
   };
   const onKeyPress = (e) => {
@@ -34,6 +35,7 @@ const AddressSearchContainer = ({ setPick }) => {
         placeholder={"주소를 검색해주세요 ex) 삼성동"}
         onChange={changeAddressInput}
         onKeyPress={onKeyPress}
+        value={addressInput}
       />
     </AddressInputBox>
   );

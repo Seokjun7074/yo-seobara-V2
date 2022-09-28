@@ -15,12 +15,13 @@ import { useEffect, useRef, useState } from "react";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
-import { __createPost } from "../../../redux/async/asyncPost";
+import { __createPost, __editPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const InputContainer = ({ pick, pickedAddress }) => {
-  const [title, titleHandler] = useInput();
-  const [content, contentHandler] = useInput();
+const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
+  const [title, titleHandler, setTitle] = useInput();
+  const [content, contentHandler, setContent] = useInput();
   const [imageInput, setImageInput] = useState([]); // 미리보기용 이미지 리스트
   const [imageFile, setImageFile] = useState([]); // 서버 전송용 이미지 데이터
   const imageRef = useRef();
@@ -39,6 +40,30 @@ const InputContainer = ({ pick, pickedAddress }) => {
       lng: pick.lng,
     },
     address: pickedAddress,
+  };
+  console.log("imageFile:", imageFile);
+  // console.log("imageInput:", imageInput);
+  console.log(editData.imageUrls);
+  // 수정페이지 모드
+  useEffect(() => {
+    if (editData.isEditting) {
+      setTitle(editData.title);
+      setContent(editData.content);
+      setImageInput(editData.imageUrls); // 미리보기용 데이터
+      editData.imageUrls.forEach((e) => {
+        urlToObject(e);
+      });
+    }
+  }, [editData.isEditting]);
+
+  // URL to File 전환 함수
+  const urlToObject = async (image) => {
+    const response = await fetch(image);
+    const blob = await response.blob();
+    const fileName = image.split("-").pop();
+    const type = fileName.split(".").pop();
+    const file = new File([blob], fileName, { type: `image/${type}` });
+    setImageFile((prev) => [...prev, file]);
   };
 
   const addImage = (e) => {
@@ -80,6 +105,27 @@ const InputContainer = ({ pick, pickedAddress }) => {
       });
       dispatch(__createPost(formData));
     }
+  };
+
+  const editSubmit = async () => {
+    formData.append(
+      "postRequestDto",
+      new Blob([JSON.stringify(submitData)], { type: "application/json" })
+    );
+    imageFile.forEach((e, idx) => {
+      formData.append(`images`, e);
+    });
+    // console.log(formData);
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
+    for (let value of formData.values()) {
+      console.log(value);
+    }
+
+    dispatch(__editPost({ formData: formData, postId: postId }));
+    // const res = await apis.editPost(formData, postId);
+    // console.log(res);
   };
 
   useEffect(() => {
@@ -145,7 +191,9 @@ const InputContainer = ({ pick, pickedAddress }) => {
           </LabelBox>
         </InputBox>
       </InputContainerWrapper>
-      <SubmitButton onClick={onSubmit}>제출</SubmitButton>
+      <SubmitButton onClick={editData.isEditting ? editSubmit : onSubmit}>
+        {editData.isEditting ? "수정하기" : "제출하기"}
+      </SubmitButton>
     </>
   );
 };

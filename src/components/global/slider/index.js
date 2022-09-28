@@ -9,6 +9,7 @@ import {
 } from "./style";
 
 const Slider = ({ imageList }) => {
+  // console.log(imageList);
   const TOTAL_SLIDES = imageList.length;
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);

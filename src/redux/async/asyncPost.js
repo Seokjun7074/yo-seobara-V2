@@ -18,6 +18,23 @@ export const __createPost = createAsyncThunk(
     }
   }
 );
+export const __editPost = createAsyncThunk(
+  "post/editPost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.editPost(payload.formData, payload.postId);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
 
 export const __getPost = createAsyncThunk(
   "post/getPost",

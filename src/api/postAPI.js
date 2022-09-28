@@ -15,6 +15,7 @@ export const apis = {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     }),
+  // 유저페이지 게시물 조회
   getUserPost: (page, nickname) =>
     instance.get(
       `/api/posts?page=${page}&size=10&search=nickname&keyword=${encodeURIComponent(
@@ -26,7 +27,8 @@ export const apis = {
         },
       }
     ),
-
+  // 단일 게시물 조회
+  getSinglePost: (postId) => instance.get(`/api/posts/${postId}`),
   // 좌표기준 게시물 조회
   getPostLocation: (params) =>
     instance.post(
@@ -47,7 +49,13 @@ export const apis = {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
     }),
-  // 게시물 전체 싹 다 조회
+  // 게시물 수정
+  editPost: (data, postId) =>
+    instance.put(`/api/posts/${postId}`, data, {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    }),
 
   // 좌표를 주소로 변환
   convertToAddress: (lat, lng) =>

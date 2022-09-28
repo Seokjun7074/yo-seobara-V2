@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { __createPost, __getPost, __getPostLocation } from "../async/asyncPost";
+import {
+  __createPost,
+  __editPost,
+  __getPost,
+  __getPostLocation,
+} from "../async/asyncPost";
 
 const initialState = {
   update: true, // 무한스크롤 통신 억제기
@@ -36,6 +41,15 @@ const postSlice = createSlice({
     });
     builder.addCase(__createPost.rejected, (state, actions) => {
       alert("작성실패");
+    });
+    // 게시물 수정
+    builder.addCase(__editPost.fulfilled, (state, actions) => {
+      state.createPost = true;
+
+      alert("수정완료");
+    });
+    builder.addCase(__editPost.rejected, (state, actions) => {
+      alert("수정실패");
     });
     // 전체 게시물 조회
     builder.addCase(__getPost.fulfilled, (state, actions) => {
