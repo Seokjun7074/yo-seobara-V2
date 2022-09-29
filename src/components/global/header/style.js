@@ -40,3 +40,6 @@ export const LoginedButton = styled(AnonymousButton)`
 export const LogineButton = styled(AnonymousButton)`
   display: ${(props) => (props.isLogin ? "none" : null)};
 `;
+export const LogoutButton = styled(AnonymousButton)`
+  display: ${(props) => (props.isLogin ? null : "none")};
+`;
