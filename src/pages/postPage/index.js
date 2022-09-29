@@ -6,57 +6,20 @@ import AddressSearchContainer from "../../components/postpage/addressSearchConta
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { apis } from "../../api/postAPI";
+import useLocation from "../../hooks/useLocation";
 const PostPage = () => {
   const [pick, setPick] = useState({ lat: null, lng: null }); // 사용자가 위치 지정한 곳의 좌표
   const [pickedAddress, setPickAddress] =
     useState("주소에서 위치를 찍어주세요!"); // 사용자가 위치 지정한 곳의 좌표
-  const [location, setLocation] = useState({
-    // 현재 위치
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
-    },
-    errMsg: null,
-    isLoading: true,
-  });
-
   const [editData, setEditData] = useState({
     isEditting: false,
     title: "",
     content: "",
     imageUrls: [],
   });
-  let { postId } = useParams();
+  const [location] = useLocation();
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude, // 위도
-              lng: position.coords.longitude, // 경도
-            },
-            isLoading: false,
-          }));
-        },
-        (err) => {
-          setLocation((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
-        }
-      );
-    } else {
-      setLocation((prev) => ({
-        ...prev,
-        errMsg: "geolocation을 사용할수 없어요..",
-        isLoading: false,
-      }));
-    }
-  }, [setLocation]);
+  let { postId } = useParams();
 
   const fetchData = async () => {
     try {
