@@ -11,6 +11,7 @@ const Spinner = () => {
 export default Spinner;
 
 const SpinnerContainer = styled.div`
+  z-index: 99;
   width: 100vw;
   height: 100vh;
   position: fixed;

@@ -53,7 +53,7 @@ const Slider = ({
     setImageFile([...copyArr2]);
     setCurrentSlide(0);
   };
-  console.log(mouseOver);
+
   return (
     <SliderWrapper>
       <ButtonContainer count={TOTAL_SLIDES} onClick={prevSlide}>
