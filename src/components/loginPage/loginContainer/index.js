@@ -115,6 +115,7 @@ const LoginContainer = ({ login, setLogin }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={submitHandler}
+              style={{ padding: "8px" }}
             >
               로그인
             </Button>
@@ -126,6 +127,11 @@ const LoginContainer = ({ login, setLogin }) => {
               sx={{ mt: 3, mb: 2 }}
               //onClick={submitHandler}
               href={KAKAO_AUTH_URL}
+              style={{
+                marginTop: "10px",
+                marginBottom: "20px",
+                padding: "8px",
+              }}
             >
               카카오로 로그인하기
             </Button>

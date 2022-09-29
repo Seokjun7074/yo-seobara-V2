@@ -17,5 +17,3 @@ export const apis = {
     api.post("/api/member/signup/nicknameCheck", userData),
   kakaoLogin: (code) => api.get(`/member/kakao/callback?code=${code}`),
 };
-
-//kakaoLogin: (code) => api.get(`?code=${code}`),
