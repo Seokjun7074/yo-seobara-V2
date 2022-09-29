@@ -73,7 +73,8 @@ export const TextArea = styled.div`
   min-height: 40px;
   max-height: 70px;
   height: 100%;
-  padding: 10px;
+  /* padding: 10px; */
+  line-height: 40px;
   border-radius: 10px;
   text-align: center;
   font-size: 1.3rem;

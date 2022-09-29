@@ -83,7 +83,6 @@ const MainMapView = ({
     });
   }, []);
 
-  console.log(pickedLocation);
   return location.isLoading ? (
     <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
