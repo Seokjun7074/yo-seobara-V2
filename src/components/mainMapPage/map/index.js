@@ -5,6 +5,7 @@ import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
 import "./style.css";
 import Spinner from "../../global/spinner";
+import LocatioinSpot from "../../global/locationSpot";
 
 const MainMapView = ({
   location,
@@ -110,16 +111,11 @@ const MainMapView = ({
       >
         <BiCurrentLocation size={"30px"} color={"white"} />
       </LocationButton>
-      <MapMarker
-        position={location.center}
-        image={{
-          src: `${process.env.PUBLIC_URL}/images/reddot.png`, // 마커이미지의 주소입니다
-          size: {
-            width: 24,
-            height: 24,
-          }, // 마커이미지의 크기입니다
-        }}
-      />
+      {/* 현재위치 마커 */}
+      <CustomOverlayMap position={location.center}>
+        <LocatioinSpot />
+      </CustomOverlayMap>
+
       {locationList.map((data) => (
         <div key={data.postId}>
           <MapMarker
