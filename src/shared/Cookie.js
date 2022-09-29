@@ -1,4 +1,4 @@
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 // 쿠키 객체 생성
 const cookies = new Cookies();
@@ -9,7 +9,7 @@ export const setCookie = (name, value, exp) => {
   let date = new Date();
   date.setTime(exp);
   // date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value}; expires=${date.toUTCString()}`;
+  document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/;`;
   // return cookies.set(name, value, { ...option });
 };
 
