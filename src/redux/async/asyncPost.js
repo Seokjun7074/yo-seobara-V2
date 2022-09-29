@@ -21,8 +21,10 @@ export const __createPost = createAsyncThunk(
 export const __editPost = createAsyncThunk(
   "post/editPost",
   async (payload, thunkAPI) => {
+    console.log(payload);
     try {
       const data = await apis.editPost(payload.formData, payload.postId);
+      console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       // LOGIN_REQUIRED

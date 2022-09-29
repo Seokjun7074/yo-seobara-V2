@@ -17,7 +17,6 @@ import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { __createPost, __editPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const [title, titleHandler, setTitle] = useInput();
@@ -34,16 +33,13 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const submitData = {
     title: title,
     content: content,
-    // images: [],
     location: {
       lat: pick.lat,
       lng: pick.lng,
     },
     address: pickedAddress,
   };
-  console.log("imageFile:", imageFile);
-  // console.log("imageInput:", imageInput);
-  console.log(editData.imageUrls);
+  // console.log(imageFile);
   // 수정페이지 모드
   useEffect(() => {
     if (editData.isEditting) {
@@ -116,16 +112,14 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
       formData.append(`images`, e);
     });
     // console.log(formData);
-    for (let key of formData.keys()) {
-      console.log(key);
-    }
-    for (let value of formData.values()) {
-      console.log(value);
-    }
+    // for (let key of formData.keys()) {
+    //   console.log(key);
+    // }
+    // for (let value of formData.values()) {
+    //   console.log(value);
+    // }
 
     dispatch(__editPost({ formData: formData, postId: postId }));
-    // const res = await apis.editPost(formData, postId);
-    // console.log(res);
   };
 
   useEffect(() => {
@@ -148,7 +142,13 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     <>
       <InputContainerWrapper>
         <PhotoBox>
-          <Slider imageList={imageInput} />
+          <Slider
+            imageList={imageInput}
+            setImageInput={setImageInput}
+            imageFile={imageFile}
+            setImageFile={setImageFile}
+            isEdit={true}
+          />
           <ImageInputButton onClick={imageUpload}>
             <MdAddPhotoAlternate size={"50%"}></MdAddPhotoAlternate>
             <span>사진추가</span>
