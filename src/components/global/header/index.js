@@ -6,11 +6,13 @@ import {
   HeaderWrapper,
   LogineButton,
   LoginedButton,
+  LogoutButton,
 } from "./style";
 import { getCookie, deleteCookie } from "../../../shared/Cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateFalse } from "../../../redux/modules/postSlice";
+//import { set } from "immer/dist/internal";
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [nowURL, setNowURL] = useState("");
@@ -34,6 +36,14 @@ const Header = () => {
     }
   };
 
+  const Logout = () => {
+    deleteCookie("accessToken");
+    deleteCookie("refreshToken");
+    deleteCookie("nickname");
+    setIsLogin(false);
+    window.location.replace("/");
+  };
+
   return (
     <HeaderWrapper>
       <HeaderTitle>요 서바라</HeaderTitle>
@@ -41,6 +51,9 @@ const Header = () => {
         <LogineButton isLogin={isLogin} onClick={() => [navigate("/login")]}>
           로그인
         </LogineButton>
+        <LogoutButton isLogin={isLogin} onClick={Logout}>
+          로그아웃
+        </LogoutButton>
         <LoginedButton
           onClick={() => {
             navigate("/post");
