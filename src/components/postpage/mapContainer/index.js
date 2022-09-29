@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { apis } from "../../../api/postAPI";
+import LocatioinSpot from "../../global/locationSpot";
 import Spinner from "../../global/spinner";
 import { MapContainerWrapper } from "./style";
 
@@ -41,16 +42,10 @@ const MapContainer = ({ location, pick, setPick, setPickAddress }) => {
               });
             }}
           >
-            <MapMarker
-              position={location.center}
-              image={{
-                src: `${process.env.PUBLIC_URL}/images/location_marker.png`, // 마커이미지의 주소입니다
-                size: {
-                  width: 32,
-                  height: 32,
-                }, // 마커이미지의 크기입니다
-              }}
-            />
+            {/* 현재위치 마커 */}
+            <CustomOverlayMap position={location.center}>
+              <LocatioinSpot />
+            </CustomOverlayMap>
             {pick && <MapMarker position={pick} />}
           </Map>
         </>
