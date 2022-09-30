@@ -7,7 +7,6 @@ import UserPage from "./pages/userPage";
 import Login from "./pages/login";
 import PostPage from "./pages/postPage";
 import Kakao from "./components/loginPage/kakao";
-import EditPage from "./pages/editPage";
 
 const Router = () => {
   return (
