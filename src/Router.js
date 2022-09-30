@@ -6,8 +6,8 @@ import Detail from "./pages/detail";
 import UserPage from "./pages/userPage";
 import Login from "./pages/login";
 import PostPage from "./pages/postPage";
-import InfiniteScroll from "./components/infinifeScrollTest";
 import Kakao from "./components/loginPage/kakao";
+import EditPage from "./pages/editPage";
 
 const Router = () => {
   return (
@@ -16,11 +16,11 @@ const Router = () => {
         <Route path="/" element={<MainPhoto />} />
         <Route exact path="/map" element={<MainMap />} />
         <Route exact path="/post" element={<PostPage />} />
+        <Route exact path="/post/:postId" element={<PostPage />} />
         <Route exact path="/detail" element={<Detail />} />
 
         <Route exact path="/userpage/:nickname" element={<UserPage />} />
         <Route exact path="/login" element={<Login />} />
-        {/* <Route exact path="/scroll" element={<InfiniteScroll />} /> */}
         <Route exact path="/member/kakao/callback" element={<Kakao />} />
       </Routes>
     </BrowserRouter>

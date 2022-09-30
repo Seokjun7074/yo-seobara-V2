@@ -6,16 +6,10 @@ import Header from "../../components/global/header";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPost, __getPostLocation } from "../../redux/async/asyncPost";
 import { initCreatePost } from "../../redux/modules/postSlice";
+import useLocation from "../../hooks/useLocation";
+
 const MainMap = () => {
-  const [location, setLocation] = useState({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
-    },
-    errMsg: null,
-    isLoading: true,
-    isPanto: false,
-  });
+  const [location] = useLocation();
   const [toggleCustomOverlay, setToggleCustomOverlay] = useState(false); // 지도에 오버레이 토글
   const [pickedLocation, setPickedLocation] = useState({
     postId: null,
@@ -34,6 +28,7 @@ const MainMap = () => {
   useEffect(() => {
     dispatch(initCreatePost()); // 작성상태 초기화
   }, []);
+
   return (
     <MainMapWrapper>
       <Header></Header>
@@ -46,12 +41,10 @@ const MainMap = () => {
       ></LocationList>
       <MainMapView
         location={location}
-        setLocation={setLocation}
         locationList={locationList}
         pickedLocation={pickedLocation}
         setPickedLocation={setPickedLocation}
         setBoundary={setBoundary}
-        boundary={boundary}
         toggleCustomOverlay={toggleCustomOverlay}
         setToggleCustomOverlay={setToggleCustomOverlay}
       ></MainMapView>

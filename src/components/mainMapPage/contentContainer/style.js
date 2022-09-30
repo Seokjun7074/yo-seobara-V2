@@ -10,5 +10,19 @@ export const ContentContainerWrapper = styled.div`
   text-align: left;
   font-weight: 600;
   transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   cursor: pointer;
+`;
+
+export const ContentTitle = styled.h3`
+  font-size: ${(props) => props.theme.fontSizes.large};
+  color: ${(props) => (props.picked ? "white" : "black")};
+`;
+
+export const ContentAddress = styled.span`
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: ${(props) => (props.picked ? "#E9E9E9" : "#333333")};
 `;
