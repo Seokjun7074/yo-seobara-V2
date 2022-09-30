@@ -119,9 +119,9 @@ const RegisterContainer = ({ login, setLogin }) => {
 
     const res = await apis.registerUser(userObj);
     if (res.status == 200) {
+      alert("회원가입이 완료되었습니다!");
       setLogin(true);
     }
-    console.log(res);
   };
 
   return (
@@ -193,12 +193,6 @@ const RegisterContainer = ({ login, setLogin }) => {
                   inputRef={passwordConfirmInput}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
 
             <Button
@@ -229,10 +223,6 @@ const RegisterContainer = ({ login, setLogin }) => {
             <hr />
             <Grid container justifyContent="flex-end">
               <Grid item>
-                {/* <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link> */}
-
                 <button
                   onClick={() => {
                     setLogin(true);
@@ -244,7 +234,6 @@ const RegisterContainer = ({ login, setLogin }) => {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );
