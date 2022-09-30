@@ -8,11 +8,11 @@ import {
   LoginedButton,
   LogoutButton,
 } from "./style";
-import { getCookie, deleteCookie } from "../../../shared/Cookie";
+import { getCookie, deleteCookie, setCookie } from "../../../shared/Cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateFalse } from "../../../redux/modules/postSlice";
-//import { set } from "immer/dist/internal";
+
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [nowURL, setNowURL] = useState("");
@@ -40,6 +40,7 @@ const Header = () => {
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
     deleteCookie("nickname");
+
     setIsLogin(false);
     window.location.replace("/");
   };
