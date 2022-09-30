@@ -1,10 +1,11 @@
-import { ContentAddress, ContentContainerWrapper, ContentTitle } from "./style";
+import { Address, Content, ContentContainerWrapper, Title } from "./style";
 
 const ContentContainer = ({ data, picked }) => {
   return (
     <ContentContainerWrapper picked={picked}>
-      <ContentTitle picked={picked}>{data.title}</ContentTitle>
-      <ContentAddress picked={picked}> {data.address}</ContentAddress>
+      <Title picked={picked}>{data.title}</Title>
+      <Address picked={picked}>📌 {data.address}</Address>
+      <Content picked={picked}>🔍 {data.content}</Content>
     </ContentContainerWrapper>
   );
 };
