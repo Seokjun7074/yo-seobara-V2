@@ -19,11 +19,12 @@ export const __createPost = createAsyncThunk(
   }
 );
 
+
 export const __getPost = createAsyncThunk(
   "post/getPost",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.getPost(payload);
+      const data = await apis.getPostPic(payload);
       // console.log("res", data.data.data.number);
       const content = {
         content: data.data.data.content,

@@ -26,7 +26,7 @@ height: 350px;
 export const Detailside = styled.div`
 grid-area:side;
 max-height:100%;
-background-color: yellow;
+// background-color: yellow;
 overflow:auto;
 width: 100%;
 height: 100%;

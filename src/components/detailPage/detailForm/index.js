@@ -1,63 +1,54 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useState, useRef, useEffect } from "react";
-import { Block } from "@mui/icons-material";
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import {Form, FormBox, FormButton} from './style';
-import axios from "axios";
-import { getCookie } from "../../../shared/Cookie"; 
 
+import { useDispatch, useSelector } from "react-redux";
+import {__createComment} from "../../../redux/async/asyncComment";
 
 const DetailForm = (id) => {
-  const idNum= id.id;  // postId
-  // console.log(idNum);
-  // const [com, setCom] = useState(false);
+
+  const idNum= id.id;  
+ 
 
 
+  const dispatch = useDispatch();
 
-    const [value, setValue] = useState(); //Initial value should be empty
+  const commentStatus = useSelector((state) => state.comment); // 작성상태
+
+
+    const [value, setValue] = useState(); 
     const handleSubmit = (e)=> {
   
       e.preventDefault();
       
     }
 const inp = (e) => {
-  // console.log(e.target.value)
+ 
   setValue(e.target.value)
 
-  // console.log(textRef.current.value,'s')
+  
 }
 
-
-
-  const textRef = useRef();
-
-
-
-// console.log(value)
 const onButtonClick= async()=>{
-  await axios
-  .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`,
-   {
-    headers: {
-      // Authorization: `Bearer ${getCookie('accessToken')}`,
-      Authorization: `Bearer ${getCookie('accessToken')}`,
-    },  
-  },{
-    "content":value
+const comment = {
+  idNum:idNum,
+  data:value 
+}
+  if(value === ""){
+    alert("내용을 입력헤주세요");
+    return;
+  }else{
+  dispatch(__createComment(comment));
   }
-  )
-  .then((res) => {
-    console.log('성공');
-    
-  })
-  .catch((err) => console.log(err));
 
   setValue('')
+  alert('댓글작성완료');
+  window.location.reload();
 }
-// console.log(value)
+
 
   return (
     
@@ -65,8 +56,6 @@ const onButtonClick= async()=>{
      <FormBox onChange={handleSubmit}>
    
       <Form>
-
-
 
         <TextField
         sx={{m:1 ,width:'auto',height:'auto',display:'flex'}}
@@ -77,7 +66,6 @@ const onButtonClick= async()=>{
         multiline
         rows={2}
         value={value}
-        inputRef={textRef}
         onChange={inp}
       />
       </Form>

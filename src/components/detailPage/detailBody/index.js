@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BodyBox,
   BodyTop,
@@ -22,30 +22,42 @@ import axios from "axios";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useNavigate } from "react-router-dom";
-
-
+import CreatedAt from "../../global/createdAt";
+ 
+ 
 const DetailBody = (data) => {
 
 const navigate = useNavigate()
 
-const detail = data.data;
-const idNum = detail.id
-const [count,setCount] = useState(0);
 
-  // console.log(typeof(count));
-      
-  
-  const [heart, setHeart] = useState(false);
+
+const detail = data.data;
+const idNum = detail.postId
+
+
+
+
+ //메인에서받아오는데이터test
+const likeCount = 22; // 해당게시물의 좋아요개수
+// const likePostId = [46, 44,37,];  //유저가 좋아요한 게시물아이디
+const test = false; // 유저가 게시물좋아요하였는지 서버에서확인
+
+
+const [like,setLike] = useState(test); // 좋아요 트글
+ 
+ 
 
   const Like = () => {
-      if(heart){
-        setHeart(false);
+      if(like){
+        setLike(false);
         console.log('취소')
-        setCount(0);
+        
       }else{
-        setHeart(true);
+        setLike(true);
         console.log('좋아요')
-        setCount(1);
+
+
+        //서버 테스트
     //     await axios
     //   .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/heart`, {
     //    headers: {
@@ -62,43 +74,59 @@ const [count,setCount] = useState(0);
       }
   };
 
-  
-
-  const nowTime = moment().format(`${detail.createdAt}`), // 서버로부터 받은 작성,또는수정시간
-    startTime = new Date(nowTime);
 
   return (
     <BodyBox>
+
       <BodyTop>
 
-    {heart ? (
-      <button onClick={Like}><FavoriteIcon/></button>
-    ):(
-<button onClick={Like}><FavoriteBorderIcon/></button>
-    )}:{detail.heart + count}
-           
+{test ? (<>
+ {like ? (
+  <button onClick={Like}><FavoriteIcon/>:{likeCount } </button>
+  
+):(
+<button onClick={Like}><FavoriteBorderIcon/>:{likeCount -1} </button>
+)}  
+</>   
+): (
+<>
+{like ? (
+  <button onClick={Like}><FavoriteIcon/>:{likeCount+1 } </button>
+  
+):(
+<button onClick={Like}><FavoriteBorderIcon/>:{likeCount } </button>
+)} 
+</>
+)}
+
+      
+      
       </BodyTop>
 
       <BodySide>
-        <Grid container sx={{ color: "text.primary" }}>
-          <DeleteIcon />
-        </Grid>
-        수정랑 삭제
+        지도로표시하기
+        작업중
       </BodySide>
 
       <BodyHeader>주소:{detail.address}</BodyHeader>
+
       <BodyTitle>
-        <UseName onClick={() => navigate(`/userpage/${detail.nickname}`)}>
+        <UseName onClick={() => navigate(`/post/${detail.postId}`,
+          {state: detail}
+        )}>
           {detail.nickname}님의
-          </UseName>
+        </UseName>
         {detail.title}
       </BodyTitle>
+      
       <BodyMain>내용:{detail.content}</BodyMain>
+      
       <Footer>
         <Time>
-          <Moment fromNow>{startTime}</Moment>
+          <CreatedAt time={detail.createdAt}/>
         </Time>
       </Footer>
+    
     </BodyBox>
   );
 };

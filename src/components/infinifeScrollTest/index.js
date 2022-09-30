@@ -10,7 +10,7 @@ import Modal from "../global/modal";
 import axios from "axios";
 import Spinner from "../global/spinner";
 
-const InfiniteScroll = () => {
+const InfiniteScrollTest = () => {
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
@@ -82,7 +82,7 @@ const InfiniteScroll = () => {
   );
 };
 
-export default InfiniteScroll;
+export default InfiniteScrollTest;
 
 const TestComponent = ({ modalToggel }) => {
   return (

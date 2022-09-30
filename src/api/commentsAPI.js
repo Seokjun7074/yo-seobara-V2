@@ -1,38 +1,34 @@
-// 댓글 관련 API
-// import axios from "axios";
+//댓글 관련 API
+import axios from "axios";
+import { getCookie } from "../shared/Cookie";
 
-// export const instance = axios.create({
-//     baseURL: "",
-//     withCredentials: true,
-//     headers: {
-//     "Content-Type": "application/json",
-// }
-// });
+const instance = axios.create({
+  baseURL: `${process.env.REACT_APP_API_URL}`,
+  withCredentials: true,
+});
 
-// instance.interceptors.request.use(
-//     (config) => {
-//         const token = localStorage.getItem("token");
-//         if (token) {
-//             config.headers["Authorization"] = `Bearer ${token}`
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         console.log(error);
-//         return Promise.reject(error);
-//     }
-// );
+export const apis = {
 
-// const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
-// //토큰불러올자리
+    //댓글조회
+    getComment: (postId) =>
+    instance.get(`/api/posts/${postId}/comments`, {
+      headers: {
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+      }),
 
+    //댓글작성
+    createComment: (idNum, data) => 
+      instance.post(
+        `/api/posts/${idNum}/comments`,{'content':data},{
+            headers: {
+                Authorization: `Bearer ${getCookie("accessToken")}`,
+              }, 
+        }),
 
-// //댓글불러오기
-// export const uploadComment = () =>{
-
-// }
+    };
 
 
 
 
-//댓글등록
+
