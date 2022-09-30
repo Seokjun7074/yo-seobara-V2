@@ -26,7 +26,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const imageRef = useRef();
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
-
+  const IMAGE_SIZE_LIMIT = 1 * (1024 * 1024);
   const postStatus = useSelector((state) => state.post); // 작성상태
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +39,6 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     },
     address: pickedAddress,
   };
-  // console.log(imageFile);
   // 수정페이지 모드
   useEffect(() => {
     if (editData.isEditting) {
@@ -71,13 +70,18 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     const imageURLList = [...imageInput]; // 미리보기용 사진
     const imageFileList = [...imageFile]; // 서버로 보낼 사진
     for (let i = 0; i < selectedImageList.length; i++) {
-      const imageURL = URL.createObjectURL(selectedImageList[i]);
-      imageURLList.push(imageURL);
-      imageFileList.push(selectedImageList[i]);
+      if (selectedImageList[i].size > IMAGE_SIZE_LIMIT) {
+        alert("1MB 이상 이미지는 업로드가 불가능 합니다.");
+      } else {
+        const imageURL = URL.createObjectURL(selectedImageList[i]);
+        imageURLList.push(imageURL);
+        imageFileList.push(selectedImageList[i]);
+      }
     }
     setImageInput(imageURLList);
     setImageFile(imageFileList);
   };
+
   const onSubmit = () => {
     if (title === "" || content === "") {
       alert("내용을 입력해주세요.");
@@ -95,38 +99,20 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
         "postRequestDto",
         new Blob([JSON.stringify(submitData)], { type: "application/json" })
       );
-      imageFile.forEach((e, idx) => {
-        formData.append(`images`, e);
-      });
-      dispatch(__createPost(formData));
-    }
-  };
-
-  const editSubmit = async () => {
-    if (title === "" || content === "") {
-      alert("내용을 입력해주세요.");
-      return;
-    } else if (imageFile.length === 0) {
-      alert("사진을 추가해주세요.");
-      return;
-    } else if (
-      submitData.location.lat === undefined ||
-      submitData.location.lng === undefined
-    ) {
-      alert("지도에 위치를 표시해주세요.");
-    } else {
-      formData.append(
-        "postRequestDto",
-        new Blob([JSON.stringify(submitData)], { type: "application/json" })
-      );
-      imageFile.forEach((e, idx) => {
-        formData.append(`newImages`, e);
-      });
-      try {
-        dispatch(__editPost({ formData: formData, postId: postId }));
-      } catch (e) {
-        alert("통신에 실패했습니다. 다시 시도해주세요.");
+      if (editData.isEditting) {
+        imageFile.forEach((e, idx) => {
+          formData.append(`newImages`, e);
+        });
+      } else {
+        imageFile.forEach((e, idx) => {
+          formData.append(`images`, e);
+        });
       }
+      dispatch(
+        editData.isEditting
+          ? __editPost({ formData: formData, postId: postId })
+          : __createPost(formData)
+      );
     }
   };
 
@@ -164,7 +150,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           <input
             type="file"
             multiple="multiple"
-            accept="image"
+            accept="image/gif, image/jpeg, image/png"
             style={{ display: "none" }}
             ref={imageRef}
             onChange={addImage}
@@ -199,7 +185,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           </LabelBox>
         </InputBox>
       </InputContainerWrapper>
-      <SubmitButton onClick={editData.isEditting ? editSubmit : onSubmit}>
+      <SubmitButton onClick={onSubmit}>
         {editData.isEditting ? "수정하기" : "제출하기"}
       </SubmitButton>
     </>
