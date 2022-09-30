@@ -78,7 +78,6 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     setImageInput(imageURLList);
     setImageFile(imageFileList);
   };
-
   const onSubmit = () => {
     if (title === "" || content === "") {
       alert("내용을 입력해주세요.");
@@ -104,22 +103,31 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   };
 
   const editSubmit = async () => {
-    formData.append(
-      "postRequestDto",
-      new Blob([JSON.stringify(submitData)], { type: "application/json" })
-    );
-    imageFile.forEach((e, idx) => {
-      formData.append(`images`, e);
-    });
-    // console.log(formData);
-    // for (let key of formData.keys()) {
-    //   console.log(key);
-    // }
-    // for (let value of formData.values()) {
-    //   console.log(value);
-    // }
-
-    dispatch(__editPost({ formData: formData, postId: postId }));
+    if (title === "" || content === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    } else if (imageFile.length === 0) {
+      alert("사진을 추가해주세요.");
+      return;
+    } else if (
+      submitData.location.lat === undefined ||
+      submitData.location.lng === undefined
+    ) {
+      alert("지도에 위치를 표시해주세요.");
+    } else {
+      formData.append(
+        "postRequestDto",
+        new Blob([JSON.stringify(submitData)], { type: "application/json" })
+      );
+      imageFile.forEach((e, idx) => {
+        formData.append(`newImages`, e);
+      });
+      try {
+        dispatch(__editPost({ formData: formData, postId: postId }));
+      } catch (e) {
+        alert("통신에 실패했습니다. 다시 시도해주세요.");
+      }
+    }
   };
 
   useEffect(() => {
