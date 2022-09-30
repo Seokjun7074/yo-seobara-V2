@@ -60,3 +60,8 @@ export const Time = styled.p`
 font-size: 17px;
 // display:block;
 `;
+
+export const UseName = styled.div`
+font-size: 17px;
+background-color:red; 
+`;

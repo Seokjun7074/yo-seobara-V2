@@ -18,6 +18,7 @@ const Router = () => {
         <Route exact path="/post" element={<PostPage />} />
         <Route exact path="/post/:postId" element={<PostPage />} />
         <Route exact path="/detail" element={<Detail />} />
+
         <Route exact path="/userpage/:nickname" element={<UserPage />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/member/kakao/callback" element={<Kakao />} />
