@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
 import {
   __createPost,
   __editPost,
@@ -58,8 +57,7 @@ const postSlice = createSlice({
       state.update = false;
     });
     builder.addCase(__getPost.rejected, (state, actions) => {
-      // console.log("actions", actions);
-      alert("게시물 불러오기 실패 새로고침 해보슈");
+      alert("게시물 불러오기 실패 새로고침 해보세요.");
     });
     // 좌표기준 게시물 조회
     builder.addCase(__getPostLocation.fulfilled, (state, actions) => {
@@ -67,8 +65,7 @@ const postSlice = createSlice({
       // console.log(state);
     });
     builder.addCase(__getPostLocation.rejected, (state, actions) => {
-      // console.log("actions", actions);
-      alert("게시물 불러오기 실패 새로고침 해보슈");
+      alert("게시물 불러오기 실패 새로고침 해보세요.");
     });
   },
 });
