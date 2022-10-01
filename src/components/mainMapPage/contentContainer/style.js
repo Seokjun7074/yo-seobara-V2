@@ -12,9 +12,8 @@ export const ContentContainerWrapper = styled.div`
   transition: 0.3s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  gap: 5px;
+
   white-space: nowrap;
   cursor: pointer;
   :hover {
@@ -32,6 +31,8 @@ export const Address = styled.span`
   font-weight: 400;
   font-size: 1.3rem;
   color: ${(props) => (props.picked ? "#E9E9E9" : "gray")};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Content = styled.p`
