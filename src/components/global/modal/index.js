@@ -3,7 +3,6 @@ import { ModalWrapper, ModalContainer, ModalButton } from "./style";
 
 function Modal({ btn_title, modalToggel, setModlaToggle, children }) {
   // const [modalToggel, setModlaToggle] = useState(false);
-
   const closeModal = () => {
     setModlaToggle({ ...modalToggel, open: false });
   };
