@@ -26,7 +26,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const imageRef = useRef();
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
-  const IMAGE_SIZE_LIMIT = 1 * (1024 * 1024);
+  const IMAGE_SIZE_LIMIT = 10 * (1024 * 1024);
   const postStatus = useSelector((state) => state.post); // 작성상태
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     const imageFileList = [...imageFile]; // 서버로 보낼 사진
     for (let i = 0; i < selectedImageList.length; i++) {
       if (selectedImageList[i].size > IMAGE_SIZE_LIMIT) {
-        alert("1MB 이상 이미지는 업로드가 불가능 합니다.");
+        alert("10MB 이상 이미지는 업로드가 불가능 합니다.");
       } else {
         const imageURL = URL.createObjectURL(selectedImageList[i]);
         imageURLList.push(imageURL);

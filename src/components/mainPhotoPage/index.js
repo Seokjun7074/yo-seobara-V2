@@ -12,7 +12,7 @@ import "./style.css";
 //다른페이지
 import Modal from "../global/modal/index";
 import Detail from "../../pages/detail";
-import {incrementPage, updateTrue} from '../../redux/modules/postSlice';
+import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 import { __getPost } from "../../redux/async/asyncPost";
 import { __getComment } from "../../redux/async/asyncComment";
 import { getCookie } from "../../shared/Cookie";
@@ -22,46 +22,35 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-import {useSelector,useDispatch} from 'react-redux';
-
-
-
+import { useSelector, useDispatch } from "react-redux";
 
 const MainPhotoCard = () => {
-  
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
-
-const datas = useSelector((state)=>state.post.data);
-const page = useSelector((state) => state.post.page);
-const update = useSelector((state) => state.post.update);
+  const datas = useSelector((state) => state.post.data);
+  const page = useSelector((state) => state.post.page);
+  const update = useSelector((state) => state.post.update);
 
 
-console.log(datas);
-const [ref, inView] = useInView({
+  const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
 
-
   // `page` 가 바뀔 때 마다 함수 실행
   useEffect(() => {
-    if(update){
+    if (update) {
       dispatch(__getPost(page));
     }
-
   }, [page]);
-
-
 
   // 사용자가 마지막 요소를 보고 있으면
   useEffect(() => {
     if (inView) {
       dispatch(incrementPage());
-     dispatch(updateTrue());
+      dispatch(updateTrue());
     }
   }, [inView]);
-
 
   const Columns = {
     default: 4,
@@ -70,17 +59,14 @@ const [ref, inView] = useInView({
     700: 1,
   };
 
-
   const [modalToggel, setModlaToggle] = useState({
     open: false,
     loading: false,
     data: {},
   });
 
-const ee = 44;
+  const ee = 44;
 
-  
-  
   return (
     <>
       <Masonry
@@ -98,13 +84,12 @@ const ee = 44;
                       setModlaToggle((prev) => {
                         return { ...prev, open: true, loading: true };
                       });
-        
-                      dispatch(__getComment(item.postId))
+                      dispatch(__getComment(item.postId));
                       //기존데이터에 댓글추가
-                       setModlaToggle((prev) => {
+                      setModlaToggle((prev) => {
                         return {
                           ...prev,
-                          data: {  ...item },
+                          data: { ...item },
                           loading: false,
                         };
                       });
@@ -137,7 +122,6 @@ const ee = 44;
                   />
                 </ImageListItem>
                 {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
-              
               </Box>
             ) : (
               <>
@@ -148,12 +132,12 @@ const ee = 44;
                         setModlaToggle((prev) => {
                           return { ...prev, open: true, loading: true };
                         });
-                  
-                        dispatch(__getComment({postId:item.postId}));
+
+                        dispatch(__getComment({ postId: item.postId }));
                         setModlaToggle((prev) => {
                           return {
                             ...prev,
-                            data: {  ...item },
+                            data: { ...item },
                             loading: false,
                           };
                         });
@@ -186,7 +170,6 @@ const ee = 44;
                     />
                   </ImageListItem>
                   {item.postId}
-             
                 </Box>
               </>
             )}
@@ -194,7 +177,7 @@ const ee = 44;
         ))}
       </Masonry>
       <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-         <Detail item={modalToggel.data} />
+        <Detail item={modalToggel.data} />
       </Modal>
     </>
   );

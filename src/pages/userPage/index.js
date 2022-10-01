@@ -28,7 +28,6 @@ const UserPage = () => {
     }
     //쿠키닉네임 === params
   }, [page]);
-  // console.log(lastPage, page);
   return (
     <UserPageWrapper>
       <Header></Header>

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Masonry from "react-masonry-css";
+import { useDispatch } from "react-redux";
+import Detail from "../../../pages/detail";
+import { __getComment } from "../../../redux/async/asyncComment";
+import ModalCopy from "../../global/modal copy";
 import { CheckBar, ImageWrapper } from "./style";
 
 const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
@@ -8,7 +12,7 @@ const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
-  // console.log(dataList);
+  const dispatch = useDispatch();
 
   const Columns = {
     default: 4,
@@ -24,8 +28,19 @@ const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
     }
   }, [inView]);
 
+  const [modalToggel, setModlaToggle] = useState({
+    open: false,
+    loading: false,
+    data: {},
+  });
+
   return (
     <>
+      {modalToggel.open && (
+        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+          <Detail item={modalToggel.data} />
+        </ModalCopy>
+      )}
       <Masonry
         breakpointCols={Columns}
         className="my-masonry-grid"
@@ -33,7 +48,15 @@ const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
       >
         {dataList.map((data) => {
           return (
-            <div key={data.postId}>
+            <div
+              key={data.postId}
+              onClick={() => {
+                dispatch(__getComment({ postId: data.postId }));
+                setModlaToggle((prev) => {
+                  return { ...prev, open: true, data: { ...data } };
+                });
+              }}
+            >
               <ImageWrapper src={data.thumbnailUrl} alt="" />
             </div>
           );
