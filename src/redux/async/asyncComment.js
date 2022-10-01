@@ -24,6 +24,7 @@ async(payload, thunkAPI) => {
          console.log(data);
     }catch(error){
       const error_code = error.response.data.errorCode.code;
+      console.log(error_code);
       if (error_code === "LOGIN_REQUIRED") {
         return thunkAPI.rejectWithValue(error_code);
       } else {console.log(payload); 

@@ -57,6 +57,14 @@ export const apis = {
       },
     }),
 
+    // 게시물 삭제
+    deletePost: (postId) =>
+  instance.delete(`/api/posts/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("accessToken")}`,
+    },
+  }),
+
   // 좌표를 주소로 변환
   convertToAddress: (lat, lng) =>
     instance.get(`/api/map/address?lat=${lat}&lng=${lng}`),

@@ -27,11 +27,11 @@ import { getCookie } from "../../shared/Cookie";
 
 const Detail = (item) => {
   
-const navigator = useNavigate();
+const navigate = useNavigate();
 
   const data = item.item;
   const idNum = data.postId;
-  console.log(item);
+  console.log(idNum);
   // console.log(dummydata.url);
 
   const user = getCookie('nickname');  //로그인한 유저닉네임
@@ -42,6 +42,7 @@ const navigator = useNavigate();
   const handleClose = () => setOpen(false);
 
 const updateClick = () => {
+  navigate(`/post/${idNum}`);
 console.log('수정');
 }
 

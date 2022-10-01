@@ -36,6 +36,8 @@ const datas = useSelector((state)=>state.post.data);
 const page = useSelector((state) => state.post.page);
 const update = useSelector((state) => state.post.update);
 
+
+console.log(datas);
 const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중

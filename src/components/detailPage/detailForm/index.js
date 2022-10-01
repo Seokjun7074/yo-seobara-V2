@@ -1,6 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import {Form, FormBox, FormButton} from './style';
@@ -11,7 +11,7 @@ import {__createComment} from "../../../redux/async/asyncComment";
 const DetailForm = (id) => {
 
   const idNum= id.id;  
- 
+  const textRef = useRef();
 
 
   const dispatch = useDispatch();
@@ -33,20 +33,22 @@ const inp = (e) => {
 }
 
 const onButtonClick= async()=>{
+  // console.log(value);
 const comment = {
   idNum:idNum,
   data:value 
 }
-  if(value === ""){
+  if(value === "" || value == undefined){
     alert("내용을 입력헤주세요");
-    return;
+    // return;
   }else{
+    console.log(value);
   dispatch(__createComment(comment));
-  }
 
+  // window.location.reload();
+  }
   setValue('')
-  alert('댓글작성완료');
-  window.location.reload();
+  
 }
 
 
@@ -66,6 +68,7 @@ const comment = {
         multiline
         rows={2}
         value={value}
+        ref={textRef}
         onChange={inp}
       />
       </Form>

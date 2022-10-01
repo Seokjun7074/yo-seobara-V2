@@ -33,12 +33,15 @@ const navigate = useNavigate()
 
 const detail = data.data;
 const idNum = detail.postId
+// console.log(detail);
 
+//서버열면 사용할코드
+const likeCount = detail.heart;
 
 
 
  //메인에서받아오는데이터test
-const likeCount = 22; // 해당게시물의 좋아요개수
+// const likeCount = 22; // 해당게시물의 좋아요개수
 // const likePostId = [46, 44,37,];  //유저가 좋아요한 게시물아이디
 const test = false; // 유저가 게시물좋아요하였는지 서버에서확인
 
@@ -111,7 +114,7 @@ const [like,setLike] = useState(test); // 좋아요 트글
       <BodyHeader>주소:{detail.address}</BodyHeader>
 
       <BodyTitle>
-        <UseName onClick={() => navigate(`/post/${detail.postId}`,
+        <UseName onClick={() => navigate(`/userpage/${detail.nickname}`,
           {state: detail}
         )}>
           {detail.nickname}님의

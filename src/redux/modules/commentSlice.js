@@ -36,7 +36,14 @@ const commentSlice = createSlice({
             alert("작성완료");
           });
           builder.addCase(__createComment.rejected, (state, actions) => {
+            if(actions.payload === "LOGIN_REQUIRED"){
+              alert("로그인한 유저가아닙니다");
+            }else{
+              console.log(actions.payload);
             alert("작성실패");
+            }
+            
+            
           });
 
       
