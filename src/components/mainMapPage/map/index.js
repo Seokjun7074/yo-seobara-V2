@@ -8,6 +8,7 @@ import Spinner from "../../global/spinner";
 import LocatioinSpot from "../../global/locationSpot";
 import ModalCopy from "../../global/modal copy";
 import Detail from "../../../pages/detail";
+import isLogin from "../../../shared/isLogin";
 
 const MainMapView = ({
   location,
@@ -34,7 +35,6 @@ const MainMapView = ({
       },
     });
   };
-
   const onCreate = useCallback(() => {
     const map = mapRef.current;
 
