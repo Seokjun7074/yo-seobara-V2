@@ -56,6 +56,7 @@ const LoginContainer = ({ login, setLogin }) => {
       setCookie("accessToken", token.accessToken, token.accessTokenExpiresIn);
       setCookie("refreshToken", token.refreshToken);
       setCookie("nickname", res.data.data.nickname);
+      setCookie("memberId", res.data.data.id);
 
       alert("로그인 성공");
       navigate("/");
