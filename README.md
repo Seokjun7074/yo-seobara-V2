@@ -17,22 +17,41 @@
 </div>
 
 <br></br>
-## 🧑‍💻 기술 특장점 🧑‍💻
+## 💻 기술 특장점 
 <details>
-<summary> 👨‍💻 고민중</summary>
-<br>
-써보자
+<summary> 고민중</summary>
 - ㅇㅇㅇ
 - ㅇㅇㅇㅇㅇ
 - ㅇㅇㅇㅇㅇㅇ
 - 협업방식(코드컨벤션등)
 - 트러블슈팅 / 리펙토링
 </details>
-
-
-
-
 <br></br>
+
+## 💻 트러블슈팅
+<details>
+<summary> 고민중</summary>
+- ㅇㅇㅇ
+- ㅇㅇㅇㅇㅇ
+- ㅇㅇㅇㅇㅇㅇ
+- 협업방식(코드컨벤션등)
+- 트러블슈팅 / 리펙토링
+</details>
+<br></br>
+
+## 💻 협업방식
+<details>
+<summary> 고민중</summary>
+- ㅇㅇㅇ
+- ㅇㅇㅇㅇㅇ
+- ㅇㅇㅇㅇㅇㅇ
+- 협업방식(코드컨벤션등)
+- 트러블슈팅 / 리펙토링
+</details>
+<br></br>
+
+
+## 💻 만든 사람
 | 이석준 | 이예찬 | 서정희|
 |:-----------:|:-----------:|:-----------:|
 | ![이석준](https://user-images.githubusercontent.com/109025674/193542311-15be2f67-ccbb-4383-8c74-2ca9da505ecd.png)|![이예찬](https://user-images.githubusercontent.com/109025674/193542349-5cff393d-570a-4918-9674-258e0b371c88.png)|![서정희](https://user-images.githubusercontent.com/109025674/193542379-6bd3276d-5304-456f-9cb0-942815ea19ad.png)|
