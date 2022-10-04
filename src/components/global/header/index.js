@@ -40,6 +40,7 @@ const Header = () => {
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
     deleteCookie("nickname");
+    deleteCookie("memberId");
 
     setIsLogin(false);
     window.location.replace("/");
