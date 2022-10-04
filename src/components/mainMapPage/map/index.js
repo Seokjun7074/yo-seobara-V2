@@ -1,11 +1,13 @@
 import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import { BiCurrentLocation } from "react-icons/bi";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ImageContainer, LocationButton, SearchButton } from "./style";
 import { useCallback } from "react";
 import "./style.css";
 import Spinner from "../../global/spinner";
 import LocatioinSpot from "../../global/locationSpot";
+import ModalCopy from "../../global/modal copy";
+import Detail from "../../../pages/detail";
 
 const MainMapView = ({
   location,
@@ -32,7 +34,6 @@ const MainMapView = ({
       },
     });
   };
-
   const onCreate = useCallback(() => {
     const map = mapRef.current;
 
@@ -50,6 +51,11 @@ const MainMapView = ({
     });
   }, []);
 
+  const [modalToggel, setModlaToggle] = useState({
+    open: false,
+    loading: false,
+    data: {},
+  });
   return location.isLoading ? (
     <Spinner /> // 로딩중에 보여줄 스피너 컴포넌트
   ) : (
@@ -62,12 +68,22 @@ const MainMapView = ({
       style={{ width: "100%", height: "100%" }}
       ref={mapRef}
       onCreate={onCreate}
-      onClick={(_t, mouseEvent) => {
+      onClick={(event) => {
         setPickedLocation({
           ...pickedLocation,
           postId: null,
         });
       }}
+      // 위치 계속 변경
+      onCenterChanged={(map) =>
+        setPickedLocation({
+          postId: pickedLocation.postId,
+          location: {
+            lat: map.getCenter().getLat(),
+            lng: map.getCenter().getLng(),
+          },
+        })
+      }
     >
       <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
       <LocationButton
@@ -98,14 +114,28 @@ const MainMapView = ({
           {data.postId === pickedLocation.postId && toggleCustomOverlay ? (
             <CustomOverlayMap // 커스텀 오버레이를 표시할 Container
               position={data.location}
+              clickable={true}
             >
-              <div className="balloon">
+              <div
+                className="balloon"
+                onClick={(e) => {
+                  // console.log(e);
+                  setModlaToggle((prev) => {
+                    return { ...prev, open: true, data: { ...data } };
+                  });
+                }}
+              >
                 <ImageContainer src={`${data.thumbnailUrl}`} />
               </div>
             </CustomOverlayMap>
           ) : null}
         </div>
       ))}
+      {modalToggel.open && (
+        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+          <Detail item={modalToggel.data} />
+        </ModalCopy>
+      )}
     </Map>
   );
 };

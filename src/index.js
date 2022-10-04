@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Router from "./Router";
+import Router from "./router/Router";
 import GlobalStyle from "./style/globalStyle";
 import { ThemeProvider } from "styled-components";
 import theme from "./style/theme";

@@ -5,6 +5,7 @@ import { getCookie, setCookie } from "../../shared/Cookie";
 
 const Kakao = () => {
   const navigate = useNavigate();
+
   useEffect(() => {
     const SocialLoginKakao = async () => {
       let code = new URL(window.location.href).searchParams.get("code");
@@ -15,6 +16,7 @@ const Kakao = () => {
         setCookie("accessToken", token.accessToken, token.accessTokenExpiresIn);
         setCookie("refreshToken", token.refreshToken);
         setCookie("nickname", token.nickname);
+        setCookie("memberId", token.memberId);
 
         alert("카카오 로그인이 완료되었습니다!");
         window.location.replace("/");
