@@ -6,8 +6,8 @@ export const BodyBox = styled.div`
 
 height:100%;
 display: grid;
-grid-template-columns: 2fr 3fr;
-grid-template-rows:1fr 1fr 2fr 3fr 1fr;
+grid-template-columns: 2fr ;
+grid-template-rows:1fr 2fr 3fr 4fr 1fr;
 grid-template-areas:
 'top side'
 'header header'
@@ -19,7 +19,9 @@ grid-template-areas:
 export const BodyTop = styled.div`
 grid-area:top;
 border:1px solid ${(props) => props.theme.color.blue};
-
+display : flex;
+justify-content : center;
+align-items : center;
 
 `;
 
@@ -54,11 +56,14 @@ export const Footer = styled.div`
 grid-area:footer;
 border-radius:1px;
 border:1px solid ${(props) => props.theme.color.blue};
-
+display : flex;
+justify-content : center;
+align-items : center;
 
 `;
 export const Time = styled.p`
 font-size: 17px;
+
 `;
 
 export const UseName = styled.div`

@@ -1,11 +1,16 @@
-import * as React from "react";
+//mui css
 import TextField from "@mui/material/TextField";
-import { useState,useRef } from "react";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+
+//내부 css
 import {Form, FormBox, FormButton} from './style';
 
+import * as React from "react";
+import { useState,useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//컴포넌트
 import {__createComment} from "../../../redux/async/asyncComment";
 
 const DetailForm = (id) => {
@@ -20,16 +25,13 @@ const DetailForm = (id) => {
 
 
     const [value, setValue] = useState(); 
-    const handleSubmit = (e)=> {
-  
-      e.preventDefault();
-      
-    }
-const inp = (e) => {
- 
-  setValue(e.target.value)
 
-  
+    const handleSubmit = (e)=> {
+      e.preventDefault();
+    }
+
+const inp = (e) => {
+  setValue(e.target.value)
 }
 
 const onButtonClick= async()=>{
@@ -42,7 +44,7 @@ const comment = {
     alert("내용을 입력헤주세요");
     // return;
   }else{
-    console.log(value);
+    // console.log(comment);
   dispatch(__createComment(comment));
 
   // window.location.reload();

@@ -15,7 +15,7 @@ import Detail from "../../pages/detail";
 import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 import { __getPost } from "../../redux/async/asyncPost";
 import { __getComment } from "../../redux/async/asyncComment";
-import { getCookie } from "../../shared/Cookie";
+import ModalCopy from "../global/modal copy";
 
 //
 import * as React from "react";
@@ -31,6 +31,7 @@ const MainPhotoCard = () => {
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
 
+//  console.log(datas);
 
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
@@ -65,7 +66,7 @@ const MainPhotoCard = () => {
     data: {},
   });
 
-  const ee = 44;
+ 
 
   return (
     <>
@@ -76,7 +77,7 @@ const MainPhotoCard = () => {
       >
         {datas.map((item, idx) => (
           <div key={item.postId}>
-            {datas.length - 1 == idx ? (
+           
               <Box>
                 <ImageListItem key={item.img}>
                   <div
@@ -84,7 +85,7 @@ const MainPhotoCard = () => {
                       setModlaToggle((prev) => {
                         return { ...prev, open: true, loading: true };
                       });
-                      dispatch(__getComment(item.postId));
+                      dispatch(__getComment({ postId: item.postId }));
                       //기존데이터에 댓글추가
                       setModlaToggle((prev) => {
                         return {
@@ -116,69 +117,28 @@ const MainPhotoCard = () => {
                         }}
                         aria-label={`info about ${item.title}`}
                       >
-                        <InfoIcon />
                       </IconButton>
                     }
                   />
                 </ImageListItem>
-                {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
+                {item.postId}
               </Box>
-            ) : (
-              <>
-                <Box>
-                  <ImageListItem key={item.img}>
-                    <div
-                      onClick={async () => {
-                        setModlaToggle((prev) => {
-                          return { ...prev, open: true, loading: true };
-                        });
-
-                        dispatch(__getComment({ postId: item.postId }));
-                        setModlaToggle((prev) => {
-                          return {
-                            ...prev,
-                            data: { ...item },
-                            loading: false,
-                          };
-                        });
-                      }}
-                    >
-                      <ImageWrapper
-                        key={item.postId}
-                        src={item.thumbnailUrl}
-                        alt=""
-                      />
-                    </div>
-
-                    <ImageListItemBar
-                      sx={{
-                        borderBottomRightRadius: 10,
-                        borderBottomLeftRadius: 10,
-                      }}
-                      title={item.title}
-                      subtitle={item.author}
-                      actionIcon={
-                        <IconButton
-                          sx={{
-                            color: "rgba(255, 255, 255, 0.54)",
-                          }}
-                          aria-label={`info about ${item.title}`}
-                        >
-                          <InfoIcon />
-                        </IconButton>
-                      }
-                    />
-                  </ImageListItem>
-                  {item.postId}
-                </Box>
-              </>
-            )}
+           
           </div>
         ))}
+
+
       </Masonry>
-      <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-        <Detail item={modalToggel.data} />
-      </Modal>
+{datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
+
+ {modalToggel.open && (
+    <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+      <Detail item={modalToggel.data} />
+    </ModalCopy>
+  )
+}
+
+
     </>
   );
 };
