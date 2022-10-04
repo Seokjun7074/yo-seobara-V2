@@ -8,7 +8,6 @@ import Spinner from "../../global/spinner";
 import LocatioinSpot from "../../global/locationSpot";
 import ModalCopy from "../../global/modal copy";
 import Detail from "../../../pages/detail";
-import isLogin from "../../../shared/isLogin";
 
 const MainMapView = ({
   location,
@@ -70,21 +69,21 @@ const MainMapView = ({
       ref={mapRef}
       onCreate={onCreate}
       onClick={(event) => {
-        console.log("click");
         setPickedLocation({
           ...pickedLocation,
           postId: null,
         });
       }}
       // 위치 계속 변경
-      // onCenterChanged={(map) =>
-      //   setPickedLocation({
-      //     location: {
-      //       lat: map.getCenter().getLat(),
-      //       lng: map.getCenter().getLng(),
-      //     },
-      //   })
-      // }
+      onCenterChanged={(map) =>
+        setPickedLocation({
+          postId: pickedLocation.postId,
+          location: {
+            lat: map.getCenter().getLat(),
+            lng: map.getCenter().getLng(),
+          },
+        })
+      }
     >
       <SearchButton onClick={searchPosition}>현 지도에서 검색</SearchButton>
       <LocationButton
