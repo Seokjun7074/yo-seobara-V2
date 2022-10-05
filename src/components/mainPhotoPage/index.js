@@ -31,7 +31,7 @@ const MainPhotoCard = () => {
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
 
-//  console.log(datas);
+ console.log(datas[0]);
 
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
@@ -121,7 +121,7 @@ const MainPhotoCard = () => {
                     }
                   />
                 </ImageListItem>
-                {item.postId}
+                
               </Box>
            
           </div>

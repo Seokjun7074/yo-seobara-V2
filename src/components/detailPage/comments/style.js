@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
-// export const Time = styled.p`
-// font-size: 17px;
-// // display:block;
-// `;
+
 export const Text = styled.p`
 width: 100%;
 height: 100%;
@@ -35,7 +32,7 @@ export const UserBox = styled.div`
 export const Comment = styled.div`
 width: 65%;
 height: 100%;
-font-size: ${(props)=>props.theme.fontSizes.xlarge};
+font-size: 100%;
 display : flex;
 justify-content : center;
 align-items : center;
@@ -48,32 +45,42 @@ export const Side = styled.div`
   border-radius: 10px;
   font-size: ${(props)=>props.theme.fontSizes.xlarge};
 
-//   display: grid;
-// grid-template-columns: 2fr ;
-// grid-template-rows:1fr 1fr;
-// grid-template-areas:
-// 'top '
-// 'footer '
+  display: grid;
+grid-template-columns: 2fr ;
+grid-template-rows:1fr 1fr;
+grid-template-areas:
+'top '
+'footer '
 
 `;
 
 
-export const Qq = styled.div`
-// width: 65%;
-height: 50%;
+export const DeleteBox = styled.div`
+grid-area:top;
+width: 100%;
+height: 70%;
 font-size: ${(props)=>props.theme.fontSizes.xlarge};
-// display : flex;
-// justify-content : center;
-// align-items : center;
+display : flex;
+justify-content : center;
+align-items : center;
+
+// border:1px solid ${(props) => props.theme.color.orange};
+border-radius: 10px;
+background-color:${(props) => props.theme.color.orange};
+position: relative;
 `;
 
 export const Time = styled.div`
-// width: 65%;
+grid-area:footer;
+width: 100%;
 height: 50%;
-font-size: ${(props)=>props.theme.fontSizes.xlarge};
-// display : flex;
-// justify-content : center;
-// align-items : center;
+font-size: 70%;
+display : flex;
+justify-content : center;
+align-items : center;
+
+
+
 `;
 
 

@@ -43,11 +43,13 @@ const comment = {
   if(value === "" || value == undefined){
     alert("내용을 입력헤주세요");
     // return;
+  }else if(value.length > 40){
+    alert("40글자까지만 적어주세요");
   }else{
-    // console.log(comment);
+    
   dispatch(__createComment(comment));
-
-  // window.location.reload();
+  alert("댓글작성완료!!");
+  window.location.reload();
   }
   setValue('')
   
@@ -72,6 +74,7 @@ const comment = {
         value={value}
         ref={textRef}
         onChange={inp}
+        
       />
       </Form>
       <FormButton>

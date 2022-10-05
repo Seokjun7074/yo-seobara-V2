@@ -27,7 +27,7 @@ const navigate = useNavigate();
 
   const data = item.item; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
-  // console.log(data);
+  // console.log(data.myHeart,'디테일');
   const user = getCookie('nickname');  //로그인한 유저닉네임
 
   //단축메뉴창
