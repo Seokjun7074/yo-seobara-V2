@@ -19,14 +19,21 @@
 <br></br>
 ## 💻 기술 특장점 
 <details>
-<summary> 고민중</summary>
-- ㅇㅇㅇ
-- ㅇㅇㅇㅇㅇ
-- ㅇㅇㅇㅇㅇㅇ
-- 협업방식(코드컨벤션등)
-- 트러블슈팅 / 리펙토링
+<summary>무한스크롤적용</summary>
+ㅇㅇ
 </details>
-<br></br>
+<details>
+<summary>카카오 소셜로그인</summary>
+ㅇㅇ
+</details>
+<details>
+<summary>카카오 맵sdk 활용</summary>
+ㅇㅇ
+</details>
+<details>
+<summary>리덕스툴킷을 이용한 상태관리</summary>
+ㅇㅇ
+</details>
 
 ## 💻 트러블슈팅
 <details>
@@ -41,12 +48,15 @@
 
 ## 💻 협업방식
 <details>
-<summary> 고민중</summary>
-- ㅇㅇㅇ
-- ㅇㅇㅇㅇㅇ
-- ㅇㅇㅇㅇㅇㅇ
-- 협업방식(코드컨벤션등)
-- 트러블슈팅 / 리펙토링
+<summary>코드컨벤션</summary>
+-컴포넌트 : PascalCase
+-함수 : camelCase
+-변수 : camelCase
+-폴더명 : 소문자
+</details>
+<details>
+<summary>깃플로우</summary>
+각자 작업할 브랜치 생성 ➜ dev 브랜치 생성 ➜ 이상없으면 master에 병합
 </details>
 <br></br>
 
