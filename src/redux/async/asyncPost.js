@@ -56,6 +56,20 @@ export const __getPost = createAsyncThunk(
   }
 );
 
+export const __deletePost = createAsyncThunk(
+  "post/deletePost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.deletePost(payload);
+      const res = data.data.data;
+      return thunkAPI.fulfillWithValue(res);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getPostLocation = createAsyncThunk(
   "post/getPostLocation",
   async (payload, thunkAPI) => {
@@ -69,3 +83,5 @@ export const __getPostLocation = createAsyncThunk(
     }
   }
 );
+
+

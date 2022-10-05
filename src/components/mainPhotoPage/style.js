@@ -5,6 +5,9 @@ margin-bottom: 10px;
   border-radius: 10px;
   cursor: pointer;
 
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 
@@ -17,10 +20,6 @@ export const ImageWrapper = styled.img`
   image-rendering: -o-crisp-edges; /* opera */
   image-rendering: -webkit-optimize-contrast; /* chrome(비표준) */
   image-rendering: crisp-edges;
-
-  &:hover {
-    transform: scale(1.02);
-  }
 `;
 
 export const CheckBar = styled.div`

@@ -59,7 +59,8 @@ const LoginContainer = ({ login, setLogin }) => {
       setCookie("memberId", res.data.data.id);
 
       alert("로그인 성공");
-      navigate("/");
+      window.location.replace('/');
+
     } catch (error) {
       alert(res.data.errorCode.message);
     }

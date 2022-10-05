@@ -19,6 +19,7 @@ export const apis = {
 
     //댓글작성
     createComment: (idNum, data) => 
+    
       instance.post(
         `/api/posts/${idNum}/comments`,{'content':data},{
             headers: {
