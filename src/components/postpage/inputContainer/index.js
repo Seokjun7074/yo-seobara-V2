@@ -113,13 +113,14 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           ? __editPost({ formData: formData, postId: postId })
           : __createPost(formData)
       );
+      // navigate("/");
     }
   };
 
   useEffect(() => {
     // 게시물 작성 성공했을 때만 페이지 이동
     if (postStatus.createPost) {
-      navigate("/map");
+      navigate("/");
     }
   }, [postStatus.createPost]);
 
