@@ -36,7 +36,6 @@ export const __editPost = createAsyncThunk(
   }
 );
 
-
 export const __getPost = createAsyncThunk(
   "post/getPost",
   async (payload, thunkAPI) => {
@@ -78,10 +77,7 @@ export const __getPostLocation = createAsyncThunk(
       const res = data.data.data;
       return thunkAPI.fulfillWithValue(res);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-

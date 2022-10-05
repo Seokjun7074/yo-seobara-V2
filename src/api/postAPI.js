@@ -9,7 +9,7 @@ const instance = axios.create({
 export const apis = {
   // 무한스크롤 게시물 조회
   getPostPic: (page) =>
-    instance.get(`/api/posts?page=${page}&size=6`, {
+    instance.get(`/api/posts?page=${page}&size=20`, {
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
@@ -56,13 +56,13 @@ export const apis = {
       },
     }),
 
-    // 게시물 삭제
-    deletePost: (postId) =>
-  instance.delete(`/api/posts/${postId}`, {
-    headers: {
-      Authorization: `Bearer ${getCookie("accessToken")}`,
-    },
-  }),
+  // 게시물 삭제
+  deletePost: (postId) =>
+    instance.delete(`/api/posts/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    }),
 
   // 좌표를 주소로 변환
   convertToAddress: (lat, lng) =>
