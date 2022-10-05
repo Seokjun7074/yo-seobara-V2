@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 
 export const DetailBox = styled.div`
-width:70vw;
-height:80vh;
+width:90vw;
+height:90vh;
 max-height:80vh;
 
 display: grid;

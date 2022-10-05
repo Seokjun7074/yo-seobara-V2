@@ -9,6 +9,7 @@ export const __getComment = createAsyncThunk(
       const res = data.data.data;
       return thunkAPI.fulfillWithValue(res);
     } catch (error) {
+      console.log(error.response.data);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -18,10 +19,10 @@ export const __createComment = createAsyncThunk(
   "comment/createComment",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.createComment(payload.idNum, payload.value);
-      console.log(data);
+      const data = await apis.createComment(payload.idNum, payload.data);
     } catch (error) {
       const error_code = error.response.data.errorCode.code;
+      console.log(error_code);
       if (error_code === "LOGIN_REQUIRED") {
         return thunkAPI.rejectWithValue(error_code);
       } else {

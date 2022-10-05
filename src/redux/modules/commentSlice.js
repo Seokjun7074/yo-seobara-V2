@@ -5,6 +5,7 @@ import {__getComment, __createComment} from '../async/asyncComment';
 const initialState = {
     commentList:[], //댓글데이터
     createComment: false,  //작성상태
+    isLoding:false,
 };
 
 const commentSlice = createSlice({
@@ -27,7 +28,7 @@ const commentSlice = createSlice({
           
         });
         builder.addCase(__getComment.rejected, (state, actions) => {
-          alert("작성실패");
+          alert("댓글불러오기실패");
         });
         //댓글작성
         builder.addCase(__createComment.fulfilled, (state, actions) => {
@@ -36,7 +37,14 @@ const commentSlice = createSlice({
             alert("작성완료");
           });
           builder.addCase(__createComment.rejected, (state, actions) => {
-            alert("작성실패");
+            if(actions.payload === "LOGIN_REQUIRED"){
+              alert("로그인한 유저가아닙니다");
+            }else{
+              console.log(actions.payload);
+            alert("댓글작성실패");
+            }
+            
+            
           });
 
       

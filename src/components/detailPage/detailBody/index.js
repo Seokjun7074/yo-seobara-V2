@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+//내부 css
 import {
   BodyBox,
   BodyTop,
@@ -8,125 +8,151 @@ import {
   BodyMain,
   Footer,
   Time,
-  UseName
+  UseName,
 } from "./style";
-import { AccessAlarm, ThreeDRotation } from "@mui/icons-material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Grid from "@mui/material/Grid";
+//mui css
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import { useState } from "react";
-import moment from "moment";
-import Moment from "react-moment";
-import "moment/locale/ko"; //한국말 번역
-import { getCookie } from "../../../shared/Cookie";
-import axios from "axios";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+//컴포넌트
 import CreatedAt from "../../global/createdAt";
- 
- 
+import { getCookie } from "../../../shared/Cookie";
+
+import axios from "axios";
+
 const DetailBody = (data) => {
+  
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
+  const detail = data.data; //상세내용의 데이터
+  const idNum = detail.postId;
+  const memberId = getCookie("memberId"); //로그인한 유저닉네임
 
+  //메인에서받아오는데이터test
+  // const likeCount = 22; // 해당게시물의 좋아요개수
+  // const likePostId = [46, 44,37,];  //유저가 좋아요한 게시물아이디
+  const test = false; // 유저가 게시물좋아요하였는지 서버에서확인
 
+  //서버열면 사용할코드
+  const likeCount = detail.heart; //좋아요 개수
+  const myHeart = detail.myHeart;
 
-const detail = data.data;
-const idNum = detail.postId
+  // const memberId = 1; //rrrrr의 계정아이디번호
 
+  // console.log(detail.myHeart,'바디');
 
+  const [like, setLike] = useState(myHeart); // 좋아요 트글
 
+  const [count, setCount] = useState(0);
 
- //메인에서받아오는데이터test
-const likeCount = 22; // 해당게시물의 좋아요개수
-// const likePostId = [46, 44,37,];  //유저가 좋아요한 게시물아이디
-const test = false; // 유저가 게시물좋아요하였는지 서버에서확인
+  const Like = async () => {
+    if (like) {
+      setLike(false);
 
-
-const [like,setLike] = useState(test); // 좋아요 트글
- 
- 
-
-  const Like = () => {
-      if(like){
-        setLike(false);
-        console.log('취소')
-        
-      }else{
-        setLike(true);
-        console.log('좋아요')
-
-
-        //서버 테스트
-    //     await axios
-    //   .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/heart`, {
-    //    headers: {
-    //                Authorization: `Bearer ${getCookie('accessToken')}`,
-    //             },  
-    //    }
-    //    )
-    //    .then((res) => {
-    //    console.log('성공');
-    
-    //    })
-    //  .catch((err) => console.log(err));
-
+      if (myHeart) {
+        setCount(-1);
+      } else {
+        setCount(0);
       }
-  };
 
+      await axios
+        .delete(
+          `${process.env.REACT_APP_API_URL}/api/heart`,
+
+          {
+            headers: {
+              Authorization: `Bearer ${getCookie("accessToken")}`,
+            },
+            data: {
+              postId: idNum,
+              memberId: memberId,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("성공");
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setLike(true);
+
+      if (myHeart) {
+        setCount(0);
+      } else {
+        setCount(+1);
+      }
+      console.log("좋아요");
+
+      //서버 테스트
+      await axios
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/heart`,
+          {
+            postId: idNum,
+            memberId: memberId,
+          },
+
+          {
+            headers: {
+              Authorization: `Bearer ${getCookie("accessToken")}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("성공");
+        })
+        .catch((err) => console.log(err));
+    }
+  };
 
   return (
     <BodyBox>
-
       <BodyTop>
+        {like ? (
+          <>
+            <button onClick={Like}>
+              <FavoriteIcon fontSize="large"/>
+            </button>
+            {likeCount + count}
+          </>
+        ) : (
+          <button onClick={Like}>
+            <FavoriteBorderIcon fontSize="large"/>
+            {likeCount + count}
+          </button>
+        )}
 
-{test ? (<>
- {like ? (
-  <button onClick={Like}><FavoriteIcon/>:{likeCount } </button>
-  
-):(
-<button onClick={Like}><FavoriteBorderIcon/>:{likeCount -1} </button>
-)}  
-</>   
-): (
-<>
-{like ? (
-  <button onClick={Like}><FavoriteIcon/>:{likeCount+1 } </button>
-  
-):(
-<button onClick={Like}><FavoriteBorderIcon/>:{likeCount } </button>
-)} 
-</>
-)}
-
-      
-      
       </BodyTop>
 
-      <BodySide>
+      {/* <BodySide>
         지도로표시하기
         작업중
-      </BodySide>
+      </BodySide> */}
 
-      <BodyHeader>주소:{detail.address}</BodyHeader>
+      <BodyHeader>{detail.address}</BodyHeader>
 
       <BodyTitle>
-        <UseName onClick={() => navigate(`/post/${detail.postId}`,
-          {state: detail}
-        )}>
-          {detail.nickname}님의
+        <UseName
+          onClick={() =>
+            navigate(`/userpage/${detail.nickname}`, { state: detail })
+          }
+        >
+          {detail.nickname} 님의
         </UseName>
         {detail.title}
       </BodyTitle>
-      
-      <BodyMain>내용:{detail.content}</BodyMain>
-      
+
+      <BodyMain>{detail.content}</BodyMain>
+
       <Footer>
         <Time>
-          <CreatedAt time={detail.createdAt}/>
+          <CreatedAt time={detail.createdAt} />
         </Time>
       </Footer>
-    
     </BodyBox>
   );
 };

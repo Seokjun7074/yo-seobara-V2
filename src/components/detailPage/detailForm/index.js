@@ -1,17 +1,22 @@
-import * as React from "react";
+//mui css
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+
+//내부 css
 import {Form, FormBox, FormButton} from './style';
 
+import * as React from "react";
+import { useState,useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//컴포넌트
 import {__createComment} from "../../../redux/async/asyncComment";
 
 const DetailForm = (id) => {
 
   const idNum= id.id;  
- 
+  const textRef = useRef();
 
 
   const dispatch = useDispatch();
@@ -20,33 +25,34 @@ const DetailForm = (id) => {
 
 
     const [value, setValue] = useState(); 
-    const handleSubmit = (e)=> {
-  
-      e.preventDefault();
-      
-    }
-const inp = (e) => {
- 
-  setValue(e.target.value)
 
-  
+    const handleSubmit = (e)=> {
+      e.preventDefault();
+    }
+
+const inp = (e) => {
+  setValue(e.target.value)
 }
 
 const onButtonClick= async()=>{
+  // console.log(value);
 const comment = {
   idNum:idNum,
   data:value 
 }
-  if(value === ""){
+  if(value === "" || value == undefined){
     alert("내용을 입력헤주세요");
-    return;
+    // return;
+  }else if(value.length > 40){
+    alert("40글자까지만 적어주세요");
   }else{
+    
   dispatch(__createComment(comment));
-  }
-
-  setValue('')
-  alert('댓글작성완료');
+  alert("댓글작성완료!!");
   window.location.reload();
+  }
+  setValue('')
+  
 }
 
 
@@ -66,7 +72,9 @@ const comment = {
         multiline
         rows={2}
         value={value}
+        ref={textRef}
         onChange={inp}
+        
       />
       </Form>
       <FormButton>
