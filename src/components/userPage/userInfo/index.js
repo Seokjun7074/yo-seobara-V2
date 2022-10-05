@@ -5,9 +5,9 @@ const UserInfo = ({ isFollowing, isMyPage, nickname }) => {
     <UserInfoWrapper>
       <UserInfoBox>
         <Nickname>{nickname}님의 게시물</Nickname>
-        <FollowButton isMyPage={isMyPage}>
+        {/* <FollowButton isMyPage={isMyPage}>
           {isFollowing ? "Following" : "Follow"}
-        </FollowButton>
+        </FollowButton> */}
       </UserInfoBox>
     </UserInfoWrapper>
   );
