@@ -17,6 +17,8 @@ const Slider = ({
   imageFile,
   setImageFile,
   isEdit,
+  changedImage,
+  setChangedImage,
 }) => {
   // console.log(imageList);
   const TOTAL_SLIDES = imageList.length;
@@ -46,11 +48,11 @@ const Slider = ({
   };
   const deleteImage = (idx) => {
     let copyArr1 = [...imageList];
-    let copyArr2 = [...imageFile];
+    // let copyArr2 = [...imageFile];
     copyArr1.splice(idx, 1);
-    copyArr2.splice(idx, 1);
+    // copyArr2.splice(idx, 1);
     setImageInput([...copyArr1]);
-    setImageFile([...copyArr2]);
+    // setImageFile([...copyArr2]);
     setCurrentSlide(0);
   };
 

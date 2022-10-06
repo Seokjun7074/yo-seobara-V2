@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { ModalWrapper, ModalContainer, ModalButton } from "./style";
 
 function Modal({ btn_title, modalToggel, setModlaToggle, children }) {
@@ -12,6 +13,7 @@ function Modal({ btn_title, modalToggel, setModlaToggle, children }) {
   // const openModal = () => {
   //   setModlaToggle(true);
   // };
+
   return (
     <div className="Modal">
       {/* <ModalButton onClick={openModal}>{btn_title}</ModalButton> */}
