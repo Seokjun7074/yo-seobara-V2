@@ -18,7 +18,6 @@ const PostPage = () => {
     imageUrls: [],
   });
   const [location] = useLocation();
-
   let { postId } = useParams();
 
   const fetchData = async () => {

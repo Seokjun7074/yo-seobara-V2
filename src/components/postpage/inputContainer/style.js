@@ -92,3 +92,6 @@ export const SubmitButton = styled.button`
   color: white;
   font-size: ${(props) => props.theme.fontSizes.xlarge};
 `;
+export const LoadingButton = styled(SubmitButton)`
+  cursor: progress;
+`;

@@ -20,7 +20,6 @@ const color = {
   lightgray: "#E9E9E9",
   darkgray: "#333333",
   blue: "#0584BB",
-  orange: "#047EB3",
 };
 
 const theme = {
