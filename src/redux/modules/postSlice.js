@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   __createPost,
   __editPost,
@@ -42,6 +42,7 @@ const postSlice = createSlice({
       alert("작성완료");
     });
     builder.addCase(__createPost.rejected, (state, actions) => {
+      state.loading = false;
       alert("작성실패");
     });
     // 게시물 수정
@@ -50,12 +51,13 @@ const postSlice = createSlice({
     });
     builder.addCase(__editPost.fulfilled, (state, actions) => {
       state.loading = false;
-      state.data.map((e) =>
-        e.postId === actions.payload.postId ? { ...actions.payload } : e
+      state.data = state.data.map((e) =>
+        e.postId === actions.payload.postId ? { ...e, ...actions.payload } : e
       );
       alert("수정완료");
     });
     builder.addCase(__editPost.rejected, (state, actions) => {
+      state.loading = false;
       alert("수정실패");
     });
     // 전체 게시물 조회
