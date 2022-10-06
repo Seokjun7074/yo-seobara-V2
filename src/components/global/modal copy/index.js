@@ -1,9 +1,16 @@
+import { useEffect } from "react";
 import { ModalWrapper, ModalContainer } from "./style";
 
 function ModalCopy({ modalToggel, setModlaToggle, children }) {
   const closeModal = () => {
     setModlaToggle({ ...modalToggel, open: false });
   };
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  });
   return (
     <div className="ModalCopy">
       <ModalContainer>{children}</ModalContainer>

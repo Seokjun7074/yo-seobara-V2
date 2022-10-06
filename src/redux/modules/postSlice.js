@@ -46,7 +46,9 @@ const postSlice = createSlice({
     // 게시물 수정
     builder.addCase(__editPost.fulfilled, (state, actions) => {
       state.createPost = true;
-
+      state.data.map((e) =>
+        e.postId === actions.payload.postId ? { ...actions.payload } : e
+      );
       alert("수정완료");
     });
     builder.addCase(__editPost.rejected, (state, actions) => {
