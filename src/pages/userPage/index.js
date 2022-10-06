@@ -18,6 +18,7 @@ const UserPage = () => {
 
   const fetchData = async () => {
     const res = await apis.getUserPost(page, nickname);
+    console.log(res.data);
     setLastPage(res.data.data.last);
     setDataList([...dataList, ...res.data.data.content]);
   };
