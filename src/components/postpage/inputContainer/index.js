@@ -35,7 +35,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const IMAGE_SIZE_LIMIT = 10 * (1024 * 1024);
   const createPost = useSelector((state) => state.post.createPost); // 작성상태
   const loading = useSelector((state) => state.post.loading); // 전송상태
-  console.log(loading);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
