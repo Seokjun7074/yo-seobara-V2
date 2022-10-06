@@ -6,6 +6,7 @@ import {
   InputTextArea,
   Label,
   LabelBox,
+  LoadingButton,
   PhotoBox,
   SubmitButton,
   TextArea,
@@ -17,6 +18,7 @@ import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { __createPost, __editPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const [title, titleHandler, setTitle] = useInput();
@@ -31,8 +33,9 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
   const IMAGE_SIZE_LIMIT = 10 * (1024 * 1024);
-  const postStatus = useSelector((state) => state.post); // 작성상태
-
+  const createPost = useSelector((state) => state.post.createPost); // 작성상태
+  const loading = useSelector((state) => state.post.loading); // 전송상태
+  console.log(loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -124,16 +127,16 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
         editData.isEditting
           ? __editPost({ formData: formData, postId: postId })
           : __createPost(formData)
-      );
+      )
+        .unwrap()
+        .then(() => {
+          navigate("/");
+        })
+        .catch((e) => {
+          alert("작성 실패");
+        });
     }
   };
-
-  useEffect(() => {
-    // 게시물 작성 성공했을 때만 페이지 이동
-    if (postStatus.createPost) {
-      navigate("/");
-    }
-  }, [postStatus.createPost]);
 
   const imageUpload = () => {
     if (imageInput.length >= IMAGE_LIMIT) {
@@ -199,9 +202,13 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           </LabelBox>
         </InputBox>
       </InputContainerWrapper>
-      <SubmitButton onClick={onSubmit}>
-        {editData.isEditting ? "수정하기" : "제출하기"}
-      </SubmitButton>
+      {loading ? (
+        <LoadingButton>게시물 등록중..</LoadingButton>
+      ) : (
+        <SubmitButton onClick={onSubmit}>
+          {editData.isEditting ? "수정하기" : "제출하기"}
+        </SubmitButton>
+      )}
     </>
   );
 };

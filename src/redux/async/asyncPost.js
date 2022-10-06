@@ -49,7 +49,6 @@ export const __getPost = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(content);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -63,7 +62,6 @@ export const __deletePost = createAsyncThunk(
       const res = data.data.data;
       return thunkAPI.fulfillWithValue(res);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
