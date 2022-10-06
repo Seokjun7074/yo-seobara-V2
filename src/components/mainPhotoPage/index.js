@@ -31,7 +31,7 @@ const MainPhotoCard = () => {
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
 
- console.log(datas[0]);
+  //  console.log(datas[0]);
 
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
@@ -66,8 +66,6 @@ const MainPhotoCard = () => {
     data: {},
   });
 
- 
-
   return (
     <>
       <Masonry
@@ -77,68 +75,59 @@ const MainPhotoCard = () => {
       >
         {datas.map((item, idx) => (
           <div key={item.postId}>
-           
-              <Box>
-                <ImageListItem key={item.img}>
-                  <div
-                    onClick={async () => {
-                      setModlaToggle((prev) => {
-                        return { ...prev, open: true, loading: true };
-                      });
-                      dispatch(__getComment({ postId: item.postId }));
-                      //기존데이터에 댓글추가
-                      setModlaToggle((prev) => {
-                        return {
-                          ...prev,
-                          data: { ...item },
-                          loading: false,
-                        };
-                      });
-                    }}
-                  >
-                    <ImageWrapper
-                      key={item.postId}
-                      src={item.thumbnailUrl}
-                      alt=""
-                    />
-                  </div>
-
-                  <ImageListItemBar
-                    sx={{
-                      borderBottomRightRadius: 10,
-                      borderBottomLeftRadius: 10,
-                    }}
-                    title={item.title}
-                    subtitle={item.author}
-                    actionIcon={
-                      <IconButton
-                        sx={{
-                          color: "rgba(255, 255, 255, 0.54)",
-                        }}
-                        aria-label={`info about ${item.title}`}
-                      >
-                      </IconButton>
-                    }
+            <Box>
+              <ImageListItem key={item.img}>
+                <div
+                  onClick={async () => {
+                    setModlaToggle((prev) => {
+                      return { ...prev, open: true, loading: true };
+                    });
+                    dispatch(__getComment({ postId: item.postId }));
+                    //기존데이터에 댓글추가
+                    setModlaToggle((prev) => {
+                      return {
+                        ...prev,
+                        data: { ...item },
+                        loading: false,
+                      };
+                    });
+                  }}
+                >
+                  <ImageWrapper
+                    key={item.postId}
+                    src={item.thumbnailUrl}
+                    alt=""
                   />
-                </ImageListItem>
-                
-              </Box>
-           
+                </div>
+
+                <ImageListItemBar
+                  sx={{
+                    borderBottomRightRadius: 10,
+                    borderBottomLeftRadius: 10,
+                  }}
+                  title={item.title}
+                  subtitle={item.author}
+                  actionIcon={
+                    <IconButton
+                      sx={{
+                        color: "rgba(255, 255, 255, 0.54)",
+                      }}
+                      aria-label={`info about ${item.title}`}
+                    ></IconButton>
+                  }
+                />
+              </ImageListItem>
+            </Box>
           </div>
         ))}
-
-
       </Masonry>
-{datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
+      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
 
- {modalToggel.open && (
-    <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-      <Detail item={modalToggel.data} />
-    </ModalCopy>
-  )
-}
-
-
+      {modalToggel.open && (
+        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+          <Detail item={modalToggel.data} />
+        </ModalCopy>
+      )}
     </>
   );
 };
