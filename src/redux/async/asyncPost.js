@@ -23,7 +23,7 @@ export const __editPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.editPost(payload.formData, payload.postId);
-      return thunkAPI.fulfillWithValue(data.data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       // LOGIN_REQUIRED
       const error_code = error.response.data.errorCode.code;
@@ -35,7 +35,6 @@ export const __editPost = createAsyncThunk(
     }
   }
 );
-
 
 export const __getPost = createAsyncThunk(
   "post/getPost",
@@ -50,11 +49,53 @@ export const __getPost = createAsyncThunk(
       };
       return thunkAPI.fulfillWithValue(content);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+export const __likePost = createAsyncThunk(
+  "post/likePost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.likePost(payload);
+      // console.log(data.data);
+      return thunkAPI.fulfillWithValue(data.data.postId);
+      
+    } catch (error) {
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
+
+
+export const __likeDelete = createAsyncThunk(
+  "post/likeDelete",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.likeDelete(payload.postId,payload.memberId);
+      return thunkAPI.fulfillWithValue(data.data.postId);
+      
+    } catch (error) {
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
+
+
+
 
 export const __deletePost = createAsyncThunk(
   "post/deletePost",
@@ -64,7 +105,6 @@ export const __deletePost = createAsyncThunk(
       const res = data.data.data;
       return thunkAPI.fulfillWithValue(res);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -78,10 +118,7 @@ export const __getPostLocation = createAsyncThunk(
       const res = data.data.data;
       return thunkAPI.fulfillWithValue(res);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-

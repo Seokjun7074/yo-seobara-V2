@@ -6,6 +6,7 @@ import {
   InputTextArea,
   Label,
   LabelBox,
+  LoadingButton,
   PhotoBox,
   SubmitButton,
   TextArea,
@@ -17,19 +18,27 @@ import Slider from "../../global/slider";
 import { useDispatch, useSelector } from "react-redux";
 import { __createPost, __editPost } from "../../../redux/async/asyncPost";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
   const [title, titleHandler, setTitle] = useInput();
   const [content, contentHandler, setContent] = useInput();
   const [imageInput, setImageInput] = useState([]); // 미리보기용 이미지 리스트
   const [imageFile, setImageFile] = useState([]); // 서버 전송용 이미지 데이터
+  const [changedImage, setChangedImage] = useState({
+    copyData: [], //원본 데이터랑 비교할 복사본
+    deleteImageOrders: ["ㄴ"], // 바뀐 부분의 인덱스
+  }); // 수정할 이미지의
   const imageRef = useRef();
   const formData = new FormData();
   const IMAGE_LIMIT = 3;
   const IMAGE_SIZE_LIMIT = 10 * (1024 * 1024);
-  const postStatus = useSelector((state) => state.post); // 작성상태
+  const createPost = useSelector((state) => state.post.createPost); // 작성상태
+  const loading = useSelector((state) => state.post.loading); // 전송상태
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const submitData = {
     title: title,
     content: content,
@@ -38,6 +47,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
       lng: pick.lng,
     },
     address: pickedAddress,
+    deleteImageOrders: changedImage.deleteImageOrders,
   };
   // 수정페이지 모드
   useEffect(() => {
@@ -45,21 +55,12 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
       setTitle(editData.title);
       setContent(editData.content);
       setImageInput(editData.imageUrls); // 미리보기용 데이터
-      editData.imageUrls.forEach((e) => {
-        urlToObject(e);
+      setChangedImage({
+        ...changedImage,
+        copyData: [...editData.imageUrls],
       });
     }
   }, [editData.isEditting]);
-
-  // URL to File 전환 함수
-  const urlToObject = async (image) => {
-    const response = await fetch(image);
-    const blob = await response.blob();
-    const fileName = image.split("-").pop();
-    const type = fileName.split(".").pop();
-    const file = new File([blob], fileName, { type: `image/${type}` });
-    setImageFile((prev) => [...prev, file]);
-  };
 
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
@@ -82,11 +83,23 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     setImageFile(imageFileList);
   };
 
+  const compareEditImage = () => {
+    const restArr = changedImage.copyData.filter(
+      (x) => !imageInput.includes(x)
+    );
+    const idx = [];
+    restArr.forEach((e) => {
+      idx.push(changedImage.copyData.indexOf(e));
+    });
+    submitData.deleteImageOrders = idx;
+  };
+
   const onSubmit = () => {
     if (title === "" || content === "") {
       alert("내용을 입력해주세요.");
       return;
-    } else if (imageFile.length === 0) {
+    } else if (imageInput.length === 0) {
+      // 이미지 미리보기가 없는 경우
       alert("사진을 추가해주세요.");
       return;
     } else if (
@@ -95,6 +108,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     ) {
       alert("지도에 위치를 표시해주세요.");
     } else {
+      compareEditImage();
       formData.append(
         "postRequestDto",
         new Blob([JSON.stringify(submitData)], { type: "application/json" })
@@ -108,20 +122,21 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           formData.append(`images`, e);
         });
       }
+
       dispatch(
         editData.isEditting
           ? __editPost({ formData: formData, postId: postId })
           : __createPost(formData)
-      );
+      )
+        .unwrap()
+        .then(() => {
+          navigate("/");
+        })
+        .catch((e) => {
+          alert("작성 실패");
+        });
     }
   };
-
-  useEffect(() => {
-    // 게시물 작성 성공했을 때만 페이지 이동
-    if (postStatus.createPost) {
-      navigate("/map");
-    }
-  }, [postStatus.createPost]);
 
   const imageUpload = () => {
     if (imageInput.length >= IMAGE_LIMIT) {
@@ -142,6 +157,8 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
             imageFile={imageFile}
             setImageFile={setImageFile}
             isEdit={true}
+            changedImage={changedImage}
+            setChangedImage={setChangedImage}
           />
           <ImageInputButton onClick={imageUpload}>
             <MdAddPhotoAlternate size={"50%"}></MdAddPhotoAlternate>
@@ -185,9 +202,13 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
           </LabelBox>
         </InputBox>
       </InputContainerWrapper>
-      <SubmitButton onClick={onSubmit}>
-        {editData.isEditting ? "수정하기" : "제출하기"}
-      </SubmitButton>
+      {loading ? (
+        <LoadingButton>게시물 등록중..</LoadingButton>
+      ) : (
+        <SubmitButton onClick={onSubmit}>
+          {editData.isEditting ? "수정하기" : "제출하기"}
+        </SubmitButton>
+      )}
     </>
   );
 };

@@ -51,13 +51,35 @@ export const apis = {
       },
     }),
 
-  // 게시물 삭제
-  deletePost: (postId) =>
-    instance.delete(`/api/posts/${postId}`, {
-      headers: {
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      },
-    }),
+  //게시물좋아요
+  likePost: (data) =>
+  instance.post(`/api/heart`, data, {
+    headers: {
+      Authorization: `Bearer ${getCookie("accessToken")}`,
+    },
+  }),
+
+   //게시물좋아요취소
+   likeDelete: (postId,memberId) =>
+   instance.delete(`/api/heart`,  {
+     headers: {
+       Authorization: `Bearer ${getCookie("accessToken")}`,
+     },
+     data:{
+            postId: postId,
+            memberId: memberId,
+     },
+   }),
+
+
+
+    // 게시물 삭제
+    deletePost: (postId) =>
+  instance.delete(`/api/posts/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${getCookie("accessToken")}`,
+    },
+  }),
 
   // 좌표를 주소로 변환
   convertToAddress: (lat, lng) =>

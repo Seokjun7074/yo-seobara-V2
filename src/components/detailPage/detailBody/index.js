@@ -1,137 +1,78 @@
 //내부 css
-import {
-  BodyBox,
-  BodyTop,
-  BodySide,
-  BodyHeader,
-  BodyTitle,
-  BodyMain,
-  Footer,
-  Time,
-  UseName,
-} from "./style";
+import { BodyBox, BodyTop, BodySide, BodyHeader,BodyTitle,
+   BodyMain, Footer,Time, UseName,} from "./style";
+
 //mui css
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+//
 import { useState } from "react";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 //컴포넌트
 import CreatedAt from "../../global/createdAt";
 import { getCookie } from "../../../shared/Cookie";
-
-import axios from "axios";
+import {myHeartTrue, myHeartFalse} from '../../../redux/modules/postSlice';
+import { __likePost ,__likeDelete} from "../../../redux/async/asyncPost";
 
 const DetailBody = (data) => {
   
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  const idx = data.data.idx; //상세데이터 넘버
+  const memberId = getCookie("memberId"); //로그인한 아이디번호
 
-  const detail = data.data; //상세내용의 데이터
-  const idNum = detail.postId;
-  const memberId = getCookie("memberId"); //로그인한 유저닉네임
+ const detail = useSelector((state)=> state.post.data[idx]); //상세데이터
+const heart = useSelector((state)=> state.post.data[idx].myHeart);   //좋아요 여부
+const heartCount = useSelector((state)=> state.post.data[idx].heart);   //좋아요수
+ const idNum = detail.postId; //상세데이터의 게시물번호
+ 
 
-  //메인에서받아오는데이터test
-  // const likeCount = 22; // 해당게시물의 좋아요개수
-  // const likePostId = [46, 44,37,];  //유저가 좋아요한 게시물아이디
-  const test = false; // 유저가 게시물좋아요하였는지 서버에서확인
 
-  //서버열면 사용할코드
-  const likeCount = detail.heart; //좋아요 개수
-  const myHeart = detail.myHeart;
+  const Like =  () => {
+if(heart){
 
-  // const memberId = 1; //rrrrr의 계정아이디번호
-
-  // console.log(detail.myHeart,'바디');
-
-  const [like, setLike] = useState(myHeart); // 좋아요 트글
-
-  const [count, setCount] = useState(0);
-
-  const Like = async () => {
-    if (like) {
-      setLike(false);
-
-      if (myHeart) {
-        setCount(-1);
-      } else {
-        setCount(0);
-      }
-
-      await axios
-        .delete(
-          `${process.env.REACT_APP_API_URL}/api/heart`,
-
-          {
-            headers: {
-              Authorization: `Bearer ${getCookie("accessToken")}`,
-            },
-            data: {
+  dispatch(__likeDelete({
               postId: idNum,
               memberId: memberId,
-            },
-          }
-        )
-        .then((res) => {
-          console.log("성공");
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setLike(true);
+            }));
+            dispatch(myHeartFalse(idx));
 
-      if (myHeart) {
-        setCount(0);
-      } else {
-        setCount(+1);
-      }
-      console.log("좋아요");
+}else{
 
-      //서버 테스트
-      await axios
-        .post(
-          `${process.env.REACT_APP_API_URL}/api/heart`,
-          {
-            postId: idNum,
-            memberId: memberId,
-          },
+  dispatch(__likePost(  {
+              postId: idNum,
+              memberId: memberId,
+            }));
+            dispatch(myHeartTrue(idx));
+}
 
-          {
-            headers: {
-              Authorization: `Bearer ${getCookie("accessToken")}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log("성공");
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+ };
 
   return (
     <BodyBox>
       <BodyTop>
-        {like ? (
-          <>
-            <button onClick={Like}>
+      {heart ? (
+  
+           <button onClick={Like}>
               <FavoriteIcon fontSize="large"/>
+              {heartCount}
             </button>
-            {likeCount + count}
-          </>
+          
         ) : (
-          <button onClick={Like}>
+          
+            <button onClick={Like}>
             <FavoriteBorderIcon fontSize="large"/>
-            {likeCount + count}
+            {heartCount}
           </button>
+         
+         
         )}
-
       </BodyTop>
-
-      {/* <BodySide>
-        지도로표시하기
-        작업중
-      </BodySide> */}
 
       <BodyHeader>{detail.address}</BodyHeader>
 
