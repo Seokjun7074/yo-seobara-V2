@@ -33,7 +33,7 @@ const Router = () => {
             </PrivateRoute>
           }
         />
-        <Route exact path="/userpage/:nickname" element={<UserPage />} />
+        <Route exact path="/userpage/:memberId" element={<UserPage />} />
         <Route
           exact
           path="/login"

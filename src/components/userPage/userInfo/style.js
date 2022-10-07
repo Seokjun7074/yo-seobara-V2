@@ -14,12 +14,13 @@ export const UserInfoBox = styled.div`
   /* height: 100px; */
   display: flex;
   /* flex-direction: column; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   gap: 20px;
   padding: 10px;
   /* background-color: lightgray; */
 `;
+export const TotalElements = styled(Nickname)``;
 export const FollowButton = styled.button`
   display: ${(props) => (props.isMyPage ? "none" : null)};
   padding: ${(props) => props.theme.padding.base};
