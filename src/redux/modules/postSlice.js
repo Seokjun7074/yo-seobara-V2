@@ -14,6 +14,7 @@ const initialState = {
   data: [], // 전체데이터
   location: [], // 지도페이지용 데이터
   loading: false, //로딩 상태 관리
+  count: 0 
 };
 
 const postSlice = createSlice({
@@ -33,13 +34,14 @@ const postSlice = createSlice({
       state.createPost = false;
     },
     myHeartFalse(state,action){
-      state.data[action.payload].myHeart = false;
-      state.data[action.payload].heart--;
+     
+      state.data = state.data.map((item)=> item.postId === action.payload ? {...item, myHeart: false, heart: item.heart -1} : item)
+     
     },
     myHeartTrue(state,action){
-      console.log(action);
-      state.data[action.payload].myHeart = true;
-      state.data[action.payload].heart++;
+      state.data = state.data.map((item)=> item.postId === action.payload ? {...item, myHeart: true, heart: item.heart +1 } : item)
+     
+     
     },
   },
   extraReducers: (builder) => {

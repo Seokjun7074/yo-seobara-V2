@@ -20,7 +20,10 @@ export const __createComment = createAsyncThunk(
   "comment/createComment",
   async (payload, thunkAPI) => {
     try {
+      
       const data = await apis.createComment(payload.idNum, payload.data);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       const error_code = error.response.data.errorCode.code;
       console.log(error_code);

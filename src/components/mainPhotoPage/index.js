@@ -88,7 +88,7 @@ const MainPhotoCard = () => {
                       dispatch(__getComment({ postId: item.postId }));
                       //기존데이터에 댓글추가
                       setModlaToggle((prev) => {
-                        return { ...prev,  data: { ...item,['idx']: idx},loading: false, };
+                        return { ...prev,  data: { ...item,},loading: false, };
                       });
                   
                     }}
@@ -125,7 +125,7 @@ const MainPhotoCard = () => {
 
  {modalToggel.open && (
     <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-      <Detail item={modalToggel.data} idx={modalToggel.idx} />
+      <Detail item={modalToggel.data}/>
     </ModalCopy>
   )
 }
