@@ -48,7 +48,8 @@ const comment = {
   }else{
     
   dispatch(__createComment(comment));
-  window.location.reload();
+  console.log('성공');
+  
   }
   setValue('')
   

@@ -43,7 +43,7 @@ dispatch(__deleteComment(data));
       ) : (
         <List style={{ height: 300, width: "100%" }}>
           {comments &&
-            comments.map((comment,idx) => (
+            comments.map((comment) => (
               <CommentBox key={comment.commentId}>
                 <UserBox>
                   {comment.nickname}    
@@ -62,7 +62,7 @@ dispatch(__deleteComment(data));
                   {comment.memberId == memberId ? (
                     <DeleteBox
                     onClick={() => { deleteButton( comment.commentId );
-                      dispatch(deleteComment(idx));
+                      dispatch(deleteComment(comment.commentId));
                     }}  >
                     
                     <DeleteIcon fontSize="large" Width='100%' height= '50%' display='flex'
@@ -81,29 +81,6 @@ dispatch(__deleteComment(data));
 
 export default CommentList;
 
-//  <Button variant="outlined" startIcon={
 
-// <DeleteIcon fontSize="large" Width='100%' height= '50%' display='flex'
-//              onClick={async()=>{
-//             await axios
-//             .delete(`${process.env.REACT_APP_API_URL}
-//             /api/posts/${comment.postId}/comments/${comment.commentId}`,
-//             {
-//               headers: {
-//                 Authorization: `Bearer ${getCookie('accessToken')}`,
-//               },
-//             },
-//             )
-//             .then((res) => {
-//               console.log('성공');
-//               alert('삭제하고있습니다')
-
-//             })
-//             .catch((err) => console.log(err));
-
-//           }}/>
-//         }>
-//         삭제
-//       </Button>
 
 

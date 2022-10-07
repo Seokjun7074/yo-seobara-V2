@@ -22,15 +22,17 @@ const DetailBody = (data) => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const idx = data.data.idx; //상세데이터 넘버
-  const memberId = getCookie("memberId"); //로그인한 아이디번호
 
- const detail = useSelector((state)=> state.post.data[idx]); //상세데이터
-const heart = useSelector((state)=> state.post.data[idx].myHeart);   //좋아요 여부
-const heartCount = useSelector((state)=> state.post.data[idx].heart);   //좋아요수
- const idNum = detail.postId; //상세데이터의 게시물번호
- 
+  const memberId = getCookie("memberId"); //로그인한 아이디번호
+  const id = data.data.postId//props  로 넘어오는 데이터
+  
+  const datas =  useSelector((state)=> state.post.data.filter(bady => bady.postId == id )); //배열안에 있는 상세데이터
+  const detail = datas[0]; //상세데이터 객체로만듬
+  const heart = detail.myHeart; //좋아요 여부
+  const heartCount = detail.heart; //좋아요수
+  const idNum = detail.postId; //상세데이터의 게시물번호
+
+
 
 
   const Like =  () => {
@@ -40,7 +42,7 @@ if(heart){
               postId: idNum,
               memberId: memberId,
             }));
-            dispatch(myHeartFalse(idx));
+            dispatch(myHeartFalse(idNum));
 
 }else{
 
@@ -48,7 +50,7 @@ if(heart){
               postId: idNum,
               memberId: memberId,
             }));
-            dispatch(myHeartTrue(idx));
+            dispatch(myHeartTrue(idNum));
 }
 
  };
@@ -85,6 +87,7 @@ if(heart){
           {detail.nickname} 님의
         </UseName>
         {detail.title}
+        {detail.postId}
       </BodyTitle>
 
       <BodyMain>{detail.content}</BodyMain>
