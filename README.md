@@ -40,20 +40,34 @@
 
 ## 💻 트러블슈팅
 <details>
-<summary> 작성예정</summary>
-- ㅇㅇㅇ
-- ㅇㅇㅇㅇㅇ
-- ㅇㅇㅇㅇㅇㅇ
+<summary> 모달 렌더링 문제 </summary>
+<div display="flex">
+<img src="https://user-images.githubusercontent.com/109025674/194463278-58b74987-135e-44c2-9e76-4401bbdfc959.png"  height="200px" width="300px"/>
+<p> 기존에 모달창을 공용컴포넌트로 만들 때 모달을 열고 닫는 state와 css의 display속성을 사용하여 구현했었습니다. 하지만 현재 프로젝트에서 모달창을 게시물의 상세정보를 보여주는 용도로 사용하며 모달 내부에 게시물 정보, 게시물에 대한 댓글 등의 정보가 들어가면서 문제가 발생했습니다. 여러개의 게시물을 렌더링하며 화면에 보이진 않지만 모달 컴포넌트도 여러번 렌더링될뿐더러 모달 안에 들어가는 children컴포넌트의 상태도 초기화가 되지않는 문제가 생겼습니다. 
+</p>
+<img src="https://user-images.githubusercontent.com/109025674/194465043-21d3044d-acde-4912-9156-7d5ea5c1b354.png" height="200px" width="300px"/>
+<p>
+앞서 말씀드린 문제를 해결하기위해 모달을 열고 닫는 방식을 수정했습니다. 기존의 CSS를 활용한 방식에서 모달의 생성여부를 정하는 state를 통해 조건부 렌더링을 하면서 유저가 게시물의 미리보기를 클릭하는 등의 액션이 일어났을 경우에만 모달이 렌더링 되도록 수정했습니다.조건부 렌더링을 통해 불필요한 렌더링을 줄이고 children 컴포넌트의 상태값이 리액트이 생명주기를 따라 모달이 닫히면 초기화 되도록 만들었습니다.
+</p>
+</div>
 </details>
-<br></br>
+<details>
+<summary> useEffect가 2번 실행되는 경우 </summary>
+<div >
+<img src=""/>
+</div>
+</details>
+
 
 ## 💻 협업방식
 <details>
 <summary>코드컨벤션</summary>
--컴포넌트 : PascalCase
--함수 : camelCase
--변수 : camelCase
--폴더명 : 소문자
+<ul>
+<li> 컴포넌트 : PascalCase </li>
+<li> 함수 : camelCase </li>
+<li>변수 : camelCase</li>
+<li> 폴더명 : 소문자</li>
+</ul>
 </details>
 <details>
 <summary>깃플로우</summary>
