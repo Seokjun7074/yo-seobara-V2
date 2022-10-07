@@ -1,22 +1,39 @@
-import * as React from "react";
-import List from "@mui/material/List";
-import { useEffect, useState } from "react";
+//내부css
 import {CommentBox, UserBox, Time, Comment,
         Text, NoCommentBox, Side,DeleteBox} from "./style";
+//외부css
+import List from "@mui/material/List";
+
+import * as React from "react";
+
+import { useEffect, useState } from "react";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCookie } from "../../../shared/Cookie";
 import CreatedAt from "../../global/createdAt";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import {__deleteComment}from '../../../redux/async/asyncComment'; 
+import {deleteComment} from '../../../redux/modules/commentSlice';
 
-import Button from "@mui/material/Button";
+
 const CommentList = () => {
-  const comments = useSelector((state) => state.comment.commentList);
-  const user = getCookie("nickname"); //로그인한 유저닉네임
 
+  const dispatch = useDispatch();
+  const comments = useSelector((state) => state.comment.commentList);
+  
+console.log(comments);
+  
   const memberId = getCookie("memberId"); //로그인한 유저닉네임
-//  console.log(typeof(memberId) );
-//  console.log(typeof(comments[0].memberId));
+
+const deleteButton = (commentId) => {
+  const data ={
+    postId: comments[0]['postId'],
+    commentId: commentId,
+  }
+dispatch(__deleteComment(data));
+
+}
+
   return (
     <>
       {comments && comments.length === 0 ? (
@@ -26,10 +43,10 @@ const CommentList = () => {
       ) : (
         <List style={{ height: 300, width: "100%" }}>
           {comments &&
-            comments.map((comment) => (
+            comments.map((comment,idx) => (
               <CommentBox key={comment.commentId}>
                 <UserBox>
-                  {comment.nickname}
+                  {comment.nickname}    
                 </UserBox>
 
                 <Comment>
@@ -44,24 +61,9 @@ const CommentList = () => {
 
                   {comment.memberId == memberId ? (
                     <DeleteBox
-                    onClick={() => {
-                      axios
-                    .delete(`${process.env.REACT_APP_API_URL}/api/posts/${comment.postId}/comments/${comment.commentId}`,
-                          {
-                            headers: {
-                              Authorization: `Bearer ${getCookie("accessToken")}`,
-                            },
-                          }
-                        )
-                        .then((res) => {
-                          // console.log("성공");
-                          alert('삭제되었습니다')
-                          window.location.reload();
-                        })
-                        .catch((err) => console.log(err));
-                    }}
-                    
-                    >
+                    onClick={() => { deleteButton( comment.commentId );
+                      dispatch(deleteComment(idx));
+                    }}  >
                     
                     <DeleteIcon fontSize="large" Width='100%' height= '50%' display='flex'
                     

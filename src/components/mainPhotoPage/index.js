@@ -23,13 +23,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
-
+import { myHeartTrue } from "../../redux/modules/postSlice";
 const MainPhotoCard = () => {
   const dispatch = useDispatch();
 
   const datas = useSelector((state) => state.post.data);
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
+
 
 
   const [ref, inView] = useInView({
@@ -42,6 +43,7 @@ const MainPhotoCard = () => {
     if (update) {
       dispatch(__getPost(page));
     }
+
   }, [page]);
 
   // 사용자가 마지막 요소를 보고 있으면
@@ -51,6 +53,7 @@ const MainPhotoCard = () => {
       dispatch(updateTrue());
     }
   }, [inView]);
+
 
   const Columns = {
     default: 4,
@@ -74,30 +77,28 @@ const MainPhotoCard = () => {
       >
         {datas.map((item, idx) => (
           <div key={item.postId}>
-            <Box>
-              <ImageListItem key={item.postId}>
-                <div
-                  onClick={async () => {
-                    setModlaToggle((prev) => {
-                      return { ...prev, open: true, loading: true };
-                    });
-                    dispatch(__getComment({ postId: item.postId }));
-                    //기존데이터에 댓글추가
-                    setModlaToggle((prev) => {
-                      return {
-                        ...prev,
-                        data: { ...item },
-                        loading: false,
-                      };
-                    });
-                  }}
-                >
-                  <ImageWrapper
-                    key={item.postId}
-                    src={item.thumbnailUrl}
-                    alt=""
-                  />
-                </div>
+           
+              <Box>
+                <ImageListItem key={item.img}>
+                  <div
+                    onClick={async () => {
+                      setModlaToggle((prev) => {
+                        return { ...prev, open: true, loading: true };
+                      });
+                      dispatch(__getComment({ postId: item.postId }));
+                      //기존데이터에 댓글추가
+                      setModlaToggle((prev) => {
+                        return { ...prev,  data: { ...item,['idx']: idx},loading: false, };
+                      });
+                  
+                    }}
+                  >
+                    <ImageWrapper
+                      key={item.postId}
+                      src={item.thumbnailUrl}
+                      alt=""
+                    />
+                  </div>
 
                 <ImageListItemBar
                   sx={{
@@ -122,11 +123,14 @@ const MainPhotoCard = () => {
       </Masonry>
       {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
 
-      {modalToggel.open && (
-        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-          <Detail item={modalToggel.data} />
-        </ModalCopy>
-      )}
+ {modalToggel.open && (
+    <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+      <Detail item={modalToggel.data} idx={modalToggel.idx} />
+    </ModalCopy>
+  )
+}
+
+
     </>
   );
 };

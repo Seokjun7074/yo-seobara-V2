@@ -3,6 +3,8 @@ import {
   __createPost,
   __editPost,
   __getPost,
+  __likePost,
+  __likeDelete,
   __getPostLocation,
 } from "../async/asyncPost";
 
@@ -30,6 +32,15 @@ const postSlice = createSlice({
     initCreatePost(state) {
       state.createPost = false;
     },
+    myHeartFalse(state,action){
+      state.data[action.payload].myHeart = false;
+      state.data[action.payload].heart--;
+    },
+    myHeartTrue(state,action){
+      console.log(action);
+      state.data[action.payload].myHeart = true;
+      state.data[action.payload].heart++;
+    },
   },
   extraReducers: (builder) => {
     // 게시물 작성
@@ -56,6 +67,26 @@ const postSlice = createSlice({
       );
       alert("수정완료");
     });
+
+
+  // 게시물 좋아요
+  builder.addCase(__likePost.fulfilled, (state, actions) => {
+    alert("좋아요완료");
+  });
+  builder.addCase(__likePost.rejected, (state, actions) => {
+    alert("좋아요실패");
+  });
+
+
+  // 게시물 좋아요취소
+  builder.addCase(__likeDelete.fulfilled, (state, actions) => {
+    alert("좋아요취소완료");
+  });
+  builder.addCase(__likeDelete.rejected, (state, actions) => {
+    alert("좋아요취소실패");
+  });
+
+
     builder.addCase(__editPost.rejected, (state, actions) => {
       state.loading = false;
       alert("수정실패");
@@ -80,6 +111,7 @@ const postSlice = createSlice({
   },
 });
 
-export const { incrementPage, updateTrue, updateFalse, initCreatePost } =
+export const { incrementPage, updateTrue, updateFalse, initCreatePost, 
+  myHeartTrue, myHeartFalse } =
   postSlice.actions;
 export default postSlice.reducer;
