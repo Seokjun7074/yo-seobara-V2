@@ -68,8 +68,6 @@ const MainPhotoCard = () => {
     data: {},
   });
 
- 
-
   return (
     <>
       <Masonry
@@ -102,33 +100,28 @@ const MainPhotoCard = () => {
                     />
                   </div>
 
-                  <ImageListItemBar
-                    sx={{
-                      borderBottomRightRadius: 10,
-                      borderBottomLeftRadius: 10,
-                    }}
-                    title={item.title}
-                    subtitle={item.author}
-                    actionIcon={
-                      <IconButton
-                        sx={{
-                          color: "rgba(255, 255, 255, 0.54)",
-                        }}
-                        aria-label={`info about ${item.title}`}
-                      >
-                      </IconButton>
-                    }
-                  />
-                </ImageListItem>
-                
-              </Box>
-           
+                <ImageListItemBar
+                  sx={{
+                    borderBottomRightRadius: 10,
+                    borderBottomLeftRadius: 10,
+                  }}
+                  title={item.title}
+                  subtitle={item.author}
+                  actionIcon={
+                    <IconButton
+                      sx={{
+                        color: "rgba(255, 255, 255, 0.54)",
+                      }}
+                      aria-label={`info about ${item.title}`}
+                    ></IconButton>
+                  }
+                />
+              </ImageListItem>
+            </Box>
           </div>
         ))}
-
-
       </Masonry>
-{datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
+      {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
 
  {modalToggel.open && (
     <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import {
   __createPost,
   __editPost,
@@ -13,7 +13,7 @@ const initialState = {
   page: 0, // 무한스크롤 페이지
   data: [], // 전체데이터
   location: [], // 지도페이지용 데이터
-  createPost: false, // 작성상태
+  loading: false, //로딩 상태 관리
 };
 
 const postSlice = createSlice({
@@ -44,18 +44,27 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     // 게시물 작성
+    builder.addCase(__createPost.pending, (state, payload) => {
+      state.loading = true;
+    });
     builder.addCase(__createPost.fulfilled, (state, actions) => {
-      state.createPost = true;
-
+      state.loading = false;
+      state.data.unshift(actions.payload.data);
       alert("작성완료");
     });
     builder.addCase(__createPost.rejected, (state, actions) => {
+      state.loading = false;
       alert("작성실패");
     });
     // 게시물 수정
+    builder.addCase(__editPost.pending, (state, payload) => {
+      state.loading = true;
+    });
     builder.addCase(__editPost.fulfilled, (state, actions) => {
-      state.createPost = true;
-
+      state.loading = false;
+      state.data = state.data.map((e) =>
+        e.postId === actions.payload.postId ? { ...e, ...actions.payload } : e
+      );
       alert("수정완료");
     });
 
@@ -79,6 +88,7 @@ const postSlice = createSlice({
 
 
     builder.addCase(__editPost.rejected, (state, actions) => {
+      state.loading = false;
       alert("수정실패");
     });
     // 전체 게시물 조회

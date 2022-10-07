@@ -1,6 +1,5 @@
 // 게시물 관련 API
 import axios from "axios";
-import qs from "qs";
 import { getCookie } from "../shared/Cookie";
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
@@ -10,7 +9,7 @@ const instance = axios.create({
 export const apis = {
   // 무한스크롤 게시물 조회
   getPostPic: (page) =>
-    instance.get(`/api/posts?page=${page}&size=6`, {
+    instance.get(`/api/posts?page=${page}&size=20`, {
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },
@@ -18,7 +17,7 @@ export const apis = {
   // 유저페이지 게시물 조회
   getUserPost: (page, nickname) =>
     instance.get(
-      `/api/posts?page=${page}&size=10&search=nickname&keyword=${encodeURIComponent(
+      `/api/posts?page=${page}&size=20&search=nickname&keyword=${encodeURIComponent(
         nickname
       )}`,
       {
