@@ -21,7 +21,7 @@ const DetailForm = (id) => {
 
   const dispatch = useDispatch();
 
-  const commentStatus = useSelector((state) => state.comment); // 작성상태
+  
 
 
     const [value, setValue] = useState(); 
@@ -48,7 +48,6 @@ const comment = {
   }else{
     
   dispatch(__createComment(comment));
-  alert("댓글작성완료!!");
   window.location.reload();
   }
   setValue('')

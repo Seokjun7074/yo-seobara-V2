@@ -56,6 +56,49 @@ export const __getPost = createAsyncThunk(
   }
 );
 
+export const __likePost = createAsyncThunk(
+  "post/likePost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.likePost(payload);
+      // console.log(data.data);
+      return thunkAPI.fulfillWithValue(data.data.postId);
+      
+    } catch (error) {
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
+
+
+export const __likeDelete = createAsyncThunk(
+  "post/likeDelete",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.likeDelete(payload.postId,payload.memberId);
+      return thunkAPI.fulfillWithValue(data.data.postId);
+      
+    } catch (error) {
+      // LOGIN_REQUIRED
+      const error_code = error.response.data.errorCode.code;
+      if (error_code === "LOGIN_REQUIRED") {
+        return thunkAPI.rejectWithValue(error_code);
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
+  }
+);
+
+
+
+
 export const __deletePost = createAsyncThunk(
   "post/deletePost",
   async (payload, thunkAPI) => {

@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
-
+import { myHeartTrue } from "../../redux/modules/postSlice";
 const MainPhotoCard = () => {
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const MainPhotoCard = () => {
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
 
- console.log(datas[0]);
+
 
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
@@ -43,6 +43,7 @@ const MainPhotoCard = () => {
     if (update) {
       dispatch(__getPost(page));
     }
+
   }, [page]);
 
   // 사용자가 마지막 요소를 보고 있으면
@@ -52,6 +53,7 @@ const MainPhotoCard = () => {
       dispatch(updateTrue());
     }
   }, [inView]);
+
 
   const Columns = {
     default: 4,
@@ -88,12 +90,9 @@ const MainPhotoCard = () => {
                       dispatch(__getComment({ postId: item.postId }));
                       //기존데이터에 댓글추가
                       setModlaToggle((prev) => {
-                        return {
-                          ...prev,
-                          data: { ...item },
-                          loading: false,
-                        };
+                        return { ...prev,  data: { ...item,['idx']: idx},loading: false, };
                       });
+                  
                     }}
                   >
                     <ImageWrapper
@@ -133,7 +132,7 @@ const MainPhotoCard = () => {
 
  {modalToggel.open && (
     <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-      <Detail item={modalToggel.data} />
+      <Detail item={modalToggel.data} idx={modalToggel.idx} />
     </ModalCopy>
   )
 }

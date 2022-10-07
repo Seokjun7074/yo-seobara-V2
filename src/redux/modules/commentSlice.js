@@ -1,23 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {__getComment, __createComment} from '../async/asyncComment';
+import {__getComment, __createComment, __deleteComment} from '../async/asyncComment';
 
 
 const initialState = {
     commentList:[], //댓글데이터
     createComment: false,  //작성상태
-    isLoding:false,
 };
 
 const commentSlice = createSlice({
     name: 'comment',
     initialState,
     reducers:{
-        loadList: (state, action) => {
-            state.commentList = action.payload;
+        deleteComment(state,action) {
+          console.log(action.payload);
+            state.commentList = state.commentList.filter((list,idx)=> idx != action.payload);
         },
-        lodingComment(state) {
-            state.isLoding = true;
-        },
+
 
     },
     extraReducers: (builder) => {
@@ -43,14 +41,21 @@ const commentSlice = createSlice({
               console.log(actions.payload);
             alert("댓글작성실패");
             }
-            
-            
           });
-
+          builder.addCase(__deleteComment.fulfilled, (state, actions) => {
+        
+      
+            alert("댓글삭제완료");
+          });
+          builder.addCase(__deleteComment.rejected, (state, actions) => {
+            
+      
+            alert("댓글삭제실패");
+          });
       
     }
 });
 
-export const { loadList } =
+export const { deleteComment } =
   commentSlice.actions;
 export default commentSlice.reducer;

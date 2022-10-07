@@ -27,6 +27,17 @@ export const apis = {
               }, 
         }),
 
+         //댓글삭제
+    deleteComment: (postId, commentId) => 
+    
+    instance.delete(
+      `/api/posts/${postId}/comments/${commentId}`,
+      {
+          headers: {
+              Authorization: `Bearer ${getCookie("accessToken")}`,
+            }, 
+      }),
+
     };
 
 
