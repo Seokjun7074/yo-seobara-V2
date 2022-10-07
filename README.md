@@ -54,7 +54,7 @@
 </details>
 
 <details>
-<summary> useEffect가 2번 실행되는 경우 </summary>
+<summary> useEffect가 두 번 실행되는 경우 </summary>
 <div >
 <img src="https://user-images.githubusercontent.com/109025674/194465576-2370211f-428c-456b-be54-0cd08d12b6ac.png" height="200px" width="300px"/>
 <p>
