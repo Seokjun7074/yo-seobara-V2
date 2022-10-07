@@ -102,7 +102,7 @@ const MainMapView = ({
         <LocatioinSpot />
       </CustomOverlayMap>
 
-      {locationList.map((data) => (
+      {locationList.map((data, idx) => (
         <div key={data.postId}>
           <MapMarker
             position={data.location}
@@ -124,7 +124,11 @@ const MainMapView = ({
                 onClick={(e) => {
                   // console.log(e);
                   setModlaToggle((prev) => {
-                    return { ...prev, open: true, data: { ...data } };
+                    return {
+                      ...prev,
+                      open: true,
+                      data: { ...data, ["idx"]: idx },
+                    };
                   });
                   dispatch(__getComment({ postId: data.postId }));
                 }}
@@ -137,7 +141,7 @@ const MainMapView = ({
       ))}
       {modalToggel.open && (
         <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-          <Detail item={modalToggel.data} />
+          <Detail item={modalToggel.data} idx={modalToggel.idx} />
         </ModalCopy>
       )}
     </Map>
