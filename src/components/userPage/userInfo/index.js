@@ -1,13 +1,11 @@
-import { UserInfoWrapper, FollowButton, UserInfoBox, Nickname } from "./style";
+import { UserInfoWrapper, TotalElements, UserInfoBox, Nickname } from "./style";
 
-const UserInfo = ({ isFollowing, isMyPage, nickname }) => {
+const UserInfo = ({ isFollowing, isMyPage, userInfoData }) => {
   return (
     <UserInfoWrapper>
       <UserInfoBox>
-        <Nickname>{nickname}의 게시물</Nickname>
-        {/* <FollowButton isMyPage={isMyPage}>
-          {isFollowing ? "Following" : "Follow"}
-        </FollowButton> */}
+        <Nickname>{userInfoData.nickname}의 게시물</Nickname>
+        <TotalElements>{userInfoData.totalElements}개</TotalElements>
       </UserInfoBox>
     </UserInfoWrapper>
   );
