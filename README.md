@@ -37,6 +37,7 @@
 관리하는 상태가 많지 않아 전역으로 상태관리를 하지 않아도 되지만
 향후 유지보수의 측면에서 데이터를 전역관리하는 것이 유리하다고 판단했어요.
 </details>
+<br></br>
 
 ## 💻 트러블슈팅
 <details>
@@ -51,13 +52,19 @@
 </p>
 </div>
 </details>
+
 <details>
 <summary> useEffect가 2번 실행되는 경우 </summary>
 <div >
-<img src=""/>
+<img src="https://user-images.githubusercontent.com/109025674/194465576-2370211f-428c-456b-be54-0cd08d12b6ac.png" height="200px" width="300px"/>
+<p>
+두번째 트러블 슈팅으로는 특정 상황에서만 작동되어야하는특정 상황에서만 작동되어야하는 useEffect hook이 두번 작동하는 상황이었습니다. 
+console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔는지 확인하던 중 게시물 데이터가 같은 부분에서 2번 출력된것을 볼 수 있었습니다. 오른쪽 예시 코드처럼 dispatch는 최초 렌더링 때와 page가 변할 때만 작동해야하는데 dispatch된 데이터를 출력해보면 page의 변화가 없는데도 2번씩 출력이 되는 현상이었습니다. 
+이를 해결하기 위해 검색을 하던 중 index.js의 react strict mode가 개발환경에서의 문제발생을 감지하기위해 두번 렌더링을 진행한다는것을 알게되었고 해당 기능을 종료하면 다시 원하는 대로 특정 조건에서만 dispatch를 실행했습니다.
+</p>
 </div>
 </details>
-
+<br></br>
 
 ## 💻 협업방식
 <details>
@@ -71,7 +78,11 @@
 </details>
 <details>
 <summary>깃플로우</summary>
-각자 작업할 브랜치 생성 ➜ dev 브랜치 생성 ➜ 이상없으면 master에 병합
+<ul>
+<li> 각자 작업할 브랜치 생성</li>
+<li> dev 브랜치 생성 </li>
+<li>이상없으면 master에 병합</li>
+</ul>
 </details>
 <br></br>
 
