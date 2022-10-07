@@ -4,7 +4,6 @@ import {__getComment, __createComment, __deleteComment} from '../async/asyncComm
 
 const initialState = {
     commentList:[], //댓글데이터
-    createComment: false,  //작성상태
 };
 
 const commentSlice = createSlice({
@@ -13,7 +12,7 @@ const commentSlice = createSlice({
     reducers:{
         deleteComment(state,action) {
           console.log(action.payload);
-            state.commentList = state.commentList.filter((list,idx)=> idx != action.payload);
+            state.commentList = state.commentList.filter((list)=> list.commentId != action.payload);
         },
 
 
@@ -30,9 +29,11 @@ const commentSlice = createSlice({
         });
         //댓글작성
         builder.addCase(__createComment.fulfilled, (state, actions) => {
-            state.createComment = true;
-      
-            alert("작성완료");
+          
+          state.commentList.unshift(actions.payload);
+        
+          alert("댓글작성완료");
+          
           });
           builder.addCase(__createComment.rejected, (state, actions) => {
             if(actions.payload === "LOGIN_REQUIRED"){
