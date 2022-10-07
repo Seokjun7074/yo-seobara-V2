@@ -30,16 +30,19 @@ import { __likePost, __likeDelete } from "../../../redux/async/asyncPost";
 const DetailBody = (data) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const memberId = getCookie("memberId"); //로그인한 아이디번호
   const id = data.data.postId; //props  로 넘어오는 데이터
-
-  const datas = useSelector((state) =>
-    state.post.data.filter((bady) => bady.postId == id)
+  // console.log(data.isMap);
+  const datas = useSelector(
+    (state) => {
+      if (data.isMap)
+        return state.post.location.filter((bady) => bady.postId == id);
+      else return state.post.data.filter((bady) => bady.postId == id);
+    }
+    // state.post.data.filter((bady) => bady.postId == id)
   ); //배열안에 있는 상세데이터
-  // const detail = datas[0]; //상세데이터 객체로만듬
-  const detail = data.data; //상세데이터 객체로만듬
-  console.log("detail", detail);
+  const detail = datas[0]; //상세데이터 객체로만듬
+  // const detail = data.data; //상세데이터 객체로만듬
   const heart = detail.myHeart; //좋아요 여부
   const heartCount = detail.heart; //좋아요수
   const idNum = detail.postId; //상세데이터의 게시물번호

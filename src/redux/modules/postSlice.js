@@ -14,7 +14,7 @@ const initialState = {
   data: [], // 전체데이터
   location: [], // 지도페이지용 데이터
   loading: false, //로딩 상태 관리
-  count: 0 
+  count: 0,
 };
 
 const postSlice = createSlice({
@@ -33,15 +33,29 @@ const postSlice = createSlice({
     initCreatePost(state) {
       state.createPost = false;
     },
-    myHeartFalse(state,action){
-     
-      state.data = state.data.map((item)=> item.postId === action.payload ? {...item, myHeart: false, heart: item.heart -1} : item)
-     
+    myHeartFalse(state, action) {
+      state.data = state.data.map((item) =>
+        item.postId === action.payload
+          ? { ...item, myHeart: false, heart: item.heart - 1 }
+          : item
+      );
+      state.location = state.location.map((item) =>
+        item.postId === action.payload
+          ? { ...item, myHeart: false, heart: item.heart - 1 }
+          : item
+      );
     },
-    myHeartTrue(state,action){
-      state.data = state.data.map((item)=> item.postId === action.payload ? {...item, myHeart: true, heart: item.heart +1 } : item)
-     
-     
+    myHeartTrue(state, action) {
+      state.data = state.data.map((item) =>
+        item.postId === action.payload
+          ? { ...item, myHeart: true, heart: item.heart + 1 }
+          : item
+      );
+      state.location = state.location.map((item) =>
+        item.postId === action.payload
+          ? { ...item, myHeart: true, heart: item.heart + 1 }
+          : item
+      );
     },
   },
   extraReducers: (builder) => {
@@ -70,24 +84,21 @@ const postSlice = createSlice({
       alert("수정완료");
     });
 
+    // 게시물 좋아요
+    builder.addCase(__likePost.fulfilled, (state, actions) => {
+      alert("좋아요완료");
+    });
+    builder.addCase(__likePost.rejected, (state, actions) => {
+      alert("좋아요실패");
+    });
 
-  // 게시물 좋아요
-  builder.addCase(__likePost.fulfilled, (state, actions) => {
-    alert("좋아요완료");
-  });
-  builder.addCase(__likePost.rejected, (state, actions) => {
-    alert("좋아요실패");
-  });
-
-
-  // 게시물 좋아요취소
-  builder.addCase(__likeDelete.fulfilled, (state, actions) => {
-    alert("좋아요취소완료");
-  });
-  builder.addCase(__likeDelete.rejected, (state, actions) => {
-    alert("좋아요취소실패");
-  });
-
+    // 게시물 좋아요취소
+    builder.addCase(__likeDelete.fulfilled, (state, actions) => {
+      alert("좋아요취소완료");
+    });
+    builder.addCase(__likeDelete.rejected, (state, actions) => {
+      alert("좋아요취소실패");
+    });
 
     builder.addCase(__editPost.rejected, (state, actions) => {
       state.loading = false;
@@ -113,7 +124,12 @@ const postSlice = createSlice({
   },
 });
 
-export const { incrementPage, updateTrue, updateFalse, initCreatePost, 
-  myHeartTrue, myHeartFalse } =
-  postSlice.actions;
+export const {
+  incrementPage,
+  updateTrue,
+  updateFalse,
+  initCreatePost,
+  myHeartTrue,
+  myHeartFalse,
+} = postSlice.actions;
 export default postSlice.reducer;

@@ -29,7 +29,7 @@ import { getCookie } from "../../shared/Cookie";
 
 const Detail = (item) => {
   const navigate = useNavigate();
-
+  const isMap = item.isMap; // 지도페이지용 관리
   const data = item.item; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
   // console.log(data.myHeart,'디테일');
@@ -99,7 +99,7 @@ const Detail = (item) => {
         </DetailMain>
 
         <Detailside>
-          <DetailBody data={data} />
+          <DetailBody data={data} isMap={isMap} />
         </Detailside>
 
         <DetailHeader>
