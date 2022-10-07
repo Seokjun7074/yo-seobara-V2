@@ -14,10 +14,10 @@ const UserPage = () => {
   const [isFollowing, setFoloowing] = useState(false);
   const [dataList, setDataList] = useState([]);
 
-  let { nickname } = useParams();
+  let { memberId } = useParams();
 
   const fetchData = async () => {
-    const res = await apis.getUserPost(page, nickname);
+    const res = await apis.getUserPost(page, memberId);
     console.log(res.data);
     setLastPage(res.data.data.last);
     setDataList([...dataList, ...res.data.data.content]);
@@ -35,7 +35,7 @@ const UserPage = () => {
       <UserInfo
         isFollowing={isFollowing}
         isMyPage={isMyPage}
-        nickname={nickname}
+        // nickname={nickname}
       />
       <InfiniteScroll
         page={page}

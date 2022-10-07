@@ -15,17 +15,12 @@ export const apis = {
       },
     }),
   // 유저페이지 게시물 조회
-  getUserPost: (page, nickname) =>
-    instance.get(
-      `/api/posts?page=${page}&size=20&search=nickname&keyword=${encodeURIComponent(
-        nickname
-      )}`,
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-        },
-      }
-    ),
+  getUserPost: (page, memberId) =>
+    instance.get(`/api/member/posts/${memberId}`, {
+      headers: {
+        Authorization: `Bearer ${getCookie("accessToken")}`,
+      },
+    }),
   // 단일 게시물 조회
   getSinglePost: (postId) => instance.get(`/api/posts/${postId}`),
   // 좌표기준 게시물 조회

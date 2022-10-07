@@ -8,6 +8,8 @@ import Spinner from "../../global/spinner";
 import LocatioinSpot from "../../global/locationSpot";
 import ModalCopy from "../../global/modal copy";
 import Detail from "../../../pages/detail";
+import { useDispatch } from "react-redux";
+import { __getComment } from "../../../redux/async/asyncComment";
 
 const MainMapView = ({
   location,
@@ -19,6 +21,7 @@ const MainMapView = ({
   setToggleCustomOverlay,
 }) => {
   const mapRef = useRef();
+  const dispatch = useDispatch();
   const searchPosition = () => {
     const map = mapRef.current;
     setBoundary({
@@ -123,6 +126,7 @@ const MainMapView = ({
                   setModlaToggle((prev) => {
                     return { ...prev, open: true, data: { ...data } };
                   });
+                  dispatch(__getComment({ postId: data.postId }));
                 }}
               >
                 <ImageContainer src={`${data.thumbnailUrl}`} />

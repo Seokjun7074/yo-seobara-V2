@@ -33,4 +33,5 @@ export const LocationButton = styled.div`
 `;
 export const ImageContainer = styled.img`
   width: 270px;
+  object-fit: cover;
 `;
