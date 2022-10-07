@@ -40,12 +40,10 @@
 
 ## 💻 트러블슈팅
 <details>
-<summary> 고민중</summary>
+<summary> 작성예정</summary>
 - ㅇㅇㅇ
 - ㅇㅇㅇㅇㅇ
 - ㅇㅇㅇㅇㅇㅇ
-- 협업방식(코드컨벤션등)
-- 트러블슈팅 / 리펙토링
 </details>
 <br></br>
 
