@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/109025674/193523365-e4c205bb-150f-4ad5-97b2-9377a9ac69e1.PNG" width="150">   <h6>인생 '내' 컷 어디가 잘나와? 여기 서 봐, 패션의 완성은 얼굴? 사진의 완성은 배경! 여기 서 봐</h6>
+  <img src="https://user-images.githubusercontent.com/79635274/194881265-08db0498-c674-41ba-a085-9c87878c4228.png" width="150">   <h6>인생 '내' 컷 어디가 잘나와? 여기 서 봐, 패션의 완성은 얼굴? 사진의 완성은 배경! 여기 서 봐</h6>
   <h2>📸 사진 스팟 공유 서비스, 요서바라📸</h2>
   <a href="https://www.notion.so/2-b2a83adc547f456fa02222cad3e04a44">노션</a>　
   <br></br>
@@ -20,7 +20,7 @@
 ## 💻 기술 특장점 및 도입 배경
 <details>
 <summary>무한스크롤적용</summary>
-사진을 공유하는 서비스이기때문에 페이지네이션보다 무한스크롤이 유저가 더 편하게 사진을 볼 수 있다고 판단했어요.
+이미지 공유 기반 서비스이기때문에 페이지네이션보다 무한스크롤을 통해 간편하게 사진 위주로 훑어 볼 수 있도록 제작했어요.
 </details>
 <details>
 <summary>카카오 소셜로그인</summary>
@@ -29,13 +29,14 @@
 <details>
 <summary>카카오 맵sdk 활용</summary>
 카카오 맵이 국내 사용자에게 구글맵보다 적합하다고 판단했고,
-카카오 로그인과 같은 API KEY로 관리하기 위해 선택했어요.
+같은 API KEY로 카카오 로그인과 함께 관리하기 위해 선택했어요.
 </details>
 <details>
-<summary>리덕스툴킷을 이용한 상태관리</summary>
+<summary>Redux-toolkit을 이용한 상태관리</summary>
 현재의 프로젝트 규모로는 props drilling도 적고 
 관리하는 상태가 많지 않아 전역으로 상태관리를 하지 않아도 되지만
 향후 유지보수의 측면에서 데이터를 전역관리하는 것이 유리하다고 판단했어요.
+지도 페이지는 위치를 기준으로 데이터를 받아오고 무한 스크롤 페이지는 최신 순으로 데이터를 받아오기 때문데 각각 나누어서 전역상태관리를 했어요.
 </details>
 <br></br>
 
@@ -81,7 +82,7 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 <ul>
 <li> 각자 작업할 브랜치 생성</li>
 <li> dev 브랜치 생성 </li>
-<li>이상없으면 master에 병합</li>
+<li>이상없으면 dev 병합</li>
 </ul>
 </details>
 <br></br>
