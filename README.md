@@ -16,6 +16,12 @@
   <img src ="https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white">
 </div>
 
+## 💻 주요기능
+ - 카카오 소셜로그인
+ - 카카오 지도를 이용한 지도 페이지에서 게시물 위치 조회
+ - 클릭한 게시물의 위치로 게시물 스크롤 및 핀 이동 (이미지 추가 예정)
+ - 무한스크롤을 통한 이미지 분할 로딩
+
 <br></br>
 ## 💻 기술 특장점 및 도입 배경
 <details>
