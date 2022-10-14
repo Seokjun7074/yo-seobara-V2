@@ -49,7 +49,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <LogoBox
-        src={process.env.PUBLIC_URL + "images/logo.png"}
+        src={process.env.PUBLIC_URL + "/images/logo.png"}
         onClick={() => {
           navigate("/");
         }}
