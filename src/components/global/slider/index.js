@@ -48,11 +48,9 @@ const Slider = ({
   };
   const deleteImage = (idx) => {
     let copyArr1 = [...imageList];
-    // let copyArr2 = [...imageFile];
-    copyArr1.splice(idx, 1);
-    // copyArr2.splice(idx, 1);
+    const deletedImg = copyArr1.splice(idx, 1);
+    URL.revokeObjectURL(deletedImg);
     setImageInput([...copyArr1]);
-    // setImageFile([...copyArr2]);
     setCurrentSlide(0);
   };
 
