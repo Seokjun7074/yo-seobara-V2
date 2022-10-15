@@ -62,6 +62,14 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
     }
   }, [editData.isEditting]);
 
+  //페이지 나가면 메리 누수 방지
+  useEffect(
+    () => () => {
+      imageInput.forEach((e) => URL.revokeObjectURL(e));
+    },
+    []
+  );
+
   const addImage = (e) => {
     const selectedImageList = e.target.files; // 선택한 이미지들
     if (selectedImageList.length + imageInput.length > IMAGE_LIMIT) {
