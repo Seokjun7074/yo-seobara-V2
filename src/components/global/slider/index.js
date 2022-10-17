@@ -55,8 +55,12 @@ const Slider = ({
   };
 
   return (
-    <SliderWrapper>
-      <ButtonContainer count={TOTAL_SLIDES} onClick={prevSlide}>
+    <SliderWrapper show={TOTAL_SLIDES > 1}>
+      <ButtonContainer
+        count={TOTAL_SLIDES}
+        onClick={prevSlide}
+        show={TOTAL_SLIDES > 1}
+      >
         <FiChevronLeft size="50px" color="gray" />
       </ButtonContainer>
       <ImagePreviewWrapper>
@@ -96,7 +100,11 @@ const Slider = ({
           ))}
         </PreviewContainer>
       </ImagePreviewWrapper>
-      <ButtonContainer count={TOTAL_SLIDES} onClick={nextSlide}>
+      <ButtonContainer
+        count={TOTAL_SLIDES}
+        onClick={nextSlide}
+        show={TOTAL_SLIDES > 1}
+      >
         <FiChevronRight size="50px" color="gray" />
       </ButtonContainer>
     </SliderWrapper>

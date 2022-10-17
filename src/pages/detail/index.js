@@ -8,12 +8,14 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 //스타일 파일
 import {
-  Box,
-  DetailBox,
-  DetailHeader,
-  DetailMain,
-  Detailside,
-  DetailFooter,
+  ContentLabel,
+  ContentWrapper,
+  DetailWrapper,
+  SliderWrapper,
+  UserButton,
+  UserButtonWrapper,
+  UserInfoWrapper,
+  UserText,
 } from "./style";
 
 import { useEffect, useState } from "react";
@@ -26,6 +28,7 @@ import DetailBody from "../../components/detailPage/detailBody";
 import DetailForm from "../../components/detailPage/detailForm";
 import CommentList from "../../components/detailPage/comments";
 import { getCookie } from "../../shared/Cookie";
+import CreatedAt from "../../components/global/createdAt";
 
 const Detail = (item) => {
   const navigate = useNavigate();
@@ -33,8 +36,7 @@ const Detail = (item) => {
   const data = item.item; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
   // console.log(data.myHeart,'디테일');
-  const user = getCookie("nickname"); //로그인한 유저닉네임
-
+  const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임
   //단축메뉴창
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -44,7 +46,6 @@ const Detail = (item) => {
     navigate(`/post/${idNum}`);
     console.log("수정");
   };
-
   const deleteClick = async () => {
     // console.log('삭제');
     // alert('삭제하고있습니다')
@@ -59,78 +60,32 @@ const Detail = (item) => {
         alert("삭제하고있습니다");
       })
       .catch((err) => console.log(err));
-    // console.log('성공');
     window.location.reload();
   };
 
-  const locationClick = () => {
-    console.log("위치정보");
-  };
-
-  const actions = [
-    {
-      icon: <CreateIcon fontSize="large" onClick={updateClick} />,
-      name: "수정",
-    },
-    {
-      icon: <DeleteIcon fontSize="large" onClick={deleteClick} />,
-      name: "게시물삭제",
-    },
-    {
-      icon: <FmdGoodIcon fontSize="large" onClick={locationClick} />,
-      name: "위치정보",
-    },
-  ];
-
-  //기본이미지로 변경(로딩중)해야함
-  const dummydata = [
-    "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-  ];
-
   return (
-    <>
-      <DetailBox>
-        <DetailMain>
-          <Slider
-            imageList={
-              data.imageUrls === undefined ? dummydata : data.imageUrls
-            }
-          />
-        </DetailMain>
-
-        <Detailside>
-          <DetailBody data={data} isMap={isMap} />
-        </Detailside>
-
-        <DetailHeader>
-          <DetailForm id={data.postId} />
-        </DetailHeader>
-
-        <DetailFooter>
-          <CommentList data={data} />
-        </DetailFooter>
-      </DetailBox>
-
-      {data.nickname === user ? (
-        <SpeedDial
-          ariaLabel="SpeedDial controlled open example"
-          sx={{ position: "absolute", bottom: 0, right: 0 }}
-          icon={<AddIcon fontSize="large" />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={handleClose}
-            />
-          ))}
-        </SpeedDial>
-      ) : null}
-    </>
+    <DetailWrapper>
+      <UserInfoWrapper>
+        <div>
+          <UserText clickable={true}>{data.nickname}</UserText>
+          <UserText>님의 {data.title}</UserText>
+          <CreatedAt time={data.createdAt} />
+        </div>
+        {userId === data.memberId ? (
+          <UserButtonWrapper>
+            <UserButton>수정</UserButton>
+            <UserButton>삭제</UserButton>
+          </UserButtonWrapper>
+        ) : null}
+      </UserInfoWrapper>
+      <SliderWrapper>
+        <Slider imageList={data.imageUrls} />
+      </SliderWrapper>
+      <ContentLabel>이 장소는요</ContentLabel>
+      <ContentWrapper>{data.content}</ContentWrapper>
+      <DetailForm id={data.postId} />
+      <CommentList data={data} />
+    </DetailWrapper>
   );
 };
 
