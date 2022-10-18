@@ -5,17 +5,12 @@ import { useEffect, useState } from "react";
 import Header from "../../components/global/header";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPost, __getPostLocation } from "../../redux/async/asyncPost";
-const MainMap = () => {
-  const [location, setLocation] = useState({
-    center: {
-      lat: 33.450701,
-      lng: 126.570667,
-    },
-    errMsg: null,
-    isLoading: true,
-    isPanto: false,
-  });
+import { initCreatePost } from "../../redux/modules/postSlice";
+import useLocation from "../../hooks/useLocation";
 
+const MainMap = () => {
+  const [location] = useLocation();
+  const [toggleCustomOverlay, setToggleCustomOverlay] = useState(false); // 지도에 오버레이 토글
   const [pickedLocation, setPickedLocation] = useState({
     postId: null,
     location: null,
@@ -23,13 +18,17 @@ const MainMap = () => {
   const [boundary, setBoundary] = useState(); // 보이는 지도 범위
   const dispatch = useDispatch();
   const locationList = useSelector((state) => state.post.location);
-  // 위치정보 가져와서 서버에 목록 요청하기
 
   useEffect(() => {
     if (boundary) {
       dispatch(__getPostLocation(boundary));
     }
   }, [boundary]);
+
+  useEffect(() => {
+    dispatch(initCreatePost()); // 작성상태 초기화
+  }, []);
+
   return (
     <MainMapWrapper>
       <Header></Header>
@@ -38,15 +37,16 @@ const MainMap = () => {
         locationList={locationList}
         pickedLocation={pickedLocation}
         setPickedLocation={setPickedLocation}
+        setToggleCustomOverlay={setToggleCustomOverlay}
       ></LocationList>
       <MainMapView
         location={location}
-        setLocation={setLocation}
         locationList={locationList}
         pickedLocation={pickedLocation}
         setPickedLocation={setPickedLocation}
         setBoundary={setBoundary}
-        boundary={boundary}
+        toggleCustomOverlay={toggleCustomOverlay}
+        setToggleCustomOverlay={setToggleCustomOverlay}
       ></MainMapView>
     </MainMapWrapper>
   );

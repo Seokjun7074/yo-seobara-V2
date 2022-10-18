@@ -1,61 +1,111 @@
-import React from "react";
-import {BodyBox, BodyTop, BodySide, BodyHeader, 
-BodyTitle, BodyMain,
-Footer,Time} from './style';
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Grid from '@mui/material/Grid';
+//내부 css
+import {
+  BodyBox,
+  BodyTop,
+  BodySide,
+  BodyHeader,
+  BodyTitle,
+  BodyMain,
+  Footer,
+  Time,
+  UseName,
+} from "./style";
 
-import moment from 'moment';
-import Moment from 'react-moment';
-import 'moment/locale/ko';      //한국말 번역
+//mui css
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+//
+import { useState } from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
+//컴포넌트
+import CreatedAt from "../../global/createdAt";
+import { getCookie } from "../../../shared/Cookie";
+import { myHeartTrue, myHeartFalse } from "../../../redux/modules/postSlice";
+import { __likePost, __likeDelete } from "../../../redux/async/asyncPost";
 
-const DetailBody =(data)=> {
+const DetailBody = (data) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const memberId = getCookie("memberId"); //로그인한 아이디번호
+  const id = data.data.postId; //props  로 넘어오는 데이터
+  // console.log(data.isMap);
+  const datas = useSelector(
+    (state) => {
+      if (data.isMap)
+        return state.post.location.filter((bady) => bady.postId == id);
+      else return state.post.data.filter((bady) => bady.postId == id);
+    }
+    // state.post.data.filter((bady) => bady.postId == id)
+  ); //배열안에 있는 상세데이터
+  const detail = datas[0]; //상세데이터 객체로만듬
+  // const detail = data.data; //상세데이터 객체로만듬
+  const heart = detail.myHeart; //좋아요 여부
+  const heartCount = detail.heart; //좋아요수
+  const idNum = detail.postId; //상세데이터의 게시물번호
 
-const Like =()=>{
-    
-}
+  const Like = () => {
+    if (heart) {
+      dispatch(
+        __likeDelete({
+          postId: idNum,
+          memberId: memberId,
+        })
+      );
+      dispatch(myHeartFalse(idNum));
+    } else {
+      dispatch(
+        __likePost({
+          postId: idNum,
+          memberId: memberId,
+        })
+      );
+      dispatch(myHeartTrue(idNum));
+    }
+  };
 
-    const detail = data.data
-    // console.log(detail)
+  return (
+    <BodyBox>
+      <BodyTop>
+        {heart ? (
+          <button onClick={Like}>
+            <FavoriteIcon fontSize="large" />
+            {heartCount}
+          </button>
+        ) : (
+          <button onClick={Like}>
+            <FavoriteBorderIcon fontSize="large" />
+            {heartCount}
+          </button>
+        )}
+      </BodyTop>
 
-    const nowTime = moment().format(`${detail.createdAt}`),  // 서버로부터 받은 작성,또는수정시간
-    startTime = new Date(nowTime);
-    
-    return(
-        <BodyBox>
+      <BodyHeader>{detail.address}</BodyHeader>
 
-           <BodyTop>
-           <button onClick={Like}>좋아요좋아요</button> 
-            </BodyTop>
-            
-          
-            <BodySide>
-  <Grid container sx={{ color: 'text.primary' }}>
-            <DeleteIcon />
-            </Grid>
-            수정랑 삭제
-            </BodySide>
-            
-            
-            <BodyHeader>
-                주소:{detail.address}
-            </BodyHeader>
-            <BodyTitle>
-               {detail.nickname}의 {detail.title}
-            </BodyTitle>
-            <BodyMain>
-                내용:{detail.content}
-            </BodyMain>
-            <Footer>
-                <Time>
-                <Moment fromNow>{startTime}</Moment>
-                </Time>
-            </Footer>
-        </BodyBox>
-    );
-}
+      <BodyTitle>
+        <UseName
+          onClick={() =>
+            navigate(`/userpage/${detail.memberId}`, { state: detail })
+          }
+        >
+          {detail.nickname} 님의
+        </UseName>
+        {detail.title}
+        {detail.postId}
+      </BodyTitle>
+
+      <BodyMain>{detail.content}</BodyMain>
+
+      <Footer>
+        <Time>
+          <CreatedAt time={detail.createdAt} />
+        </Time>
+      </Footer>
+    </BodyBox>
+  );
+};
 
 export default DetailBody;

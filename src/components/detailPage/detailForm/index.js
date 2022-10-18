@@ -1,59 +1,60 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+//mui css
 import TextField from "@mui/material/TextField";
-import { useState, useRef, useEffect } from "react";
-import { Block } from "@mui/icons-material";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import {Form, FormBox, FormButton} from './style';
-import axios from "axios";
-import { getCookie } from "../../../shared/Cookie"; 
 
+//내부 css
+import {Form, FormBox, FormButton} from './style';
+
+import * as React from "react";
+import { useState,useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+//컴포넌트
+import {__createComment} from "../../../redux/async/asyncComment";
 
 const DetailForm = (id) => {
-  const idNum= id.id;  // postId
-  // console.log(idNum);
-  // const [com, setCom] = useState(false);
 
-
-
-    const [value, setValue] = useState(''); //Initial value should be empty
-    const handleSubmit = (e)=> {
-  
-      e.preventDefault();
-      e.target.reset();
-    }
-const inp = (e) => {
-  console.log(e.target.value)
-  setValue(e.target.value)
-}
-
-
-
+  const idNum= id.id;  
   const textRef = useRef();
 
 
+  const dispatch = useDispatch();
 
-// console.log(value)
-const onButtonClick=async()=>{
-  await axios
-  .post(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`, {
-    headers: {
-      Authorization: `Bearer ${getCookie('accessToken')}`,
-    },  
-  },{
-    comment:value
-  }
-  )
-  .then((res) => {
-    console.log('성공');
-    
-  })
-  .catch((err) => console.log(err));
+  
 
-  setValue('')
+
+    const [value, setValue] = useState(); 
+
+    const handleSubmit = (e)=> {
+      e.preventDefault();
+    }
+
+const inp = (e) => {
+  setValue(e.target.value)
 }
-// console.log(value)
+
+const onButtonClick= async()=>{
+  // console.log(value);
+const comment = {
+  idNum:idNum,
+  data:value 
+}
+  if(value === "" || value == undefined){
+    alert("내용을 입력헤주세요");
+    // return;
+  }else if(value.length > 40){
+    alert("40글자까지만 적어주세요");
+  }else{
+    
+  dispatch(__createComment(comment));
+  console.log('성공');
+  
+  }
+  setValue('')
+  
+}
+
 
   return (
     
@@ -61,8 +62,6 @@ const onButtonClick=async()=>{
      <FormBox onChange={handleSubmit}>
    
       <Form>
-
-
 
         <TextField
         sx={{m:1 ,width:'auto',height:'auto',display:'flex'}}
@@ -73,8 +72,9 @@ const onButtonClick=async()=>{
         multiline
         rows={2}
         value={value}
-        inputRef={textRef}
+        ref={textRef}
         onChange={inp}
+        
       />
       </Form>
       <FormButton>

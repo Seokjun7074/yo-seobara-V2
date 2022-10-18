@@ -1,177 +1,85 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import axios from 'axios';
-import {useEffect, useState}from 'react';
-import { CommentBox,UserBox, Time, Comment,Text } from './style';
+//내부css
+import {CommentBox, UserBox, Time, Comment,
+        Text, NoCommentBox, Side,DeleteBox} from "./style";
+//외부css
+import List from "@mui/material/List";
 
-//라이브러리
-import moment from 'moment';
-import Moment from 'react-moment';
-import 'moment/locale/ko';      //한국말 번역
+import * as React from "react";
 
+import { useEffect, useState } from "react";
 
- const CommentList =(id)=> {
+import DeleteIcon from "@mui/icons-material/Delete";
+import { getCookie } from "../../../shared/Cookie";
+import CreatedAt from "../../global/createdAt";
+import { useSelector, useDispatch } from "react-redux";
+import {__deleteComment}from '../../../redux/async/asyncComment'; 
+import {deleteComment} from '../../../redux/modules/commentSlice';
 
 
+const CommentList = () => {
+
+  const dispatch = useDispatch();
+  const comments = useSelector((state) => state.comment.commentList);
   
-  const idNum = id.id // postId
-// console.log(idNum)
-
-
-  const [comments,setComments] = useState([
-    {
-      commentId: '댓글아이디',
-      nickname: '작성자닉네임',
-      comment: '댓글내용',
-      creativeAt: '작성 시간',
-      modifiedAt: '수정 시간'
-    },
-    {
-      commentId: '댓글아이디22',
-      nickname: '작성자닉네임22',
-      comment: '댓글내용22',
-      creativeAt: '작성 시간22',
-      modifiedAt: '수정 시간22'
-    },
-
-    // {
-    // postId: 1,
-    // id: 3,
-    // name: "odio adipisci rerum aut animi",
-    // email: "Nikita@garfield.biz",
-    // body: "quia molestiae reprehenderit quasi aspernatur"
-    // },
-
-
-  ])
-
-
-  useEffect(() => {
-    
-
-    //실전서버용
-    // await axios
-    // .get(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}/comments`, {
-    //   headers: {
-    //     Authorization: `Bearer ${getCookie('accessToken')}`,
-        
-    //   },
-    // })
-    // .then((res) => {
-    //   console.log('불러온 데이터', res);
-      
-      
-    // })
-    // .catch((err) => console.log(err));
-
-
-
-  // 가상서버 테스트용
-  //   await axios.get(`https://jsonplaceholder.typicode.com/comments/?postId=${idNum}`)
-  //     .then((res) => {
-        
-  //       const list = res.data
-  //       console.log(idNum,list)
-        
-  //       setComments(list)
-        
-         
-  //     })
-  //  .catch(err=> console.log(err))
-
+console.log(comments);
   
+  const memberId = getCookie("memberId"); //로그인한 유저닉네임
 
+const deleteButton = (commentId) => {
+  const data ={
+    postId: comments[0]['postId'],
+    commentId: commentId,
+  }
+dispatch(__deleteComment(data));
 
-  }, []);
-  
-  const nowTime = moment().format('2022-09-12 15:20:03'),  // 서버로부터 받은 작성,또는수정시간
-        startTime = new Date(nowTime);
-
-//2022-09-12 15:20:03 형식
-// const nowTime = moment().format('YYYY-MM-DD HH:mm:ss');
-// console.log(nowTime);
-
-
-//숫자형식
-// const nowTime2 = Date.now();
-// console.log(nowTime2);
-
-
-
-  return (
-
-    <List style={{height: 300,  
-    width:'100%'
-    }}>
-    
-        <CommentBox>
-        <UserBox>
-          닉네임
-          
-          </UserBox>          
-        <Comment>댓글내용ㅇㅇ</Comment>
-        <Time>몇분전</Time>
-        </CommentBox>
-
-
-
-                
-                    
-   </List>
-      
-                          
-                    
-
-  );
 }
 
+  return (
+    <>
+      {comments && comments.length === 0 ? (
+        <NoCommentBox>
+          <Text>당첨! 첫번째 댓글의 주인공이 되어보세요!</Text>
+        </NoCommentBox>
+      ) : (
+        <List style={{ height: 300, width: "100%" }}>
+          {comments &&
+            comments.map((comment) => (
+              <CommentBox key={comment.commentId}>
+                <UserBox>
+                  {comment.nickname}    
+                </UserBox>
+
+                <Comment>
+                 {comment.content}
+                </Comment>
+
+                <Side>
+                  <Time>
+                    <CreatedAt time={comment.createdAt} />
+                  </Time>
+                  
+
+                  {comment.memberId == memberId ? (
+                    <DeleteBox
+                    onClick={() => { deleteButton( comment.commentId );
+                      dispatch(deleteComment(comment.commentId));
+                    }}  >
+                    
+                    <DeleteIcon fontSize="large" Width='100%' height= '50%' display='flex'
+                    
+                    />
+                    </DeleteBox>
+                  ) : null}
+                </Side>
+              </CommentBox>
+            ))}
+        </List>
+      )}
+    </>
+  );
+};
+
 export default CommentList;
-
-//mui 스타일 댓글창
-{/* <List style={{height: 300,  display:'block',
-width:'100%'
-}}>
-
-        {comments.map((comment,idx)=>(
-          <>
-        <ListItem alignItems="flex-start">
-        
-        <ListItemText
-        sx={{ fontSize: 15 }}
-        primary={comment.name}
-        
-        secondary={
-        <React.Fragment>
-        <Typography
-        sx={{ display: 'flex',fontSize: 20 }}
-        component="span"
-        variant="body2"
-        color="text.primary"
-        >
-        {comment.comment}
-        {comment.body}
-        </Typography>
-        </React.Fragment>
-        }
-        />
-
-        <Time><Moment fromNow>{startTime}</Moment></Time>
-        </ListItem>
-        <Divider variant="inset" component="li" />
-
-        </>))}
-
-
-
-            
-                
-</List> */}
 
 
 

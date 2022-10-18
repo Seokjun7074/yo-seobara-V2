@@ -19,18 +19,16 @@ import { setCookie } from "../../../shared/Cookie";
 // 소셜로그인
 import { KAKAO_AUTH_URL } from "../../../shared/SocialOauth";
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: {
-        main: "#0584BB",
-      },
-      secondary: {
-        main: '#C4441C',
-      },
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0584BB",
     },
-  }
-);
+    secondary: {
+      main: "#C4441C",
+    },
+  },
+});
 
 const LoginContainer = ({ login, setLogin }) => {
   const navigate = useNavigate();
@@ -49,21 +47,22 @@ const LoginContainer = ({ login, setLogin }) => {
       password: enteredPassword,
     };
 
-    console.log(userObj);
     const res = await apis.loginUser(userObj);
 
     //쿠키저장
     try {
       const token = res.data.data.token;
+
       setCookie("accessToken", token.accessToken, token.accessTokenExpiresIn);
       setCookie("refreshToken", token.refreshToken);
-      //setCookie('userId', res.data.data.id, token.accessTokenExpiresIn);
+      setCookie("nickname", res.data.data.nickname);
+      setCookie("memberId", res.data.data.id);
+
       alert("로그인 성공");
-      navigate("/");
-      //window.location.reload(true);
+      window.location.replace('/');
+
     } catch (error) {
       alert(res.data.errorCode.message);
-      console.log(error);
     }
   };
 
@@ -79,8 +78,6 @@ const LoginContainer = ({ login, setLogin }) => {
             alignItems: "center",
           }}
         >
-          {/*  */} 
-          {/* "" */}
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -117,6 +114,7 @@ const LoginContainer = ({ login, setLogin }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={submitHandler}
+              style={{ padding: "8px" }}
             >
               로그인
             </Button>
@@ -126,26 +124,19 @@ const LoginContainer = ({ login, setLogin }) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              //onClick={submitHandler}
               href={KAKAO_AUTH_URL}
+              style={{
+                marginTop: "10px",
+                marginBottom: "20px",
+                padding: "8px",
+              }}
             >
               카카오로 로그인하기
             </Button>
-
             <hr></hr>
-            {/* <img src={`${process.env.PUBLIC_URL}/images/kakao_login.svg`} alt="kakao_login_medium.pnkakao_login.svg" /> */}
-            {/* </a> */}
-
             <Grid container>
-              <Grid item xs>
-                {/* <Link href="#" variant="body2">
-          Forgot password?
-        </Link> */}
-              </Grid>
+              <Grid item xs></Grid>
               <Grid item>
-                {/* <Link href="#" variant="body2">
-          {"Don't have an account? Sign Up"}
-        </Link> */}
                 <button
                   onClick={() => {
                     setLogin(false);

@@ -10,14 +10,17 @@ export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${(props) => props.theme.padding.xlarge};
+  padding: ${(props) => props.theme.padding.base};
   background-color: white;
 `;
 export const HeaderTitle = styled.span`
   font-weight: 600;
   font-size: 2rem;
 `;
-
+export const LogoBox = styled.img`
+  height: 100%;
+  border-radius: 10px;
+`;
 export const HeaderMenu = styled.div`
   display: flex;
   justify-content: center;
@@ -39,4 +42,7 @@ export const LoginedButton = styled(AnonymousButton)`
 `;
 export const LogineButton = styled(AnonymousButton)`
   display: ${(props) => (props.isLogin ? "none" : null)};
+`;
+export const LogoutButton = styled(AnonymousButton)`
+  display: ${(props) => (props.isLogin ? null : "none")};
 `;

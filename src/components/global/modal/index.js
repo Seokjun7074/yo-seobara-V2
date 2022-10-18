@@ -1,15 +1,19 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { ModalWrapper, ModalContainer, ModalButton } from "./style";
 
 function Modal({ btn_title, modalToggel, setModlaToggle, children }) {
-  // const [modalToggel, setModlaToggle] = useState(false);
-
+  if (modalToggel.open) {
+    document.body.style.overflow = "hidden";
+  }
   const closeModal = () => {
     setModlaToggle({ ...modalToggel, open: false });
+    document.body.style.overflow = "unset";
   };
   // const openModal = () => {
   //   setModlaToggle(true);
   // };
+
   return (
     <div className="Modal">
       {/* <ModalButton onClick={openModal}>{btn_title}</ModalButton> */}

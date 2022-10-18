@@ -16,21 +16,18 @@ import useInput from "../../../hooks/useInput";
 //통신
 import { apis } from "../../../api/loginAPI";
 
-const theme = createTheme(
-  {
-    palette: {
-      primary: {
-        main: "#0584BB",
-      },
-      secondary: {
-        main: '#C4441C',
-      },
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0584BB",
     },
-  }
-);
+    secondary: {
+      main: "#C4441C",
+    },
+  },
+});
 
 const RegisterContainer = ({ login, setLogin }) => {
-  
   const emailInput = useRef();
   const passwordInput = useRef();
   const passwordConfirmInput = useRef();
@@ -122,9 +119,9 @@ const RegisterContainer = ({ login, setLogin }) => {
 
     const res = await apis.registerUser(userObj);
     if (res.status == 200) {
+      alert("회원가입이 완료되었습니다!");
       setLogin(true);
     }
-    console.log(res);
   };
 
   return (
@@ -196,12 +193,6 @@ const RegisterContainer = ({ login, setLogin }) => {
                   inputRef={passwordConfirmInput}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
 
             <Button
@@ -210,6 +201,7 @@ const RegisterContainer = ({ login, setLogin }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={nicknameCheck}
+              style={{ padding: "8px" }}
             >
               닉네임중복확인
             </Button>
@@ -220,16 +212,17 @@ const RegisterContainer = ({ login, setLogin }) => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={submitHandler}
+              style={{
+                marginTop: "10px",
+                marginBottom: "20px",
+                padding: "8px",
+              }}
             >
               가입하기
             </Button>
-            <hr/>
+            <hr />
             <Grid container justifyContent="flex-end">
               <Grid item>
-                {/* <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link> */}
-
                 <button
                   onClick={() => {
                     setLogin(true);
@@ -241,7 +234,6 @@ const RegisterContainer = ({ login, setLogin }) => {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );
