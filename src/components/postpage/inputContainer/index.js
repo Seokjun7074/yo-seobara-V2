@@ -138,7 +138,7 @@ const InputContainer = ({ pick, pickedAddress, editData, postId }) => {
       )
         .unwrap()
         .then(() => {
-          navigate("/");
+          navigate(-1);
         })
         .catch((e) => {
           alert("작성 실패");
