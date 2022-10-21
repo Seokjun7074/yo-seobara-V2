@@ -23,7 +23,6 @@ import { __deletePost } from "../../redux/async/asyncPost";
 
 const Detail = ({ modalToggel, setModlaToggle }) => {
   const navigate = useNavigate();
-  // const isMap = item.isMap; // 지도페이지용 관리
   const data = modalToggel.data; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
   const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임

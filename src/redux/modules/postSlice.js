@@ -94,6 +94,9 @@ const postSlice = createSlice({
       state.data = state.data.filter(
         (e) => parseInt(e.postId) !== parseInt(postId)
       );
+      state.location = state.location.filter(
+        (e) => parseInt(e.postId) !== parseInt(postId)
+      );
     });
 
     // 게시물 좋아요
