@@ -36,32 +36,16 @@ export const Comment = styled.div`
 `;
 
 export const Side = styled.div`
-  width: 15%;
   height: 100%;
-  border-radius: 10px;
-  font-size: ${(props) => props.theme.fontSizes.xlarge};
-
-  display: grid;
-  grid-template-columns: 2fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
-    "top "
-    "footer ";
+  display: flex;
 `;
 
 export const DeleteBox = styled.div`
-  grid-area: top;
-  width: 100%;
-  height: 70%;
   font-size: ${(props) => props.theme.fontSizes.xlarge};
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // border:1px solid ${(props) => props.theme.color.orange};
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.color.orange};
-  position: relative;
+  cursor: pointer;
 `;
 
 export const Time = styled.div`

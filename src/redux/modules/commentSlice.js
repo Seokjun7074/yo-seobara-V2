@@ -12,14 +12,7 @@ const initialState = {
 const commentSlice = createSlice({
   name: "comment",
   initialState,
-  reducers: {
-    deleteComment(state, action) {
-      console.log(action.payload);
-      state.commentList = state.commentList.filter(
-        (list) => list.commentId != action.payload
-      );
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // 댓글불러오기
     builder.addCase(__getComment.fulfilled, (state, actions) => {
@@ -34,14 +27,13 @@ const commentSlice = createSlice({
       alert("댓글작성완료");
     });
     builder.addCase(__createComment.rejected, (state, actions) => {
-      if (actions.payload === "LOGIN_REQUIRED") {
-        alert("로그인한 유저가아닙니다");
-      } else {
-        alert("댓글작성실패");
-      }
+      alert("댓글작성실패");
     });
     builder.addCase(__deleteComment.fulfilled, (state, actions) => {
-      alert("댓글삭제완료");
+      const commentId = actions.payload.data.split("번")[0];
+      state.commentList = state.commentList.filter(
+        (list) => list.commentId != commentId
+      );
     });
     builder.addCase(__deleteComment.rejected, (state, actions) => {
       alert("댓글삭제실패");

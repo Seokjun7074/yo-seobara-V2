@@ -39,7 +39,7 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await apis.deleteComment(payload.postId, payload.commentId);
-      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       const error_code = error.response.data.errorCode.code;
       console.log(error_code);
