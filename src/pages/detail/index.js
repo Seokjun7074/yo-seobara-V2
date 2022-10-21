@@ -11,7 +11,6 @@ import {
 } from "./style";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 //컴포넌트
 import Slider from "../../components/global/slider";
@@ -19,31 +18,28 @@ import DetailForm from "../../components/detailPage/detailForm";
 import CommentList from "../../components/detailPage/comments";
 import { getCookie } from "../../shared/Cookie";
 import CreatedAt from "../../components/global/createdAt";
+import { useDispatch } from "react-redux";
+import { __deletePost } from "../../redux/async/asyncPost";
 
-const Detail = (item) => {
+const Detail = ({ modalToggel, setModlaToggle }) => {
   const navigate = useNavigate();
-  const isMap = item.isMap; // 지도페이지용 관리
-  const data = item.item; //메인에서 받아오는 데이터
+  // const isMap = item.isMap; // 지도페이지용 관리
+  const data = modalToggel.data; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
   const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임
+  const dispatch = useDispatch();
 
-  const updateClick = () => {
+  const editClick = () => {
     navigate(`/post/${idNum}`);
   };
 
   const deleteClick = async () => {
-    await axios
-      .delete(`${process.env.REACT_APP_API_URL}/api/posts/${idNum}`, {
-        headers: {
-          Authorization: `Bearer ${getCookie("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log("성공");
-        alert("삭제하고있습니다");
-      })
-      .catch((err) => console.log(err));
-    window.location.reload();
+    dispatch(__deletePost(idNum))
+      .unwrap()
+      .then(() => {
+        alert("게시물이 삭제되었습니다.");
+        setModlaToggle({ ...modalToggel, open: false });
+      });
   };
 
   return (
@@ -56,8 +52,8 @@ const Detail = (item) => {
         </div>
         {userId === data.memberId ? (
           <UserButtonWrapper>
-            <UserButton>수정</UserButton>
-            <UserButton>삭제</UserButton>
+            <UserButton onClick={editClick}>수정</UserButton>
+            <UserButton onClick={deleteClick}>삭제</UserButton>
           </UserButtonWrapper>
         ) : null}
       </UserInfoWrapper>

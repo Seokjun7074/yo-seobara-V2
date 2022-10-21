@@ -6,6 +6,7 @@ import {
   __likePost,
   __likeDelete,
   __getPostLocation,
+  __deletePost,
 } from "../async/asyncPost";
 
 const initialState = {
@@ -83,6 +84,17 @@ const postSlice = createSlice({
       );
       alert("수정완료");
     });
+    builder.addCase(__editPost.rejected, (state, actions) => {
+      state.loading = false;
+      alert("수정실패");
+    });
+    // 게시물 삭제
+    builder.addCase(__deletePost.fulfilled, (state, actions) => {
+      const postId = actions.payload.split("번")[0];
+      state.data = state.data.filter(
+        (e) => parseInt(e.postId) !== parseInt(postId)
+      );
+    });
 
     // 게시물 좋아요
     builder.addCase(__likePost.fulfilled, (state, actions) => {
@@ -100,10 +112,6 @@ const postSlice = createSlice({
       alert("좋아요취소실패");
     });
 
-    builder.addCase(__editPost.rejected, (state, actions) => {
-      state.loading = false;
-      alert("수정실패");
-    });
     // 전체 게시물 조회
     builder.addCase(__getPost.fulfilled, (state, actions) => {
       const payloadContent = actions.payload.content;

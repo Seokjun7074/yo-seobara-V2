@@ -10,7 +10,6 @@ import { ImageWrapper, Box, CheckBar } from "./style";
 import "./style.css";
 
 //다른페이지
-import Modal from "../global/modal/index";
 import Detail from "../../pages/detail";
 import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 import { __getPost } from "../../redux/async/asyncPost";
@@ -116,7 +115,7 @@ const MainPhotoCard = () => {
 
       {modalToggel.open && (
         <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-          <Detail item={modalToggel.data} />
+          <Detail modalToggel={modalToggel} setModlaToggle={setModlaToggle} />
         </ModalCopy>
       )}
     </>

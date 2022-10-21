@@ -61,7 +61,6 @@ export const __likePost = createAsyncThunk(
       const data = await apis.likePost(payload);
       // console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data.postId);
-      
     } catch (error) {
       // LOGIN_REQUIRED
       const error_code = error.response.data.errorCode.code;
@@ -73,15 +72,13 @@ export const __likePost = createAsyncThunk(
     }
   }
 );
-
 
 export const __likeDelete = createAsyncThunk(
   "post/likeDelete",
   async (payload, thunkAPI) => {
     try {
-      const data = await apis.likeDelete(payload.postId,payload.memberId);
+      const data = await apis.likeDelete(payload.postId, payload.memberId);
       return thunkAPI.fulfillWithValue(data.data.postId);
-      
     } catch (error) {
       // LOGIN_REQUIRED
       const error_code = error.response.data.errorCode.code;
@@ -93,9 +90,6 @@ export const __likeDelete = createAsyncThunk(
     }
   }
 );
-
-
-
 
 export const __deletePost = createAsyncThunk(
   "post/deletePost",
