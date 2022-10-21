@@ -9,10 +9,6 @@ import {
   DeleteBox,
   CommentListWrapper,
 } from "./style";
-//외부css
-import List from "@mui/material/List";
-
-import * as React from "react";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCookie } from "../../../shared/Cookie";
