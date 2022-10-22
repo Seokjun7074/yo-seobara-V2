@@ -23,7 +23,8 @@ export const ModalContainer = styled.div`
   border-radius: 10px;
   /* width: 700px;
   height: 600px; */
-  padding: 20px 0;
+  /* padding: 20px 0; */
   z-index: 100;
+  overflow: hidden;
   /* cursor: default; */
 `;
