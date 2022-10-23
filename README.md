@@ -73,7 +73,7 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 </details>
 <br></br>
 
-## 🛠 리팩토링
+## 🛠 UX 리팩토링
 <details>
 <summary>상세페이지 UI 수정</summary>
 <br/>
@@ -84,6 +84,11 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 <img src="https://user-images.githubusercontent.com/79635274/197417156-ffd64609-cb6b-4fca-92ba-6454babb968b.png" width="50%">
 <span>수정 후</span>
 </div>
+</details>
+<details>
+<summary>로그인 여부에 따른 댓글 유효성 검사 수정</summary>
+<br/>
+로그인하지 않은 사용자에게는 댓글 작성 버튼을 숨기고 input을 비활성화 시켜 비회원의 댓글 작성을 차단했습니다.
 </details>
 <details>
 <summary>게시물 삭제 redux 적용</summary>
