@@ -1,7 +1,9 @@
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/79635274/194881265-08db0498-c674-41ba-a085-9c87878c4228.png" width="150">   <h6>인생 '내' 컷 어디가 잘나와? 여기 서 봐, 패션의 완성은 얼굴? 사진의 완성은 배경! 여기 서 봐</h6>
+  <img src="https://user-images.githubusercontent.com/79635274/194881265-08db0498-c674-41ba-a085-9c87878c4228.png" width="150">
+  <h1>🛠요서바라 리팩토링 저장소입니다🛠</h1>
+  <h6>인생 '내' 컷 어디가 잘나와? 여기 서 봐, 패션의 완성은 얼굴? 사진의 완성은 배경! 여기 서 봐</h6>
   <h2>📸 사진 스팟 공유 서비스, 요서바라📸</h2>
-  <a href="https://www.notion.so/2-b2a83adc547f456fa02222cad3e04a44">노션</a>　
+  <a href="https://www.notion.so/2-b2a83adc547f456fa02222cad3e04a44">팀 노션</a>　
   <br></br>
 </div>
 <div align="center">  
@@ -23,10 +25,10 @@
  - 무한스크롤을 통한 이미지 분할 로딩
 
 <br></br>
-## 💻 기술 특장점 및 도입 배경
+## ⚙️ 기술 특장점 및 도입 배경
 <details>
 <summary>무한스크롤적용</summary>
-이미지 공유 기반 서비스이기때문에 페이지네이션보다 무한스크롤을 통해 간편하게 사진 위주로 훑어 볼 수 있도록 제작했어요.
+무한스크롤을 통해 이미지 로딩을 조절하고 사용자가 간편하게 사진 위주로 훑어 볼 수 있도록 제작했어요.
 </details>
 <details>
 <summary>카카오 소셜로그인</summary>
@@ -35,18 +37,16 @@
 <details>
 <summary>카카오 맵sdk 활용</summary>
 카카오 맵이 국내 사용자에게 구글맵보다 적합하다고 판단했고,
-같은 API KEY로 카카오 로그인과 함께 관리하기 위해 선택했어요.
+카카오 로그인과 같은 API KEY로 함께 관리하기 위해 선택했어요.
 </details>
 <details>
 <summary>Redux-toolkit을 이용한 상태관리</summary>
-현재의 프로젝트 규모로는 props drilling도 적고 
-관리하는 상태가 많지 않아 전역으로 상태관리를 하지 않아도 되지만
-향후 유지보수의 측면에서 데이터를 전역관리하는 것이 유리하다고 판단했어요.
-지도 페이지는 위치를 기준으로 데이터를 받아오고 무한 스크롤 페이지는 최신 순으로 데이터를 받아오기 때문데 각각 나누어서 전역상태관리를 했어요.
+지도 페이지는 위치를 기준으로 데이터를 받아오고 무한 스크롤 페이지는 최신 순으로 데이터를 받아오기 때문에 각각 나누어서 전역상태관리를 했어요.
+각각의 페이지에서 게시물의 수정 및 삭제가 일어나는 경우 두 페이지에 모두 적용 시키기위해 전역 저장소를 통해 상태를 관리했어요.
 </details>
 <br></br>
 
-## 💻 트러블슈팅
+## ❗️ 트러블슈팅
 <details>
 <summary> 모달 렌더링 문제 </summary>
 <div display="flex">
@@ -65,13 +65,32 @@
 <div >
 <img src="https://user-images.githubusercontent.com/109025674/194465576-2370211f-428c-456b-be54-0cd08d12b6ac.png" height="200px" width="300px"/>
 <p>
-두번째 트러블 슈팅으로는 특정 상황에서만 작동되어야하는특정 상황에서만 작동되어야하는 useEffect hook이 두번 작동하는 상황이었습니다. 
+특정 상황에서만 작동되어야하는특정 상황에서만 작동되어야하는 useEffect hook이 두번 작동하는 상황이었습니다. 
 console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔는지 확인하던 중 게시물 데이터가 같은 부분에서 2번 출력된것을 볼 수 있었습니다. 오른쪽 예시 코드처럼 dispatch는 최초 렌더링 때와 page가 변할 때만 작동해야하는데 dispatch된 데이터를 출력해보면 page의 변화가 없는데도 2번씩 출력이 되는 현상이었습니다. 
 이를 해결하기 위해 검색을 하던 중 index.js의 react strict mode가 개발환경에서의 문제발생을 감지하기위해 두번 렌더링을 진행한다는것을 알게되었고 해당 기능을 종료하면 다시 원하는 대로 특정 조건에서만 dispatch를 실행했습니다.
 </p>
 </div>
 </details>
 <br></br>
+
+## 🛠 리팩토링
+<details>
+<summary>상세페이지 UI 수정</summary>
+<br/>
+사진 위주의 서비스기 때문에 사진이 차지하는 비율을 늘렸습니다.
+<div>
+<img src="https://user-images.githubusercontent.com/79635274/197417150-529714c1-8773-48d8-9ce5-92b6112de501.png" width="50%">
+<span>수정 전</span>
+<img src="https://user-images.githubusercontent.com/79635274/197417156-ffd64609-cb6b-4fca-92ba-6454babb968b.png" width="50%">
+<span>수정 후</span>
+</div>
+</details>
+<details>
+<summary>게시물 삭제 redux 적용</summary>
+<br/>
+기존에는 게시물 삭제 후 강제 새로고침을 통해 서버로부터 게시물을 갱신했습니다. 
+수정 후에는 게시물 삭제 시 새로고침하지 않아도 삭제된 내용이 바로 적용 되도록 상태 처리했습니다.
+</details>
 
 ## 💻 협업방식
 <details>
@@ -94,10 +113,10 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 <br></br>
 
 
-## 💻 만든 사람
+## 👥 만든 사람
 | 이석준 | 이예찬 | 서정희|
 |:-----------:|:-----------:|:-----------:|
 | ![이석준](https://user-images.githubusercontent.com/109025674/193542311-15be2f67-ccbb-4383-8c74-2ca9da505ecd.png)|![이예찬](https://user-images.githubusercontent.com/109025674/193542349-5cff393d-570a-4918-9674-258e0b371c88.png)|![서정희](https://user-images.githubusercontent.com/109025674/193542379-6bd3276d-5304-456f-9cb0-942815ea19ad.png)|
-|[Seokjun7074](https://github.com/Seokjun7074) | [yc8569](https://github.com/yc8569) | [jinaSE0](https://github.com/jinaSE0) | 
+|[Seokjun7074](https://github.com/Seokjun7074)<br/><br/>지도 페이지, 게시글 작성 및 수정, 사용자 페이지, 리팩토링| [yc8569](https://github.com/yc8569)<br/><br/>무한스크롤 페이지, 상세 페이지  | [jinaSE0](https://github.com/jinaSE0) <br/><br/> 소셜로그인 | 
 
 
