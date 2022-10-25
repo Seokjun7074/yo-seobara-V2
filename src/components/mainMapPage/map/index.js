@@ -141,7 +141,11 @@ const MainMapView = ({
       ))}
       {modalToggel.open && (
         <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-          <Detail modalToggel={modalToggel} setModlaToggle={setModlaToggle} />
+          <Detail
+            modalToggel={modalToggel}
+            setModlaToggle={setModlaToggle}
+            isMap={true}
+          />
         </ModalCopy>
       )}
     </Map>

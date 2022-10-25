@@ -27,20 +27,17 @@ import {
 } from "../../redux/async/asyncPost";
 import Heart from "../../components/detailPage/heart";
 
-const Detail = ({ modalToggel, setModlaToggle }) => {
+const Detail = ({ modalToggel, setModlaToggle, isMap }) => {
   const navigate = useNavigate();
   const data = modalToggel.data; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
   const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임
   const dispatch = useDispatch();
-  const myHeart = useSelector(
-    (state) => state.post.data.filter((e) => e.postId === idNum)[0].myHeart
-  );
-  const heartCount = useSelector(
-    (state) => state.post.data.filter((e) => e.postId === idNum)[0].heart
-  );
-  console.log(heartCount);
   const memberId = getCookie("memberId");
+  const nowData = useSelector((state) => {
+    if (isMap) return state.post.location.find((e) => e.postId === idNum);
+    else return state.post.data.find((e) => e.postId === idNum);
+  });
 
   const editClick = () => {
     navigate(`/post/${idNum}`);
@@ -88,7 +85,8 @@ const Detail = ({ modalToggel, setModlaToggle }) => {
       </SliderWrapper>
       <LabelWrapper>
         <ContentLabel>🔍 이 장소는요</ContentLabel>
-        <Heart myHeart={myHeart} likePost={likePost} heartCount={heartCount} />
+        <Heart nowData={nowData} likePost={likePost} />
+        {/* <Heart myHeart={myHeart} likePost={likePost} heartCount={heartCount} /> */}
       </LabelWrapper>
       <LabelWrapper>
         <ContentWrapper>{data.content}</ContentWrapper>
@@ -99,6 +97,10 @@ const Detail = ({ modalToggel, setModlaToggle }) => {
       <CommentList data={data} />
     </DetailWrapper>
   );
+};
+
+Detail.defaultProps = {
+  isMap: false,
 };
 
 export default Detail;
