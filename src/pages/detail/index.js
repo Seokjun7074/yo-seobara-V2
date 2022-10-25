@@ -3,6 +3,7 @@ import {
   ContentLabel,
   ContentWrapper,
   DetailWrapper,
+  LabelWrapper,
   SliderWrapper,
   UserButton,
   UserButtonWrapper,
@@ -18,8 +19,13 @@ import DetailForm from "../../components/detailPage/detailForm";
 import CommentList from "../../components/detailPage/comments";
 import { getCookie } from "../../shared/Cookie";
 import CreatedAt from "../../components/global/createdAt";
-import { useDispatch } from "react-redux";
-import { __deletePost } from "../../redux/async/asyncPost";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  __deletePost,
+  __likeDelete,
+  __likePost,
+} from "../../redux/async/asyncPost";
+import Heart from "../../components/detailPage/heart";
 
 const Detail = ({ modalToggel, setModlaToggle }) => {
   const navigate = useNavigate();
@@ -27,6 +33,14 @@ const Detail = ({ modalToggel, setModlaToggle }) => {
   const idNum = data.postId; //게시물아이디
   const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임
   const dispatch = useDispatch();
+  const myHeart = useSelector(
+    (state) => state.post.data.filter((e) => e.postId === idNum)[0].myHeart
+  );
+  const heartCount = useSelector(
+    (state) => state.post.data.filter((e) => e.postId === idNum)[0].heart
+  );
+  console.log(heartCount);
+  const memberId = getCookie("memberId");
 
   const editClick = () => {
     navigate(`/post/${idNum}`);
@@ -39,6 +53,18 @@ const Detail = ({ modalToggel, setModlaToggle }) => {
         alert("게시물이 삭제되었습니다.");
         setModlaToggle({ ...modalToggel, open: false });
       });
+  };
+
+  const likePost = (heart) => {
+    const data = {
+      postId: idNum,
+      memberId: memberId,
+    };
+    if (heart) {
+      dispatch(__likeDelete(data));
+    } else {
+      dispatch(__likePost(data));
+    }
   };
 
   return (
@@ -60,8 +86,13 @@ const Detail = ({ modalToggel, setModlaToggle }) => {
       <SliderWrapper>
         <Slider imageList={data.imageUrls} />
       </SliderWrapper>
-      <ContentLabel>🔍 이 장소는요</ContentLabel>
-      <ContentWrapper>{data.content}</ContentWrapper>
+      <LabelWrapper>
+        <ContentLabel>🔍 이 장소는요</ContentLabel>
+        <Heart myHeart={myHeart} likePost={likePost} heartCount={heartCount} />
+      </LabelWrapper>
+      <LabelWrapper>
+        <ContentWrapper>{data.content}</ContentWrapper>
+      </LabelWrapper>
       {/* 댓글 작성 부분 */}
       <DetailForm id={data.postId} />
       {/* 댓글 리스트 */}

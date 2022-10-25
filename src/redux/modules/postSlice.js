@@ -101,7 +101,12 @@ const postSlice = createSlice({
 
     // 게시물 좋아요
     builder.addCase(__likePost.fulfilled, (state, actions) => {
-      alert("좋아요완료");
+      state.data = state.data.map((item) =>
+        item.postId === actions.payload
+          ? { ...item, myHeart: true, heart: item.heart + 1 }
+          : item
+      );
+      // alert("좋아요완료");
     });
     builder.addCase(__likePost.rejected, (state, actions) => {
       alert("좋아요실패");
@@ -109,7 +114,12 @@ const postSlice = createSlice({
 
     // 게시물 좋아요취소
     builder.addCase(__likeDelete.fulfilled, (state, actions) => {
-      alert("좋아요취소완료");
+      state.data = state.data.map((item) =>
+        item.postId === actions.payload
+          ? { ...item, myHeart: false, heart: item.heart - 1 }
+          : item
+      );
+      // alert("좋아요취소완료");
     });
     builder.addCase(__likeDelete.rejected, (state, actions) => {
       alert("좋아요취소실패");
