@@ -38,7 +38,7 @@ const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
     <>
       {modalToggel.open && (
         <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
-          <Detail item={modalToggel.data} />
+          <Detail modalToggel={modalToggel} setModlaToggle={setModlaToggle} />
         </Modal>
       )}
       <Masonry

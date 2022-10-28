@@ -1,11 +1,15 @@
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import isLogin from "../../../shared/isLogin";
 import { HeartCount, HeartWrapper } from "./style";
 
 const Heart = ({ likePost, nowData }) => {
   return (
     <HeartWrapper
       onClick={() => {
-        likePost(nowData.myHeart);
+        if (!isLogin()) return;
+        else {
+          likePost(nowData.myHeart);
+        }
       }}
     >
       {nowData.myHeart ? (

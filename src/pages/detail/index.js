@@ -26,19 +26,18 @@ import {
   __likePost,
 } from "../../redux/async/asyncPost";
 import Heart from "../../components/detailPage/heart";
+import isLogin from "../../shared/isLogin";
 
 const Detail = ({ modalToggel, setModlaToggle, isMap }) => {
   const navigate = useNavigate();
   const data = modalToggel.data; //메인에서 받아오는 데이터
   const idNum = data.postId; //게시물아이디
-  const userId = parseInt(getCookie("memberId")); //로그인한 유저닉네임
   const dispatch = useDispatch();
   const memberId = getCookie("memberId");
   const nowData = useSelector((state) => {
     if (isMap) return state.post.location.find((e) => e.postId === idNum);
     else return state.post.data.find((e) => e.postId === idNum);
   });
-
   const editClick = () => {
     navigate(`/post/${idNum}`);
   };
@@ -51,7 +50,6 @@ const Detail = ({ modalToggel, setModlaToggle, isMap }) => {
         setModlaToggle({ ...modalToggel, open: false });
       });
   };
-
   const likePost = (heart) => {
     const data = {
       postId: idNum,
@@ -68,11 +66,18 @@ const Detail = ({ modalToggel, setModlaToggle, isMap }) => {
     <DetailWrapper>
       <UserInfoWrapper>
         <div>
-          <UserText clickable={true}>{data.nickname}</UserText>
+          <UserText
+            clickable={true}
+            onClick={() => {
+              navigate(`/userpage/${data.memberId}`);
+            }}
+          >
+            {data.nickname}
+          </UserText>
           <UserText>님의 {data.title}</UserText>
           <CreatedAt time={data.createdAt} />
         </div>
-        {userId === data.memberId ? (
+        {parseInt(memberId) === data.memberId && isLogin() ? (
           <UserButtonWrapper>
             <UserButton onClick={editClick}>수정</UserButton>
             <UserButton onClick={deleteClick}>삭제</UserButton>
