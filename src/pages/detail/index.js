@@ -66,7 +66,14 @@ const Detail = ({ modalToggel, setModlaToggle, isMap }) => {
     <DetailWrapper>
       <UserInfoWrapper>
         <div>
-          <UserText clickable={true}>{data.nickname}</UserText>
+          <UserText
+            clickable={true}
+            onClick={() => {
+              navigate(`/userpage/${data.memberId}`);
+            }}
+          >
+            {data.nickname}
+          </UserText>
           <UserText>님의 {data.title}</UserText>
           <CreatedAt time={data.createdAt} />
         </div>
