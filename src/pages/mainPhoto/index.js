@@ -4,10 +4,10 @@ import MainPhotoCard from "../../components/mainPhotoPage";
 
 const MainPhoto = () => {
   return (
-    <div>
+    <>
       <Header />
       <MainPhotoCard />
-    </div>
+    </>
   );
 };
 

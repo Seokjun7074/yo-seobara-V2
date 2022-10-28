@@ -6,7 +6,7 @@ import { useCallback } from "react";
 import "./style.css";
 import Spinner from "../../global/spinner";
 import LocatioinSpot from "../../global/locationSpot";
-import ModalCopy from "../../global/modal copy";
+import Modal from "../../global/modal";
 import Detail from "../../../pages/detail";
 import { useDispatch } from "react-redux";
 import { __getComment } from "../../../redux/async/asyncComment";
@@ -140,13 +140,13 @@ const MainMapView = ({
         </div>
       ))}
       {modalToggel.open && (
-        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+        <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
           <Detail
             modalToggel={modalToggel}
             setModlaToggle={setModlaToggle}
             isMap={true}
           />
-        </ModalCopy>
+        </Modal>
       )}
     </Map>
   );

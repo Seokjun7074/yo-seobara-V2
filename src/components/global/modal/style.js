@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: ${(props) => (props.visible ? "block" : "none")};
+  /* display: ${(props) => (props.visible ? "block" : "none")}; */
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  display: ${(props) => (props.visible ? "block" : "none")};
+  /* display: ${(props) => (props.visible ? "block" : "none")}; */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -23,11 +23,8 @@ export const ModalContainer = styled.div`
   border-radius: 10px;
   /* width: 700px;
   height: 600px; */
-  padding: 20px 0;
+  /* padding: 20px 0; */
   z-index: 100;
+  overflow: hidden;
   /* cursor: default; */
-`;
-export const ModalButton = styled.button`
-  border: none;
-  text-align: center;
 `;

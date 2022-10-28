@@ -4,7 +4,7 @@ import Masonry from "react-masonry-css";
 import { useDispatch } from "react-redux";
 import Detail from "../../../pages/detail";
 import { __getComment } from "../../../redux/async/asyncComment";
-import ModalCopy from "../../global/modal copy";
+import Modal from "../../global/modal";
 import { CheckBar, ImageWrapper } from "./style";
 
 const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
@@ -37,9 +37,9 @@ const InfiniteScroll = ({ page, lastPage, setPage, dataList }) => {
   return (
     <>
       {modalToggel.open && (
-        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+        <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
           <Detail item={modalToggel.data} />
-        </ModalCopy>
+        </Modal>
       )}
       <Masonry
         breakpointCols={Columns}

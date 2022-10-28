@@ -8,7 +8,7 @@ import Detail from "../../pages/detail";
 import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 import { __getPost } from "../../redux/async/asyncPost";
 import { __getComment } from "../../redux/async/asyncComment";
-import ModalCopy from "../global/modal copy";
+import Modal from "../global/modal";
 
 //
 import { useEffect, useState } from "react";
@@ -80,9 +80,9 @@ const MainPhotoCard = () => {
       {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
 
       {modalToggel.open && (
-        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+        <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
           <Detail modalToggel={modalToggel} setModlaToggle={setModlaToggle} />
-        </ModalCopy>
+        </Modal>
       )}
     </>
   );
