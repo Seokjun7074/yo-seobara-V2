@@ -18,7 +18,7 @@ const initialState = {
   userPageData: {
     data: [],
     totalElements: 0,
-    nickname: "dd",
+    nickname: "",
     page: 0,
     lastPage: false,
     update: true,
@@ -176,6 +176,8 @@ const postSlice = createSlice({
     builder.addCase(__getUserPost.fulfilled, (state, actions) => {
       const payloadContent = actions.payload.content;
       state.userPageData.lastPage = actions.payload.last;
+      state.userPageData.nickname = payloadContent[0].nickname;
+      state.userPageData.totalElements = actions.payload.totalElements;
       state.userPageData.data = [...state.userPageData.data, ...payloadContent];
       state.update = false;
     });
