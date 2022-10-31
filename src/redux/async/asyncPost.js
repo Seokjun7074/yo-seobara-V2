@@ -116,3 +116,16 @@ export const __getPostLocation = createAsyncThunk(
     }
   }
 );
+
+export const __getUserPost = createAsyncThunk(
+  "post/getUserPost",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await apis.getUserPost(payload.page, payload.memberId);
+      const res = data.data.data;
+      return thunkAPI.fulfillWithValue(res);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
