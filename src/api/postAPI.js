@@ -16,7 +16,7 @@ export const apis = {
     }),
   // 유저페이지 게시물 조회
   getUserPost: (page, memberId) =>
-    instance.get(`/api/member/posts/${memberId}?page=${page}&size=10`, {
+    instance.get(`/api/member/posts/${memberId}?page=${page}&size=20`, {
       headers: {
         Authorization: `Bearer ${getCookie("accessToken")}`,
       },

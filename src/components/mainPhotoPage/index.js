@@ -16,7 +16,6 @@ import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
 const MainPhotoCard = () => {
   const dispatch = useDispatch();
-
   const datas = useSelector((state) => state.post.data);
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
