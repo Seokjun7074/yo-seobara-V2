@@ -49,6 +49,17 @@ const postSlice = createSlice({
     updateUserPageTrue(state) {
       state.userPageData.update = true;
     },
+    changeMember(state) {
+      state.userPageData = {
+        memberChanged: false,
+        data: [],
+        totalElements: 0,
+        nickname: "",
+        page: 0,
+        lastPage: false,
+        update: true,
+      };
+    },
     initCreatePost(state) {
       state.createPost = false;
     },
@@ -179,7 +190,7 @@ const postSlice = createSlice({
       state.userPageData.nickname = payloadContent[0].nickname;
       state.userPageData.totalElements = actions.payload.totalElements;
       state.userPageData.data = [...state.userPageData.data, ...payloadContent];
-      state.update = false;
+      state.userPageData.update = false;
     });
     builder.addCase(__getUserPost.rejected, (state, actions) => {
       alert("게시물 불러오기 실패 새로고침 해보세요.");
@@ -196,5 +207,6 @@ export const {
   initCreatePost,
   myHeartTrue,
   myHeartFalse,
+  changeMember,
 } = postSlice.actions;
 export default postSlice.reducer;

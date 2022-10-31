@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { __getUserPost } from "../../../redux/async/asyncPost";
 import {
   incrementUserPage,
   updateUserPageTrue,
+  changeMember,
 } from "../../../redux/modules/postSlice";
 import Modal from "../../global/modal";
 import { CheckBar, ImageWrapper } from "./style";
@@ -16,17 +17,23 @@ const InfiniteScroll = ({ memberId }) => {
   const dataList = useSelector((state) => state.post.userPageData.data);
   const page = useSelector((state) => state.post.userPageData.page);
   const update = useSelector((state) => state.post.userPageData.update);
+
   const lastPage = useSelector((state) => state.post.userPageData.lastPage);
   const [ref, inView] = useInView({
     // threshold: 1, // ref부분이 다 보여야 작동
     // triggerOnce: true, // 한번만 작동하는거 뺄지말지 고민중
   });
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeMember());
+  }, [memberId]);
+
   useEffect(() => {
     if (update) {
       dispatch(__getUserPost({ page, memberId }));
     }
-  }, [page]);
+  }, [page, memberId, update]);
 
   // 사용자가 마지막 요소를 보고 있으면
   useEffect(() => {
