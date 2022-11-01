@@ -49,9 +49,14 @@ export const SliderWrapper = styled.div`
   height: 70%;
   width: 100%;
 `;
+export const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+`;
 export const ContentLabel = styled.div`
   width: 100%;
-  padding: 10px;
   display: flex;
   justify-content: start;
   font-weight: 600;

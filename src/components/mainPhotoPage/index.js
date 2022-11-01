@@ -1,20 +1,14 @@
 //css 부분 (외부)
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
-import ImageListItem from "@mui/material/ImageListItem";
 import Masonry from "react-masonry-css";
-
 //css 부분 (내부)
-import { ImageWrapper, Box, CheckBar } from "./style";
+import { ImageWrapper, CheckBar } from "./style";
 import "./style.css";
-
 //다른페이지
 import Detail from "../../pages/detail";
 import { incrementPage, updateTrue } from "../../redux/modules/postSlice";
 import { __getPost } from "../../redux/async/asyncPost";
 import { __getComment } from "../../redux/async/asyncComment";
-import ModalCopy from "../global/modal copy";
+import Modal from "../global/modal";
 
 //
 import { useEffect, useState } from "react";
@@ -22,7 +16,6 @@ import { useInView } from "react-intersection-observer";
 import { useSelector, useDispatch } from "react-redux";
 const MainPhotoCard = () => {
   const dispatch = useDispatch();
-
   const datas = useSelector((state) => state.post.data);
   const page = useSelector((state) => state.post.page);
   const update = useSelector((state) => state.post.update);
@@ -67,56 +60,28 @@ const MainPhotoCard = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {datas.map((item, idx) => (
-          <div key={item.postId}>
-            <Box>
-              <ImageListItem key={item.img}>
-                <div
-                  onClick={async () => {
-                    setModlaToggle((prev) => {
-                      return { ...prev, open: true, loading: true };
-                    });
-                    dispatch(__getComment({ postId: item.postId }));
-                    //기존데이터에 댓글추가
-                    setModlaToggle((prev) => {
-                      return { ...prev, data: { ...item }, loading: false };
-                    });
-                  }}
-                >
-                  <ImageWrapper
-                    key={item.postId}
-                    src={item.thumbnailUrl}
-                    alt=""
-                  />
-                </div>
-
-                <ImageListItemBar
-                  sx={{
-                    borderBottomRightRadius: 10,
-                    borderBottomLeftRadius: 10,
-                  }}
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
-                      sx={{
-                        color: "rgba(255, 255, 255, 0.54)",
-                      }}
-                      aria-label={`info about ${item.title}`}
-                    ></IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Box>
-          </div>
-        ))}
+        {datas.map((data) => {
+          return (
+            <div
+              key={data.postId}
+              onClick={() => {
+                dispatch(__getComment({ postId: data.postId }));
+                setModlaToggle((prev) => {
+                  return { ...prev, open: true, data: { ...data } };
+                });
+              }}
+            >
+              <ImageWrapper src={data.thumbnailUrl} alt="" />
+            </div>
+          );
+        })}
       </Masonry>
       {datas.length === 0 ? null : <CheckBar ref={ref}></CheckBar>}
 
       {modalToggel.open && (
-        <ModalCopy modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
+        <Modal modalToggel={modalToggel} setModlaToggle={setModlaToggle}>
           <Detail modalToggel={modalToggel} setModlaToggle={setModlaToggle} />
-        </ModalCopy>
+        </Modal>
       )}
     </>
   );
