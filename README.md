@@ -4,6 +4,7 @@
   <h6>인생 '내' 컷 어디가 잘나와? 여기 서 봐, 패션의 완성은 얼굴? 사진의 완성은 배경! 여기 서 봐</h6>
   <h2>📸 사진 스팟 공유 서비스, 요서바라📸</h2>
   <a href="https://www.notion.so/2-b2a83adc547f456fa02222cad3e04a44">팀 노션</a>　
+  <a href="https://github.com/yo-seobara/client"> 원본 저장소</a>
   <br></br>
 </div>
 <div align="center">  
@@ -16,6 +17,47 @@
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
   <img src="https://img.shields.io/badge/json%20web%20tokens-323330?style=for-the-badge&logo=json-web-tokens&logoColor=pink"> 
   <img src ="https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white">
+</div>
+
+## 🔍소개
+
+> 요-서바라는 나만의 포토스팟을 공유하고 소통 할 수 있는 웹서비스입니다.  
+> 현재 위치를 기반으로 주변에 있는 사진 남기기 좋은 장소를 찾을 수 있고, 나만의 인생샷도 공유할 수 있습니다.
+
+<div align="center">
+<table>
+<thead>
+  <tr>
+    <th>
+      <div>
+        <img src="https://user-images.githubusercontent.com/109025674/195797899-31389767-945a-49cd-bf20-916ea25ee875.gif" width="300" height="180">
+      </div>
+     나만의 인생샷을 공유해요!
+    </th>
+    <th>
+      <div>
+        <img src="https://user-images.githubusercontent.com/109025674/195798816-da555fd2-a876-4da5-9f5a-478df2828bee.gif" width="300" height="180">
+      </div>
+      내 근처의 사진 맛집을 확인해요!
+    </th>
+  </tr>
+</thead>
+  <tr>
+    <th>
+      <div>
+        <img src="https://user-images.githubusercontent.com/109025674/195798430-534fbf54-dd63-4291-9109-249798ff3629.gif" width="300" height="180">
+      </div>
+      카카오 로그인으로 따로 가입없이 사용하실 수 있어요!
+    </th>
+    <th>
+      <div>
+       <img src="https://user-images.githubusercontent.com/109025674/195799068-e2b3a420-1b7a-465c-913c-b3370fa256e6.gif" width="300" height="180">
+      </div>
+       댓글과 좋아요를 통해 다른 유저와 소통해보세요!
+    </th>
+  </tr>
+</tbody>
+</table>
 </div>
 
 ## 💻 주요기능
@@ -78,11 +120,11 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 <summary>상세페이지 UI 수정</summary>
 <br/>
 사진 위주의 서비스기 때문에 사진이 차지하는 비율을 늘렸습니다.
-<div>
-<img src="https://user-images.githubusercontent.com/79635274/197417150-529714c1-8773-48d8-9ce5-92b6112de501.png" width="50%">
-<span>수정 전</span>
+<div align="center">
 <img src="https://user-images.githubusercontent.com/79635274/197417156-ffd64609-cb6b-4fca-92ba-6454babb968b.png" width="50%">
-<span>수정 후</span>
+<div><span>수정 전</span></div>
+<img src="https://user-images.githubusercontent.com/79635274/197417150-529714c1-8773-48d8-9ce5-92b6112de501.png" width="50%">
+<div><span>수정 후</span></div>
 </div>
 </details>
 <details>
@@ -112,7 +154,7 @@ console.log를 찍어가며 서버로부터 요청한 데이터가 잘 들어왔
 <ul>
 <li> 각자 작업할 브랜치 생성</li>
 <li> dev 브랜치 생성 </li>
-<li>이상없으면 dev 병합</li>
+<li>이상없으면 main 병합</li>
 </ul>
 </details>
 <br></br>
